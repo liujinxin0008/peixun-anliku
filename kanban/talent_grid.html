@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>人才九宫格</title>
+    <script src="./employee_profile.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #f0f2f6; font-family: 'Inter', sans-serif; padding: 28px 24px; color: #1e293b; }
+        .dashboard { max-width: 1500px; margin: 0 auto; }
+
+        /* 卡片 */
+        .card { background: white; border-radius: 28px; box-shadow: 0 6px 14px rgba(0,0,0,0.03); padding: 22px 26px; border: 1px solid #edf2f7; margin-bottom: 24px; }
+        .card-header {
+            font-size: 18px; font-weight: 700; margin-bottom: 18px;
+            border-left: 5px solid #3b82f6; padding-left: 16px;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+        }
+        .badge { font-size: 12px; color: #5b6e8c; }
+
+        /* 筛选栏 */
+        .filter-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+        .filter-row:last-child { margin-bottom: 0; }
+        .filter-label { font-size: 12px; font-weight: 600; color: #64748b; min-width: 32px; padding-top: 5px; white-space: nowrap; }
+        .filter-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+        .chip { border: 1.5px solid #e2e8f0; background: white; color: #64748b; border-radius: 20px; padding: 4px 14px; font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.15s; }
+        .chip:hover { border-color: #93c5fd; color: #2563eb; }
+        .chip.active { background: #3b82f6; border-color: #3b82f6; color: white; font-weight: 600; }
+        .chip.chip-all.active { background: #64748b; border-color: #64748b; }
+        .filter-badge-count { font-size: 12px; color: #3b82f6; font-weight: 600; }
+
+        /* 配置面板：左右两列 */
+        .config-panel { background: #f9fafb; border-radius: 20px; padding: 16px; margin-bottom: 16px; }
+        .config-cols { display: flex; gap: 14px; align-items: flex-start; }
+        .config-col { flex: 1; background: white; border-radius: 16px; padding: 14px 16px; border: 1px solid #eef2f6; }
+        .axis-title { font-weight: 700; font-size: 13px; color: #3b82f6; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+
+        /* 每个指标行 */
+        .metric-row {
+            display: flex; align-items: flex-start; gap: 10px;
+            background: #f9fafb; border-radius: 14px; padding: 10px 12px;
+            margin-bottom: 8px; border: 1px solid #f1f5f9;
+        }
+        .metric-row:last-child { margin-bottom: 0; }
+        .metric-name { font-weight: 600; font-size: 11px; color: #334155; min-width: 72px; line-height: 1.4; padding-top: 6px; }
+
+        /* 滑块 */
+        .slider-wrap { flex: 1; position: relative; }
+        .track-row { position: relative; display: flex; height: 24px; border-radius: 12px; overflow: hidden; user-select: none; }
+        .seg { height: 100%; display: flex; align-items: center; justify-content: center; transition: flex 0.08s; min-width: 0; overflow: hidden; }
+        .seg-a { background: #fee2e2; }
+        .seg-b { background: #fef3c7; }
+        .seg-c { background: #d1fae5; }
+        .seg-score { display: flex; align-items: center; gap: 2px; font-size: 10px; font-weight: 600; color: #475569; background: rgba(255,255,255,0.85); border-radius: 8px; padding: 1px 5px; white-space: nowrap; }
+        .seg-score input { width: 26px; border: 1px solid #cbd5e1; border-radius: 6px; text-align: center; font-size: 11px; font-weight: 700; padding: 0; background: white; color: #1e293b; line-height: 18px; height: 18px; }
+        /* 句柄 */
+        .range-handles { position: absolute; top: 0; left: 0; width: 100%; height: 24px; }
+        .range-handle { -webkit-appearance: none; appearance: none; position: absolute; top: 0; left: 0; width: 100%; height: 24px; margin: 0; padding: 0; background: transparent; pointer-events: none; outline: none; }
+        .range-handle::-webkit-slider-runnable-track { background: transparent; height: 24px; }
+        .range-handle::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 4px; height: 30px; margin-top: -3px; background: white; border-radius: 2px; box-shadow: 0 0 0 2px #94a3b8, 0 2px 5px rgba(0,0,0,0.2); pointer-events: all; cursor: col-resize; }
+        .range-handle::-moz-range-thumb { width: 4px; height: 24px; background: white; border: 2px solid #94a3b8; border-radius: 2px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); pointer-events: all; cursor: col-resize; }
+        /* 阈值标签 */
+        .thresh-row { position: relative; height: 18px; margin-top: 2px; font-size: 10px; color: #64748b; font-weight: 500; }
+        .thresh-label { position: absolute; transform: translateX(-50%); white-space: nowrap; background: #e8edf4; border-radius: 6px; padding: 1px 5px; }
+
+        /* 权重 */
+        .weight-area { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-width: 54px; padding-top: 3px; }
+        .weight-area label { font-size: 10px; color: #94a3b8; font-weight: 500; }
+        .weight-area input { width: 44px; border: 1.5px solid #cbd5e1; border-radius: 10px; text-align: center; font-size: 13px; font-weight: 700; padding: 3px 2px; color: #1e293b; }
+        .weight-area span { font-size: 11px; color: #64748b; font-weight: 600; margin-top: -2px; }
+        .weight-area input[readonly] { background: #f1f5f9; color: #64748b; border-color: #e2e8f0; cursor: not-allowed; }
+        .weight-auto-label { font-size: 9px; color: #94a3b8; margin-top: -1px; font-weight: 500; }
+        .weight-area input.w-error { border-color: #ef4444 !important; }
+
+        /* 应用按钮区域 */
+        .apply-btn-row { display: flex; justify-content: center; margin-bottom: 20px; }
+        .apply-btn {
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            border: none; color: white; padding: 11px 32px; border-radius: 40px;
+            font-weight: 700; font-size: 15px; cursor: pointer;
+            box-shadow: 0 4px 14px rgba(59,130,246,0.35);
+            transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .apply-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(59,130,246,0.45); }
+        .apply-btn:active { transform: scale(0.97); }
+        .apply-btn.loading { opacity: 0.7; pointer-events: none; }
+
+        /* 九宫格 */
+        .grid-3x3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 12px; }
+        @keyframes cellAppear {
+            from { opacity: 0; transform: translateY(10px) scale(0.97); }
+            to   { opacity: 1; transform: translateY(0)  scale(1); }
+        }
+        .grid-cell {
+            background: #f8fafc; border-radius: 18px; padding: 12px; min-height: 110px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            animation: cellAppear 0.35s ease both;
+        }
+        .grid-cell:nth-child(1) { animation-delay: 0.00s; }
+        .grid-cell:nth-child(2) { animation-delay: 0.04s; }
+        .grid-cell:nth-child(3) { animation-delay: 0.08s; }
+        .grid-cell:nth-child(4) { animation-delay: 0.12s; }
+        .grid-cell:nth-child(5) { animation-delay: 0.16s; }
+        .grid-cell:nth-child(6) { animation-delay: 0.20s; }
+        .grid-cell:nth-child(7) { animation-delay: 0.24s; }
+        .grid-cell:nth-child(8) { animation-delay: 0.28s; }
+        .grid-cell:nth-child(9) { animation-delay: 0.32s; }
+        .cell-label { font-weight: 700; text-align: center; background: #e2e8f0; display: inline-block; width: 100%; padding: 4px; border-radius: 30px; font-size: 12px; margin-bottom: 8px; }
+        .emp-tag { background: white; border-radius: 30px; padding: 3px 8px; margin: 3px; display: inline-block; font-size: 12px; cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); transition: background 0.15s, color 0.15s; }
+        .emp-tag:hover { background: #dbeafe; color: #1d4ed8; }
+
+        @media (max-width: 900px) {
+            .config-cols { flex-direction: column; }
+            .metric-row { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard">
+
+    <!-- 筛选栏 -->
+    <div class="card" id="filterCard">
+        <div class="card-header" style="margin-bottom: 14px;">
+            <span><i class="fas fa-filter"></i> 数据筛选</span>
+            <span class="badge">已筛选 <span class="filter-badge-count" id="filterCount">—</span> 人</span>
+        </div>
+        <div class="filter-row">
+            <span class="filter-label">城市</span>
+            <div class="filter-chips" id="cityChips"></div>
+        </div>
+        <div class="filter-row">
+            <span class="filter-label">主管</span>
+            <div class="filter-chips" id="reporterChips"></div>
+        </div>
+    </div>
+
+    <!-- 配置 + 九宫格 -->
+    <div class="card">
+        <div class="card-header">
+            <span><i class="fas fa-sliders-h"></i> 动态评分配置（横轴：业绩+合规 / 纵轴：能力+管理）</span>
+            <span class="badge">每段得分 1–5 分，支持手动修改后点击应用</span>
+        </div>
+
+        <!-- 配置面板：左右两列 -->
+        <div class="config-panel">
+            <div class="config-cols">
+                <!-- ── 横轴 ── -->
+                <div class="config-col">
+                    <div class="axis-title">📊 横轴评分（业绩 + 合规）</div>
+
+                    <div class="metric-row">
+                        <div class="metric-name">近6月平均<br>队列目标<br>达成率</div>
+                        <div class="slider-wrap">
+                            <div class="track-row" id="track-goal">
+                                <div class="seg seg-a" id="seg-goal-a" style="flex:63.3"><div class="seg-score">得分 <input type="number" id="score-goal-a" value="1" min="1" max="5"></div></div>
+                                <div class="seg seg-b" id="seg-goal-b" style="flex:3.3" ><div class="seg-score">得分 <input type="number" id="score-goal-b" value="3" min="1" max="5"></div></div>
+                                <div class="seg seg-c" id="seg-goal-c" style="flex:33.4"><div class="seg-score">得分 <input type="number" id="score-goal-c" value="5" min="1" max="5"></div></div>
+                                <div class="range-handles">
+                                    <input type="range" class="range-handle" id="rh-goal-1" min="0" max="150" step="5" value="95">
+                                    <input type="range" class="range-handle" id="rh-goal-2" min="0" max="150" step="5" value="100">
+                                </div>
+                            </div>
+                            <div class="thresh-row">
+                                <span class="thresh-label" style="left:0%;transform:none;">0%</span>
+                                <span class="thresh-label" id="tl-goal-1">95%</span>
+                                <span class="thresh-label" id="tl-goal-2">100%</span>
+                                <span class="thresh-label" style="right:0%;transform:none;left:auto;">150%</span>
+                            </div>
+                        </div>
+                        <div class="weight-area">
+                            <label>权重</label>
+                            <input type="number" id="w-goal" value="40" min="0" max="100">
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-row">
+                        <div class="metric-name">近6月重渠<br>投诉量</div>
+                        <div class="slider-wrap">
+                            <div class="track-row" id="track-comp">
+                                <div class="seg seg-c" id="seg-comp-a" style="flex:10"><div class="seg-score">得分 <input type="number" id="score-comp-a" value="5" min="1" max="5"></div></div>
+                                <div class="seg seg-b" id="seg-comp-b" style="flex:15"><div class="seg-score">得分 <input type="number" id="score-comp-b" value="3" min="1" max="5"></div></div>
+                                <div class="seg seg-a" id="seg-comp-c" style="flex:75"><div class="seg-score">得分 <input type="number" id="score-comp-c" value="1" min="1" max="5"></div></div>
+                                <div class="range-handles">
+                                    <input type="range" class="range-handle" id="rh-comp-1" min="0" max="20" step="1" value="2">
+                                    <input type="range" class="range-handle" id="rh-comp-2" min="0" max="20" step="1" value="5">
+                                </div>
+                            </div>
+                            <div class="thresh-row">
+                                <span class="thresh-label" style="left:0%;transform:none;">0</span>
+                                <span class="thresh-label" id="tl-comp-1">2</span>
+                                <span class="thresh-label" id="tl-comp-2">5</span>
+                                <span class="thresh-label" style="right:0%;transform:none;left:auto;">20</span>
+                            </div>
+                        </div>
+                        <div class="weight-area">
+                            <label>权重</label>
+                            <input type="number" id="w-comp" value="30" min="0" max="100">
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-row">
+                        <div class="metric-name">近6月三级<br>以上违规量</div>
+                        <div class="slider-wrap">
+                            <div class="track-row" id="track-viol">
+                                <div class="seg seg-c" id="seg-viol-a" style="flex:16.7"><div class="seg-score">得分 <input type="number" id="score-viol-a" value="5" min="1" max="5"></div></div>
+                                <div class="seg seg-b" id="seg-viol-b" style="flex:16.7"><div class="seg-score">得分 <input type="number" id="score-viol-b" value="3" min="1" max="5"></div></div>
+                                <div class="seg seg-a" id="seg-viol-c" style="flex:66.7"><div class="seg-score">得分 <input type="number" id="score-viol-c" value="1" min="1" max="5"></div></div>
+                                <div class="range-handles">
+                                    <input type="range" class="range-handle" id="rh-viol-1" min="0" max="30" step="1" value="5">
+                                    <input type="range" class="range-handle" id="rh-viol-2" min="0" max="30" step="1" value="10">
+                                </div>
+                            </div>
+                            <div class="thresh-row">
+                                <span class="thresh-label" style="left:0%;transform:none;">0</span>
+                                <span class="thresh-label" id="tl-viol-1">5</span>
+                                <span class="thresh-label" id="tl-viol-2">10</span>
+                                <span class="thresh-label" style="right:0%;transform:none;left:auto;">30</span>
+                            </div>
+                        </div>
+                        <div class="weight-area">
+                            <label>权重</label>
+                            <input type="number" id="w-viol" value="30" min="0" max="100" readonly>
+                            <span>%</span>
+                            <span class="weight-auto-label">自动</span>
+                        </div>
+                    </div>
+                </div><!-- /横轴 -->
+
+                <!-- ── 纵轴 ── -->
+                <div class="config-col">
+                    <div class="axis-title">📈 纵轴评分（能力 + 管理）<span style="font-weight:400;font-size:11px;color:#94a3b8;margin-left:6px;">能力分以团队均值为基准，拖动分界线 = 设定比均值低/高几分为界</span></div>
+
+                    <div class="metric-row">
+                        <div class="metric-name">主任平均<br>能力打分</div>
+                        <div class="slider-wrap">
+                            <div class="track-row" id="track-abl">
+                                <div class="seg seg-a" id="seg-abl-a" style="flex:45"><div class="seg-score">得分 <input type="number" id="score-abl-a" value="1" min="1" max="5"></div></div>
+                                <div class="seg seg-b" id="seg-abl-b" style="flex:10"><div class="seg-score">得分 <input type="number" id="score-abl-b" value="3" min="1" max="5"></div></div>
+                                <div class="seg seg-c" id="seg-abl-c" style="flex:45"><div class="seg-score">得分 <input type="number" id="score-abl-c" value="5" min="1" max="5"></div></div>
+                                <div class="range-handles">
+                                    <input type="range" class="range-handle" id="rh-abl-1" min="0" max="10" step="0.5" value="4.5">
+                                    <input type="range" class="range-handle" id="rh-abl-2" min="0" max="10" step="0.5" value="5.5">
+                                </div>
+                            </div>
+                            <div class="thresh-row">
+                                <span class="thresh-label" style="left:0%;transform:none;">低3分</span>
+                                <span class="thresh-label" style="left:50%;color:#3b82f6;font-weight:700;">均值</span>
+                                <span class="thresh-label" id="tl-abl-1">低0.3分</span>
+                                <span class="thresh-label" id="tl-abl-2">高0.3分</span>
+                                <span class="thresh-label" style="right:0%;transform:none;left:auto;">高3分</span>
+                            </div>
+                        </div>
+                        <div class="weight-area">
+                            <label>权重</label>
+                            <input type="number" id="w-abl" value="30" min="0" max="100">
+                            <span>%</span>
+                        </div>
+                    </div>
+
+                    <div class="metric-row">
+                        <div class="metric-name">主任管理动作<br>平均打分</div>
+                        <div class="slider-wrap">
+                            <div class="track-row" id="track-mgt">
+                                <div class="seg seg-a" id="seg-mgt-a" style="flex:50"><div class="seg-score">得分 <input type="number" id="score-mgt-a" value="1" min="1" max="5"></div></div>
+                                <div class="seg seg-b" id="seg-mgt-b" style="flex:20"><div class="seg-score">得分 <input type="number" id="score-mgt-b" value="3" min="1" max="5"></div></div>
+                                <div class="seg seg-c" id="seg-mgt-c" style="flex:30"><div class="seg-score">得分 <input type="number" id="score-mgt-c" value="5" min="1" max="5"></div></div>
+                                <div class="range-handles">
+                                    <input type="range" class="range-handle" id="rh-mgt-1" min="0" max="100" step="5" value="50">
+                                    <input type="range" class="range-handle" id="rh-mgt-2" min="0" max="100" step="5" value="70">
+                                </div>
+                            </div>
+                            <div class="thresh-row">
+                                <span class="thresh-label" style="left:0%;transform:none;">0</span>
+                                <span class="thresh-label" id="tl-mgt-1">50</span>
+                                <span class="thresh-label" id="tl-mgt-2">70</span>
+                                <span class="thresh-label" style="right:0%;transform:none;left:auto;">100</span>
+                            </div>
+                        </div>
+                        <div class="weight-area">
+                            <label>权重</label>
+                            <input type="number" id="w-mgt" value="70" min="0" max="100" readonly>
+                            <span>%</span>
+                            <span class="weight-auto-label">自动</span>
+                        </div>
+                    </div>
+                </div><!-- /纵轴 -->
+            </div><!-- /config-cols -->
+        </div><!-- /config-panel -->
+
+        <!-- 应用按钮 -->
+        <div class="apply-btn-row">
+            <button class="apply-btn" id="applyConfigBtn">
+                <i class="fas fa-sync-alt"></i> 应用配置，刷新九宫格
+            </button>
+        </div>
+
+        <!-- 九宫格 -->
+        <div class="card-header" style="margin-bottom: 6px;">
+            <span><i class="fas fa-th-large"></i> 人才九宫格（横轴：业绩+合规综合分 | 纵轴：能力+管理综合分）</span>
+        </div>
+        <div id="nineGridContainer" class="grid-3x3"></div>
+        <div class="badge" style="margin-top: 10px; text-align:center;">※ 按排名划分高/中/低三段（前33%高，后33%低）</div>
+    </div>
+
+</div><!-- /dashboard -->
+
+<script>
+// ─── 筛选状态 ───
+let selectedCities    = new Set();
+let selectedReporters = new Set();
+
+const allCities = [...new Set(EMPLOYEE_DATA.map(e => e.city).filter(Boolean))].sort();
+
+function getReportersForCities(cities) {
+    const pool = cities.size === 0 ? EMPLOYEE_DATA : EMPLOYEE_DATA.filter(e => cities.has(e.city));
+    return [...new Set(pool.map(e => e.reporter).filter(Boolean))].sort();
+}
+
+function getFilteredData() {
+    return EMPLOYEE_DATA.filter(e => {
+        const cityOk     = selectedCities.size    === 0 || selectedCities.has(e.city);
+        const reporterOk = selectedReporters.size === 0 || selectedReporters.has(e.reporter);
+        return cityOk && reporterOk;
+    });
+}
+
+function makeChip(label, isActive, isAll, onClick) {
+    const btn = document.createElement('button');
+    btn.className = 'chip' + (isAll ? ' chip-all' : '') + (isActive ? ' active' : '');
+    btn.textContent = label;
+    btn.addEventListener('click', onClick);
+    return btn;
+}
+
+function renderCityChips() {
+    const container = document.getElementById('cityChips');
+    container.innerHTML = '';
+    container.appendChild(makeChip('全部', selectedCities.size === 0, true, () => {
+        selectedCities.clear(); selectedReporters.clear();
+        renderCityChips(); renderReporterChips(); updateFilterCount();
+    }));
+    allCities.forEach(city => {
+        container.appendChild(makeChip(city, selectedCities.has(city), false, () => {
+            if (selectedCities.has(city)) selectedCities.delete(city); else selectedCities.add(city);
+            const valid = new Set(getReportersForCities(selectedCities));
+            selectedReporters.forEach(r => { if (!valid.has(r)) selectedReporters.delete(r); });
+            renderCityChips(); renderReporterChips(); updateFilterCount();
+        }));
+    });
+}
+
+function renderReporterChips() {
+    const container = document.getElementById('reporterChips');
+    container.innerHTML = '';
+    container.appendChild(makeChip('全部', selectedReporters.size === 0, true, () => {
+        selectedReporters.clear(); renderReporterChips(); updateFilterCount();
+    }));
+    getReportersForCities(selectedCities).forEach(r => {
+        container.appendChild(makeChip(r, selectedReporters.has(r), false, () => {
+            if (selectedReporters.has(r)) selectedReporters.delete(r); else selectedReporters.add(r);
+            renderReporterChips(); updateFilterCount();
+        }));
+    });
+}
+
+function updateFilterCount() {
+    document.getElementById('filterCount').textContent = getFilteredData().length;
+}
+
+function getGoalAvg(emp)      { return emp.business?.goal_achievement_rate?.last_3_months_avg || 0; }
+function getComplaintSum(emp) { return emp.risk?.complaint?.last_6_months_sum || 0; }
+function getViolationSum(emp) { return emp.risk?.violation?.last_6_months_sum || 0; }
+function getAbilityAvg(emp) {
+    const s = emp.ability?.self;
+    const t = emp.ability?.team_avg;
+    if (!s || !t) return 0;
+    const keys = ['role_goal','process_review','performance_comm','team_morale','talent_auth','staff_dev'];
+    const delta = keys.reduce((sum, k) => sum + ((s[k]||0) - (t[k]||0)), 0) / keys.length;
+    return Math.min(10, Math.max(0, 5 + (delta / 3) * 5));
+}
+function getManageScore(emp) { return emp.management?.total_score?.latest || 0; }
+
+// ─── 滑块配置 ───
+const SLIDER_CONFIGS = {
+    goal: { min: 0, max: 150, isPercent: true },
+    comp: { min: 0, max: 20,  isPercent: false },
+    viol: { min: 0, max: 30,  isPercent: false },
+    abl:  { min: 0, max: 10,  isPercent: false },
+    mgt:  { min: 0, max: 100, isPercent: false }
+};
+
+function formatThresh(v, isPercent) {
+    if (isPercent) return Math.round(v) + '%';
+    return Number.isInteger(v) ? String(v) : v.toFixed(1);
+}
+
+function formatAblThresh(v) {
+    const delta = (v - 5) / 5 * 3;
+    if (Math.abs(delta) < 0.05) return '均值';
+    return (delta < 0 ? '低' : '高') + Math.abs(delta).toFixed(1) + '分';
+}
+
+function updateSlider(metric) {
+    const cfg = SLIDER_CONFIGS[metric];
+    const r1  = document.getElementById(`rh-${metric}-1`);
+    const r2  = document.getElementById(`rh-${metric}-2`);
+    let v1 = parseFloat(r1.value), v2 = parseFloat(r2.value);
+    if (v1 > v2) {
+        if (document.activeElement === r1) r1.value = v2; else r2.value = v1;
+        v1 = parseFloat(r1.value); v2 = parseFloat(r2.value);
+    }
+    const range = cfg.max - cfg.min;
+    const pA = (v1 - cfg.min) / range * 100;
+    const pB = (v2 - v1) / range * 100;
+    const pC = (cfg.max - v2) / range * 100;
+    document.getElementById(`seg-${metric}-a`).style.flex = pA;
+    document.getElementById(`seg-${metric}-b`).style.flex = Math.max(pB, 0.01);
+    document.getElementById(`seg-${metric}-c`).style.flex = pC;
+    const tl1 = document.getElementById(`tl-${metric}-1`);
+    const tl2 = document.getElementById(`tl-${metric}-2`);
+    tl1.style.left = pA + '%';              tl1.textContent = metric === 'abl' ? formatAblThresh(v1) : formatThresh(v1, cfg.isPercent);
+    tl2.style.left = (pA + pB) + '%';      tl2.textContent = metric === 'abl' ? formatAblThresh(v2) : formatThresh(v2, cfg.isPercent);
+}
+
+Object.keys(SLIDER_CONFIGS).forEach(metric => {
+    ['1', '2'].forEach(h => {
+        document.getElementById(`rh-${metric}-${h}`).addEventListener('input', () => updateSlider(metric));
+    });
+    updateSlider(metric);
+});
+
+function getSliderRules(metric) {
+    const cfg = SLIDER_CONFIGS[metric];
+    const d = cfg.isPercent ? 100 : 1;
+    const v1 = parseFloat(document.getElementById(`rh-${metric}-1`).value) / d;
+    const v2 = parseFloat(document.getElementById(`rh-${metric}-2`).value) / d;
+    return {
+        rules: [
+            { low: cfg.min / d, high: v1,   score: parseFloat(document.getElementById(`score-${metric}-a`).value) },
+            { low: v1,          high: v2,   score: parseFloat(document.getElementById(`score-${metric}-b`).value) },
+            { low: v2,          high: 9999, score: parseFloat(document.getElementById(`score-${metric}-c`).value) }
+        ],
+        weight: parseFloat(document.getElementById(`w-${metric}`).value)
+    };
+}
+
+function evalScore(value, rules) {
+    return (rules.find(r => value >= r.low && value < r.high) || rules[rules.length - 1]).score;
+}
+
+function renderGrid() {
+    const btn = document.getElementById('applyConfigBtn');
+    btn.classList.add('loading');
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 计算中…';
+
+    setTimeout(() => {
+        const hD = { goal: getSliderRules('goal'), comp: getSliderRules('comp'), viol: getSliderRules('viol') };
+        const vD = { abl:  getSliderRules('abl'),  mgt:  getSliderRules('mgt') };
+
+        const scores = getFilteredData().map(emp => {
+            const goalS = evalScore(getGoalAvg(emp),      hD.goal.rules);
+            const compS = evalScore(getComplaintSum(emp),  hD.comp.rules);
+            const violS = evalScore(getViolationSum(emp),  hD.viol.rules);
+            const hw = hD.goal.weight + hD.comp.weight + hD.viol.weight;
+            const horz = hw > 0 ? (goalS*hD.goal.weight + compS*hD.comp.weight + violS*hD.viol.weight) / hw : 0;
+
+            const ablS = evalScore(getAbilityAvg(emp),   vD.abl.rules);
+            const mgtS = evalScore(getManageScore(emp),   vD.mgt.rules);
+            const vw = vD.abl.weight + vD.mgt.weight;
+            const vert = vw > 0 ? (ablS*vD.abl.weight + mgtS*vD.mgt.weight) / vw : 0;
+            return { emp, horz, vert };
+        });
+
+        const n = scores.length;
+
+        if (n === 0) {
+            document.getElementById('nineGridContainer').innerHTML =
+                '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#94a3b8;font-size:14px;">当前筛选条件下暂无数据</div>';
+            btn.classList.remove('loading');
+            btn.innerHTML = '<i class="fas fa-sync-alt"></i> 应用配置，刷新九宫格';
+            return;
+        }
+
+        function assignLevels(arr, key) {
+            const sorted = [...arr].sort((a, b) => a[key] - b[key]);
+            sorted.forEach((item, i) => {
+                item[key + 'Level'] = i < Math.ceil(n / 3) ? 'L'
+                    : i < Math.ceil(2 * n / 3) ? 'M' : 'H';
+            });
+        }
+        assignLevels(scores, 'horz');
+        assignLevels(scores, 'vert');
+
+        const grid = { H:{H:[],M:[],L:[]}, M:{H:[],M:[],L:[]}, L:{H:[],M:[],L:[]} };
+        scores.forEach(({ emp, horzLevel, vertLevel }) => {
+            grid[vertLevel][horzLevel].push(emp);
+        });
+
+        const lbl = { H:'高', M:'中', L:'低' };
+        const container = document.getElementById('nineGridContainer');
+        container.innerHTML = '';
+        for (const v of ['H','M','L']) {
+            for (const h of ['L','M','H']) {
+                const cell = document.createElement('div');
+                cell.className = 'grid-cell';
+                const tags = grid[v][h].length > 0
+                    ? grid[v][h].map(e => `<span class="emp-tag" onclick="toProfile('${e.employee_id}')" title="点击查看主任卡片">${e.name}</span>`).join('')
+                    : '<span style="color:#94a3b8;font-size:12px;">—</span>';
+                cell.innerHTML = `<div class="cell-label">${lbl[v]}能力 / ${lbl[h]}绩效</div>${tags}`;
+                container.appendChild(cell);
+            }
+        }
+
+        btn.classList.remove('loading');
+        btn.innerHTML = '<i class="fas fa-check"></i> 已应用，刷新九宫格';
+        setTimeout(() => { btn.innerHTML = '<i class="fas fa-sync-alt"></i> 应用配置，刷新九宫格'; }, 1500);
+    }, 200);
+}
+
+document.getElementById('applyConfigBtn').addEventListener('click', renderGrid);
+
+// ─── 权重自动计算 ───
+function updateAutoWeights() {
+    const wGoal = Math.max(0, Math.min(100, parseFloat(document.getElementById('w-goal').value) || 0));
+    const wComp = Math.max(0, Math.min(100, parseFloat(document.getElementById('w-comp').value) || 0));
+    const hErr = (wGoal + wComp) > 100;
+    const wViol = hErr ? 0 : 100 - wGoal - wComp;
+    document.getElementById('w-viol').value = wViol;
+    ['w-goal', 'w-comp', 'w-viol'].forEach(id => {
+        document.getElementById(id).classList.toggle('w-error', hErr);
+    });
+
+    const wAbl = Math.max(0, Math.min(100, parseFloat(document.getElementById('w-abl').value) || 0));
+    document.getElementById('w-mgt').value = Math.max(0, 100 - wAbl);
+}
+['w-goal', 'w-comp', 'w-abl'].forEach(id => {
+    document.getElementById(id).addEventListener('input', updateAutoWeights);
+});
+updateAutoWeights();
+
+// 初始化
+renderCityChips();
+renderReporterChips();
+updateFilterCount();
+renderGrid();
+
+// 点击人员标签跳转到主任卡片
+function toProfile(id) {
+    if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'goToProfile', id }, '*');
+    }
+}
+</script>
+</body>
+</html>

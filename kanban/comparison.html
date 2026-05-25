@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人员对比 | 多维能力对比看板</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="./employee_profile.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #f1f5f9; font-family: 'Inter', sans-serif; padding: 24px; color: #0f172a; }
+        .container { max-width: 1400px; margin: 0 auto; }
+
+        /* ── 通用卡片 ── */
+        .card {
+            background: white; border-radius: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            padding: 20px 24px; border: 1px solid #eef2f6;
+            margin-bottom: 24px;
+        }
+        .card-title {
+            font-size: 18px; font-weight: 700;
+            border-left: 4px solid #3b82f6; padding-left: 12px;
+            margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+        }
+
+        /* ── 城市卡片选人区域 ── */
+        .selector-header {
+            display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+        .hint { font-size: 13px; color: #64748b; }
+        .hint strong { color: #3b82f6; }
+        .selected-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .s-tag {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 10px 4px 12px; border-radius: 20px;
+            font-size: 12px; font-weight: 600; color: white;
+        }
+        .s-tag-remove {
+            cursor: pointer; font-size: 15px; line-height: 1;
+            opacity: 0.75; transition: opacity 0.12s;
+        }
+        .s-tag-remove:hover { opacity: 1; }
+
+        /* 城市卡片网格 */
+        .city-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .city-card {
+            background: white; border-radius: 20px;
+            padding: 16px 18px; border: 1px solid #eef2f6;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+        .city-card-title {
+            font-size: 14px; font-weight: 700; color: #1e40af;
+            margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+            padding-bottom: 8px; border-bottom: 1px solid #e2e8f0;
+        }
+        .city-chip-list { display: flex; flex-wrap: wrap; gap: 7px; }
+
+        /* 人员 chip */
+        .person-chip {
+            display: inline-flex; align-items: center; gap: 5px;
+            padding: 5px 12px; border-radius: 40px;
+            border: 2px solid #cbd5e1; background: #f8fafc;
+            cursor: pointer; font-size: 12px; font-weight: 500;
+            transition: all 0.15s; user-select: none; color: #475569;
+        }
+        .person-chip:hover { border-color: #94a3b8; background: #f1f5f9; }
+        .person-chip.selected { color: white !important; border-color: transparent !important; }
+
+        /* ── 对比图表区 ── */
+        .two-panel { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .section-title { font-size: 13px; font-weight: 600; color: #64748b; margin-bottom: 10px; text-align: center; }
+        .chart-h220 { height: 220px; width: 100%; }
+        .chart-h240 { height: 240px; width: 100%; }
+        .radar-wrap { height: 380px; width: 100%; max-width: 640px; margin: 0 auto; }
+
+        .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; justify-content: center; }
+        .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #334155; }
+        .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+
+        .empty-msg { text-align: center; color: #94a3b8; padding: 50px 24px; font-size: 15px; }
+        .loading { text-align: center; padding: 50px; font-size: 16px; color: #64748b; }
+
+        /* ── 筛选条 ── */
+        .filter-bar {
+            display: flex; flex-direction: column; gap: 10px;
+            background: #f8fafc; border-radius: 14px;
+            padding: 14px 16px; margin-bottom: 16px;
+            border: 1px solid #e2e8f0;
+        }
+        .filter-group { display: flex; align-items: flex-start; gap: 10px; }
+        .filter-label {
+            font-size: 12px; font-weight: 600; color: #64748b;
+            white-space: nowrap; padding-top: 5px; min-width: 52px;
+        }
+        .filter-pills {
+            display: flex; flex-wrap: wrap; gap: 6px;
+        }
+        .filter-pill {
+            padding: 4px 12px; border-radius: 20px;
+            font-size: 12px; font-weight: 500; cursor: pointer;
+            border: 1.5px solid #cbd5e1; background: white; color: #475569;
+            transition: all 0.15s; user-select: none;
+        }
+        .filter-pill:hover { border-color: #94a3b8; background: #f1f5f9; }
+        .filter-pill.active {
+            background: #3b82f6; border-color: #3b82f6; color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="app">
+    <div class="loading"><i class="fas fa-spinner fa-spin"></i> 加载数据中...</div>
+</div>
+
+<script>
+Chart.register(ChartDataLabels);
+Chart.defaults.set('plugins.datalabels', { display: false });
+
+// ── 调色板（最多 6 人）──
+const PALETTE = [
+    { border: '#3b82f6', bg: 'rgba(59,130,246,0.15)',  solid: 'rgba(59,130,246,0.80)' },
+    { border: '#f97316', bg: 'rgba(249,115,22,0.15)',  solid: 'rgba(249,115,22,0.80)' },
+    { border: '#10b981', bg: 'rgba(16,185,129,0.15)',  solid: 'rgba(16,185,129,0.80)' },
+    { border: '#8b5cf6', bg: 'rgba(139,92,246,0.15)',  solid: 'rgba(139,92,246,0.80)' },
+    { border: '#ef4444', bg: 'rgba(239,68,68,0.15)',   solid: 'rgba(239,68,68,0.80)'  },
+    { border: '#06b6d4', bg: 'rgba(6,182,212,0.15)',   solid: 'rgba(6,182,212,0.80)'  },
+];
+
+let employeesData = [];
+let charts = {};
+let selectedIds = [];
+let activeCity = '';
+let activeQueue = '';
+
+// ── 入口 ──
+function loadData() {
+    try {
+        if (typeof EMPLOYEE_DATA === 'undefined' || !EMPLOYEE_DATA.length)
+            throw new Error('employee_profile.js 未加载或无数据');
+        employeesData = EMPLOYEE_DATA;
+        renderApp();
+    } catch(e) {
+        document.getElementById('app').innerHTML =
+            `<div class="loading" style="color:red;"><i class="fas fa-exclamation-triangle"></i> 错误：${e.message}<br>
+             <small>请确保 employee_profile.js 与 comparison.html 在同一目录</small></div>`;
+    }
+}
+
+// ── 渲染整体骨架 ──
+function renderApp() {
+    const directors = employeesData.filter(e =>
+        e.status === '主任' || e.status === '见习主任'
+    );
+    const allCities = [...new Set(directors.map(e => e.city))].sort();
+    const allQueues = [...new Set(directors.map(e => e.queue).filter(Boolean))].sort();
+
+    // 城市筛选 pills
+    const cityPillsHtml = [
+        `<div class="filter-pill active" data-value="" onclick="filterByCity(this, '')">全部</div>`,
+        ...allCities.map(c =>
+            `<div class="filter-pill" data-value="${c}" onclick="filterByCity(this, '${c}')">${c}</div>`)
+    ].join('');
+
+    // 队列筛选 pills
+    const queuePillsHtml = [
+        `<div class="filter-pill active" data-value="" onclick="filterByQueue(this, '')">全部</div>`,
+        ...allQueues.map(q =>
+            `<div class="filter-pill" data-value="${q}" onclick="filterByQueue(this, '${encodeURI(q)}')" title="${q}">${q}</div>`)
+    ].join('');
+
+    // 城市卡片 HTML
+    const cityCardsHtml = allCities.map(city => {
+        const people = directors.filter(e => e.city === city);
+        const chipsHtml = people.map(p =>
+            `<div class="person-chip" data-id="${p.employee_id}" data-queue="${p.queue || ''}"
+                  onclick="togglePerson('${p.employee_id}')">
+                <i class="fas fa-user" style="font-size:10px;"></i>
+                ${p.name}（${p.status}）
+             </div>`
+        ).join('');
+        return `<div class="city-card" data-city="${city}">
+            <div class="city-card-title">
+                <i class="fas fa-map-marker-alt"></i> ${city}
+            </div>
+            <div class="city-chip-list">${chipsHtml}</div>
+        </div>`;
+    }).join('');
+
+    document.getElementById('app').innerHTML = `
+        <!-- 选人区 -->
+        <div class="card" style="margin-bottom:24px;">
+            <div class="card-title"><i class="fas fa-users"></i> 选择对比人员</div>
+
+            <!-- 筛选条 -->
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <span class="filter-label"><i class="fas fa-map-marker-alt"></i> 城市</span>
+                    <div class="filter-pills" id="cityFilterPills">${cityPillsHtml}</div>
+                </div>
+                <div class="filter-group">
+                    <span class="filter-label"><i class="fas fa-layer-group"></i> 队列</span>
+                    <div class="filter-pills" id="queueFilterPills">${queuePillsHtml}</div>
+                </div>
+            </div>
+
+            <div class="selector-header">
+                <span class="hint"><i class="fas fa-info-circle"></i>
+                    点击姓名勾选，支持跨城市选 2~6 人，已选
+                    <strong id="countBadge">0</strong> 人
+                </span>
+                <div id="selectedTags" class="selected-tags"></div>
+            </div>
+            <div class="city-grid" id="cityGrid">${cityCardsHtml}</div>
+        </div>
+
+        <!-- 对比图表区 -->
+        <div id="compArea">
+            <div class="card">
+                <div class="empty-msg">
+                    <i class="fas fa-users fa-2x" style="display:block;margin-bottom:12px;"></i>
+                    请先在上方勾选至少 2 名主任开始对比
+                </div>
+            </div>
+        </div>`;
+}
+
+// ── 城市 / 队列筛选 ──
+function filterByCity(el, city) {
+    activeCity = city;
+    document.querySelectorAll('#cityFilterPills .filter-pill').forEach(p =>
+        p.classList.toggle('active', p.dataset.value === city));
+    applyFilters();
+}
+
+function filterByQueue(el, encodedQueue) {
+    activeQueue = decodeURI(encodedQueue);
+    document.querySelectorAll('#queueFilterPills .filter-pill').forEach(p =>
+        p.classList.toggle('active', p.dataset.value === activeQueue));
+    applyFilters();
+}
+
+function applyFilters() {
+    document.querySelectorAll('#cityGrid .city-card').forEach(card => {
+        const cityMatch = !activeCity || card.dataset.city === activeCity;
+        let anyVisible = false;
+        card.querySelectorAll('.person-chip').forEach(chip => {
+            const queueMatch = !activeQueue || chip.dataset.queue === activeQueue;
+            chip.style.display = queueMatch ? '' : 'none';
+            if (queueMatch) anyVisible = true;
+        });
+        card.style.display = (cityMatch && anyVisible) ? '' : 'none';
+    });
+}
+
+// ── 切换选中 ──
+function togglePerson(id) {
+    const idx = selectedIds.indexOf(id);
+    if (idx >= 0) {
+        selectedIds.splice(idx, 1);
+    } else {
+        if (selectedIds.length >= 6) {
+            alert('最多可同时对比 6 人');
+            return;
+        }
+        selectedIds.push(id);
+    }
+    refreshAllChipColors();
+    applyFilters();
+    updateTagsAndRender();
+}
+
+function refreshAllChipColors() {
+    document.querySelectorAll('.person-chip').forEach(chip => {
+        const id = chip.dataset.id;
+        const idx = selectedIds.indexOf(id);
+        if (idx >= 0) {
+            const pal = PALETTE[idx % PALETTE.length];
+            chip.classList.add('selected');
+            chip.style.background = pal.border;
+            chip.style.borderColor = pal.border;
+            chip.style.color = 'white';
+        } else {
+            chip.classList.remove('selected');
+            chip.style.background = '';
+            chip.style.borderColor = '';
+            chip.style.color = '';
+        }
+    });
+}
+
+// ── 更新标签 + 触发渲染 ──
+function updateTagsAndRender() {
+    document.getElementById('countBadge').textContent = selectedIds.length;
+    const selected = selectedIds
+        .map(id => employeesData.find(e => e.employee_id === id))
+        .filter(Boolean);
+
+    document.getElementById('selectedTags').innerHTML = selected.map((p, i) =>
+        `<span class="s-tag" style="background:${PALETTE[i].border};">
+            ${p.city} · ${p.name}
+            <span class="s-tag-remove" onclick="togglePerson('${p.employee_id}')" title="取消选择">×</span>
+        </span>`
+    ).join('');
+
+    if (selected.length >= 2) {
+        renderComparison(selected);
+    } else {
+        destroyCharts();
+        const need = 2 - selected.length;
+        document.getElementById('compArea').innerHTML = `
+            <div class="card"><div class="empty-msg">
+                <i class="fas fa-users fa-2x" style="display:block;margin-bottom:12px;"></i>
+                请再勾选 <strong>${need}</strong> 名主任开始对比
+            </div></div>`;
+    }
+}
+
+// ── 销毁旧图表 ──
+function destroyCharts() {
+    Object.values(charts).forEach(c => { try { c && c.destroy(); } catch(e){} });
+    charts = {};
+}
+
+// ── 工具：各人 trend 月份并集 ──
+function getMonths(people, accessor) {
+    const set = new Set();
+    people.forEach(p => {
+        try {
+            const trend = accessor(p);
+            if (Array.isArray(trend)) trend.forEach(d => set.add(d.month));
+        } catch(e) {}
+    });
+    return [...set].sort();
+}
+
+// ── 工具：取某人某月 trend 值 ──
+function getTrendVal(p, accessor, month, field = 'value') {
+    try {
+        const trend = accessor(p);
+        if (!Array.isArray(trend)) return null;
+        const item = trend.find(d => d.month === month);
+        return (item != null && item[field] != null) ? item[field] : null;
+    } catch(e) { return null; }
+}
+
+// ── 核心渲染 ──
+function renderComparison(people) {
+    destroyCharts();
+
+    const legendHtml = people.map((p, i) =>
+        `<div class="legend-item">
+            <div class="legend-dot" style="background:${PALETTE[i].border};"></div>
+            ${p.city} · ${p.name}
+         </div>`
+    ).join('');
+
+    document.getElementById('compArea').innerHTML = `
+
+        <!-- ① 能力雷达图 -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-chart-pie"></i> ① 能力雷达图对比</div>
+            <div class="legend">${legendHtml}</div>
+            <div class="radar-wrap"><canvas id="cmp-radar"></canvas></div>
+        </div>
+
+        <!-- ② 业绩：目标达成率 -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-chart-simple"></i> ② 业绩对比 — 目标达成率</div>
+            <div class="legend">${legendHtml}</div>
+            <div class="two-panel">
+                <div>
+                    <div class="section-title">近6个月平均达成率（柱状图）</div>
+                    <div class="chart-h220"><canvas id="cmp-goal-bar"></canvas></div>
+                </div>
+                <div>
+                    <div class="section-title">近6个月每月达成率趋势（折线图）</div>
+                    <div class="chart-h220"><canvas id="cmp-goal-line"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ③ 重渠投诉量 -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-phone-slash"></i> ③ 重渠投诉量对比</div>
+            <div class="legend">${legendHtml}</div>
+            <div class="two-panel">
+                <div>
+                    <div class="section-title">近6个月总投诉量（柱状图）</div>
+                    <div class="chart-h220"><canvas id="cmp-cmp-bar"></canvas></div>
+                </div>
+                <div>
+                    <div class="section-title">近6个月每月投诉量趋势（折线图）</div>
+                    <div class="chart-h220"><canvas id="cmp-cmp-line"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ④ 违规数量 -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-shield-exclamation"></i> ④ 近6个月三级及以上违规数量对比</div>
+            <div class="legend">${legendHtml}</div>
+            <div class="two-panel">
+                <div>
+                    <div class="section-title">近6个月总违规量（柱状图）</div>
+                    <div class="chart-h220"><canvas id="cmp-vio-bar"></canvas></div>
+                </div>
+                <div>
+                    <div class="section-title">近6个月每月违规量趋势（折线图）</div>
+                    <div class="chart-h220"><canvas id="cmp-vio-line"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ⑤ 话术达成率 -->
+        <div class="card">
+            <div class="card-title"><i class="fas fa-comments"></i> ⑤ 话术达成率对比</div>
+            <div class="legend">${legendHtml}</div>
+            <div class="two-panel">
+                <div>
+                    <div class="section-title">近6个月平均达成率（柱状图）</div>
+                    <div class="chart-h220"><canvas id="cmp-talk-bar"></canvas></div>
+                </div>
+                <div>
+                    <div class="section-title">近6个月每月达成率趋势（折线图）</div>
+                    <div class="chart-h220"><canvas id="cmp-talk-line"></canvas></div>
+                </div>
+            </div>
+        </div>`;
+
+    // ─────────────────────────────────────────
+    // ① 能力雷达图
+    // ─────────────────────────────────────────
+    const abilityLabels = ['角色认知与\n目标规划','过程管控\n与复盘','绩效推进\n与沟通','团队激励\n与士气','人才识别\n与授权','员工辅导\n与发展'];
+    const abilityKeys   = ['role_goal','process_review','performance_comm','team_morale','talent_auth','staff_dev'];
+
+    charts.radar = new Chart(document.getElementById('cmp-radar'), {
+        type: 'radar',
+        data: {
+            labels: abilityLabels,
+            datasets: people.map((p, i) => ({
+                label: p.name,
+                data: abilityKeys.map(k => p.ability.self[k] ?? 0),
+                backgroundColor: PALETTE[i].bg,
+                borderColor: PALETTE[i].border,
+                borderWidth: 2,
+                pointBackgroundColor: PALETTE[i].border,
+                pointRadius: 4,
+            }))
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            scales: { r: { beginAtZero: true, max: 10, ticks: { stepSize: 2, font: { size: 10 } } } },
+            plugins: { legend: { display: false }, datalabels: { display: false } }
+        }
+    });
+
+    // ─────────────────────────────────────────
+    // ② 业绩：平均达成率柱状图
+    // ─────────────────────────────────────────
+    charts.goalBar = new Chart(document.getElementById('cmp-goal-bar'), {
+        type: 'bar',
+        data: {
+            labels: people.map(p => p.name),
+            datasets: [{
+                data: people.map(p => p.business.goal_achievement_rate.last_3_months_avg ?? 0),
+                backgroundColor: people.map((_, i) => PALETTE[i].solid),
+                borderColor: people.map((_, i) => PALETTE[i].border),
+                borderWidth: 1, borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            layout: { padding: { top: 26 } },
+            plugins: {
+                legend: { display: false },
+                datalabels: {
+                    display: true, anchor: 'end', align: 'top',
+                    font: { size: 11, weight: 'bold' }, color: '#334155',
+                    formatter: v => (v * 100).toFixed(1) + '%'
+                }
+            },
+            scales: {
+                x: { ticks: { font: { size: 11 } } },
+                y: { beginAtZero: false,
+                     ticks: { font: { size: 10 }, maxTicksLimit: 5,
+                              callback: v => (v * 100).toFixed(0) + '%' } }
+            }
+        }
+    });
+
+    // ② 业绩：每月达成率折线图
+    const goalMonths = getMonths(people, p => p.business.goal_achievement_rate.trend);
+    charts.goalLine = new Chart(document.getElementById('cmp-goal-line'), {
+        type: 'line',
+        data: {
+            labels: goalMonths,
+            datasets: people.map((p, i) => ({
+                label: p.name,
+                data: goalMonths.map(m => getTrendVal(p, x => x.business.goal_achievement_rate.trend, m)),
+                borderColor: PALETTE[i].border, backgroundColor: PALETTE[i].bg,
+                fill: false, tension: 0.3, pointRadius: 4, borderWidth: 2, clip: false,
+                datalabels: { display: false }
+            }))
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }, datalabels: { display: false },
+                tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y != null ? (ctx.parsed.y*100).toFixed(1)+'%' : '-'}` } }
+            },
+            scales: {
+                x: { ticks: { font: { size: 11 } } },
+                y: { beginAtZero: false,
+                     ticks: { font: { size: 10 }, maxTicksLimit: 5, callback: v => (v*100).toFixed(0)+'%' } }
+            }
+        }
+    });
+
+    // ─────────────────────────────────────────
+    // ③ 重渠投诉量：总量柱状图
+    // ─────────────────────────────────────────
+    charts.cmpBar = new Chart(document.getElementById('cmp-cmp-bar'), {
+        type: 'bar',
+        data: {
+            labels: people.map(p => p.name),
+            datasets: [{
+                data: people.map(p => p.risk.complaint.last_6_months_sum ?? 0),
+                backgroundColor: people.map((_, i) => PALETTE[i].solid),
+                borderColor: people.map((_, i) => PALETTE[i].border),
+                borderWidth: 1, borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            layout: { padding: { top: 26 } },
+            plugins: {
+                legend: { display: false },
+                datalabels: {
+                    display: true, anchor: 'end', align: 'top',
+                    font: { size: 12, weight: 'bold' }, color: '#334155',
+                    formatter: v => v + ' 次'
+                }
+            },
+            scales: {
+                x: { ticks: { font: { size: 11 } } },
+                y: { beginAtZero: true, ticks: { font: { size: 10 }, maxTicksLimit: 5 } }
+            }
+        }
+    });
+
+    // ③ 重渠投诉量：每月趋势折线图
+    const cmpMonths = getMonths(people, p => p.risk.complaint.trend);
+    charts.cmpLine = new Chart(document.getElementById('cmp-cmp-line'), {
+        type: 'line',
+        data: {
+            labels: cmpMonths,
+            datasets: people.map((p, i) => ({
+                label: p.name,
+                data: cmpMonths.map(m => getTrendVal(p, x => x.risk.complaint.trend, m)),
+                borderColor: PALETTE[i].border, backgroundColor: PALETTE[i].bg,
+                fill: false, tension: 0.3, pointRadius: 5, borderWidth: 2, clip: false,
+                datalabels: { display: false }
+            }))
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }, datalabels: { display: false },
+                tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y ?? 0} 次` } }
+            },
+            scales: {
+                x: { ticks: { font: { size: 11 } } },
+                y: { beginAtZero: true, ticks: { font: { size: 10 }, maxTicksLimit: 5 } }
+            }
+        }
+    });
+
+    // ─────────────────────────────────────────
+    // ④ 违规数量：总量柱状图
+    // ─────────────────────────────────────────
+    charts.vioBar = new Chart(document.getElementById('cmp-vio-bar'), {
+        type: 'bar',
+        data: {
+            labels: people.map(p => p.name),
+            datasets: [{
+                data: people.map(p => p.risk.violation.last_6_months_sum ?? 0),
+                backgroundColor: people.map((_, i) => PALETTE[i].solid),
+                borderColor: people.map((_, i) => PALETTE[i].border),
+                borderWidth: 1, borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            layout: { padding: { top: 26 } },
+            plugins: {
+                legend: { display: false },
+                datalabels: {
+                    display: true, anchor: 'end', align: 'top',
+                    font: { size: 12, weight: 'bold' }, color: '#334155',
+                    formatter: v => v + ' 次'
+                }
+            },
+            scales: {
+                x: { ticks: { font: { size: 11 } } },
+                y: { beginAtZero: true, ticks: { font: { size: 10 }, maxTicksLimit: 5 } }
+            }
+        }
+    });
+
+    // ④ 违规数量：每月趋势折线图
+    const vioMonths = getMonths(people, p => p.risk.violation.trend);
+    charts.vioLine = new Chart(document.getElementById('cmp-vio-line'), {
+        type: 'line',
+        data: {
+            labels: vioMonths,
+            datasets: people.map((p, i) => ({
+                label: p.name,
+                data: vioMonths.map(m => getTrendVal(p, x => x.risk.violation.trend, m)),
+                borderColor: PALETTE[i].border, backgroundColor: PALETTE[i].bg,
+                fill: false, tension: 0.3, pointRadius: 5, borderWidth: 2, clip: false,
+                datalabels: { display: false }
+            }))
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }, datalabels: { display: false },
+                tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y ?? 0} 次` } }
+            },
+            scales: {
+                x: { ticks: { font: { size: 11 } } },
+                y: { beginAtZero: true, ticks: { font: { size: 10 }, maxTicksLimit: 5 } }
+            }
+        }
+    });
+
+    // ─────────────────────────────────────────
+    // ⑤ 话术达成率：平均柱状图
+    // ─────────────────────────────────────────
+    charts.talkBar = new Chart(document.getElementById('cmp-talk-bar'), {
+        type: 'bar',
+        data: {
+            labels: people.map(p => p.name),
+            datasets: [{
+                data: people.map(p => p.business.talk_achievement_rate.avg ?? 0),
+                backgroundColor: people.map((_, i) => PALETTE[i].solid),
+                borderColor: people.map((_, i) => PALETTE[i].border),
+                borderWidth: 1, borderRadius: 6,
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            layout: { padding: { top: 26 } },
+            plugins: {
+                legend: { display: false },
+                datalabels: {
+                    display: true, anchor: 'end', align: 'top',
+                    font: { size: 11, weight: 'bold' }, color: '#334155',
+                    formatter: v => (v * 100).toFixed(1) + '%'
+                }
+            },
+            scales: {
+                x: { ticks: { font: { size: 11 } } },
+                y: { beginAtZero: false,
+                     ticks: { font: { size: 10 }, maxTicksLimit: 5, callback: v => (v*100).toFixed(0)+'%' } }
+            }
+        }
+    });
+
+    // ⑤ 话术达成率：每月折线图
+    const talkMonths = getMonths(people, p => p.business.talk_achievement_rate.trend);
+    charts.talkLine = new Chart(document.getElementById('cmp-talk-line'), {
+        type: 'line',
+        data: {
+            labels: talkMonths,
+            datasets: people.map((p, i) => ({
+                label: p.name,
+                data: talkMonths.map(m => getTrendVal(p, x => x.business.talk_achievement_rate.trend, m)),
+                borderColor: PALETTE[i].border, backgroundColor: PALETTE[i].bg,
+                fill: false, tension: 0.3, pointRadius: 4, borderWidth: 2, clip: false,
+                datalabels: { display: false }
+            }))
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }, datalabels: { display: false },
+                tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y != null ? (ctx.parsed.y*100).toFixed(1)+'%' : '-'}` } }
+            },
+            scales: {
+                x: { ticks: { font: { size: 11 } } },
+                y: { beginAtZero: false,
+                     ticks: { font: { size: 10 }, maxTicksLimit: 5, callback: v => (v*100).toFixed(0)+'%' } }
+            }
+        }
+    });
+}
+
+loadData();
+</script>
+</body>
+</html>

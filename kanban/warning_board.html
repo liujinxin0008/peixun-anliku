@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>预警看板</title>
+    <script src="./employee_profile.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #f0f2f6; font-family: 'Inter', sans-serif; padding: 28px 24px; color: #1e293b; }
+        .dashboard { max-width: 1500px; margin: 0 auto; }
+
+        /* 卡片 */
+        .card { background: white; border-radius: 28px; box-shadow: 0 6px 14px rgba(0,0,0,0.03); padding: 22px 26px; border: 1px solid #edf2f7; margin-bottom: 24px; }
+        .card-header {
+            font-size: 18px; font-weight: 700; margin-bottom: 18px;
+            border-left: 5px solid #3b82f6; padding-left: 16px;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+        }
+        .badge { font-size: 12px; color: #5b6e8c; }
+
+        /* 预警看板 */
+        .warning-row-cards { display: flex; gap: 20px; margin-top: 8px; }
+        .warning-card { flex: 1; background: #fefefe; border-radius: 20px; border: 1px solid #eef2f6; padding: 16px 18px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+        .warning-card-title { font-weight: 700; font-size: 15px; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; padding-bottom: 8px; border-bottom: 2px solid #eef2f6; }
+        .warning-slider { display: flex; align-items: center; gap: 10px; margin: 10px 0; background: #f8fafc; padding: 7px 12px; border-radius: 40px; }
+        .warning-slider label { font-size: 12px; font-weight: 500; white-space: nowrap; color: #475569; }
+        .warning-slider input { flex: 1; }
+        .warning-slider span { min-width: 72px; font-weight: 700; font-size: 13px; color: #1e293b; white-space: nowrap; }
+
+        /* 双滑块（业绩用） */
+        .dual-range-wrap { position: relative; flex: 1; height: 22px; }
+        .dual-range-track { position: absolute; top: 50%; transform: translateY(-50%); height: 4px; width: 100%; background: #e2e8f0; border-radius: 4px; pointer-events: none; }
+        .dual-range-fill { position: absolute; height: 100%; background: #3b82f6; border-radius: 4px; }
+        .dual-range-wrap input[type="range"] {
+            position: absolute; width: 100%; height: 4px; top: 50%; transform: translateY(-50%);
+            -webkit-appearance: none; appearance: none; background: transparent; pointer-events: none;
+        }
+        .dual-range-wrap input[type="range"]::-webkit-slider-runnable-track { height: 4px; background: transparent; }
+        .dual-range-wrap input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; pointer-events: all;
+            width: 16px; height: 16px; border-radius: 50%;
+            background: #3b82f6; cursor: pointer; border: 2px solid white;
+            box-shadow: 0 1px 4px rgba(59,130,246,0.4);
+        }
+        .dual-range-wrap input[type="range"]::-moz-range-thumb {
+            pointer-events: all; width: 16px; height: 16px; border-radius: 50%;
+            background: #3b82f6; cursor: pointer; border: 2px solid white;
+            box-shadow: 0 1px 4px rgba(59,130,246,0.4);
+        }
+
+        .warning-list-simple { margin-top: 6px; }
+        .warning-item { padding: 7px 8px; border-bottom: 1px solid #eef2f6; display: flex; justify-content: space-between; align-items: center; font-size: 13px; cursor: pointer; border-radius: 8px; transition: background 0.15s; }
+        .warning-item:last-child { border-bottom: none; }
+        .warning-item:hover { background: #eff6ff; }
+        .emp-name { font-weight: 600; }
+        .metric-value { background: #eef2ff; padding: 2px 8px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+        .empty-tip { text-align: center; padding: 16px; color: #94a3b8; font-size: 13px; }
+
+        /* 城市筛选栏 */
+        .city-filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; align-items: center; }
+        .city-filter-label { font-size: 13px; font-weight: 600; color: #475569; margin-right: 4px; }
+        .city-btn {
+            padding: 5px 16px; border-radius: 40px; border: 1.5px solid #e2e8f0;
+            background: white; font-size: 13px; font-weight: 500; color: #475569;
+            cursor: pointer; transition: all 0.15s;
+        }
+        .city-btn:hover { border-color: #93c5fd; color: #3b82f6; }
+        .city-btn.active { background: #3b82f6; border-color: #3b82f6; color: white; font-weight: 600; box-shadow: 0 2px 6px rgba(59,130,246,0.3); }
+
+        @media (max-width: 900px) {
+            .warning-row-cards { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+<div class="dashboard">
+    <div class="card">
+        <div class="card-header">
+            <span><i class="fas fa-exclamation-triangle"></i> 分维度风险预警</span>
+            <span class="badge">每个维度独立筛选，展示全部预警人员</span>
+        </div>
+        <div class="city-filter-bar" id="cityFilterBar">
+            <span class="city-filter-label"><i class="fas fa-map-marker-alt"></i> 城市：</span>
+        </div>
+        <div class="warning-row-cards">
+            <div class="warning-card">
+                <div class="warning-card-title"><i class="fas fa-chart-line" style="color:#3b82f6;"></i> 业绩预警</div>
+                <div class="warning-slider">
+                    <label>近6月平均队列目标达成率</label>
+                    <div class="dual-range-wrap">
+                        <div class="dual-range-track"><div class="dual-range-fill" id="perfFill"></div></div>
+                        <input type="range" id="perfMin" min="0" max="120" step="1" value="0">
+                        <input type="range" id="perfMax" min="0" max="120" step="1" value="70">
+                    </div>
+                    <span id="perfVal">0% ~ 70%</span>
+                </div>
+                <div id="perfWarningList" class="warning-list-simple"></div>
+            </div>
+            <div class="warning-card">
+                <div class="warning-card-title"><i class="fas fa-phone-slash" style="color:#ef4444;"></i> 重渠投诉预警</div>
+                <div class="warning-slider">
+                    <label>近6月重渠投诉 ≥</label>
+                    <input type="range" id="complaintThreshold" min="0" max="100" step="1" value="1">
+                    <span id="complaintVal">1</span>
+                </div>
+                <div id="complaintWarningList" class="warning-list-simple"></div>
+            </div>
+            <div class="warning-card">
+                <div class="warning-card-title"><i class="fas fa-gavel" style="color:#f97316;"></i> 三级及以上违规数量预警</div>
+                <div class="warning-slider">
+                    <label>近6月三级以上违规 ≥</label>
+                    <input type="range" id="violationThreshold" min="0" max="100" step="1" value="1">
+                    <span id="violationVal">1</span>
+                </div>
+                <div id="violationWarningList" class="warning-list-simple"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function getGoalAvg(emp)      { return emp.business?.goal_achievement_rate?.last_3_months_avg || 0; }
+function getComplaintSum(emp) { return emp.risk?.complaint?.last_6_months_sum || 0; }
+function getViolationSum(emp) { return emp.risk?.violation?.last_6_months_sum || 0; }
+
+let selectedCity = '全部';
+
+function buildCityButtons() {
+    const cities = ['全部', ...new Set(EMPLOYEE_DATA.map(e => e.city).filter(Boolean)).values()].sort((a, b) => a === '全部' ? -1 : b === '全部' ? 1 : a.localeCompare(b, 'zh'));
+    const bar = document.getElementById('cityFilterBar');
+    const label = bar.querySelector('.city-filter-label');
+    bar.innerHTML = '';
+    bar.appendChild(label);
+    cities.forEach(city => {
+        const btn = document.createElement('button');
+        btn.className = 'city-btn' + (city === selectedCity ? ' active' : '');
+        btn.textContent = city;
+        btn.addEventListener('click', () => {
+            selectedCity = city;
+            bar.querySelectorAll('.city-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderAllWarnings();
+        });
+        bar.appendChild(btn);
+    });
+}
+
+function updateDualRange(minId, maxId, fillId, valId, unit, totalMax) {
+    const minEl = document.getElementById(minId);
+    const maxEl = document.getElementById(maxId);
+    let minV = parseInt(minEl.value);
+    let maxV = parseInt(maxEl.value);
+    if (minV > maxV) { minEl.value = maxV; minV = maxV; }
+    if (maxV < minV) { maxEl.value = minV; maxV = minV; }
+    const fill = document.getElementById(fillId);
+    fill.style.left = (minV / totalMax * 100) + '%';
+    fill.style.width = ((maxV - minV) / totalMax * 100) + '%';
+    document.getElementById(valId).textContent = unit === '%' ? `${minV}% ~ ${maxV}%` : `${minV} ~ ${maxV}`;
+}
+
+function renderAllWarnings() {
+    const perfMinV = parseInt(document.getElementById('perfMin').value) / 100;
+    const perfMaxV = parseInt(document.getElementById('perfMax').value) / 100;
+    const compTh   = parseInt(document.getElementById('complaintThreshold').value);
+    const violTh   = parseInt(document.getElementById('violationThreshold').value);
+
+    const baseData = selectedCity === '全部' ? EMPLOYEE_DATA : EMPLOYEE_DATA.filter(e => e.city === selectedCity);
+
+    const perfList = baseData.filter(e => getGoalAvg(e) >= perfMinV && getGoalAvg(e) <= perfMaxV)
+        .sort((a, b) => getGoalAvg(a) - getGoalAvg(b));
+    document.getElementById('perfWarningList').innerHTML = perfList.length === 0
+        ? '<div class="empty-tip">✅ 无业绩预警人员</div>'
+        : perfList.map(e => `<div class="warning-item" onclick="toProfile('${e.employee_id}')" title="点击查看主任卡片"><span class="emp-name">${e.name}</span><span class="metric-value">达成率 ${(getGoalAvg(e)*100).toFixed(1)}%</span></div>`).join('');
+
+    const compList = baseData.filter(e => getComplaintSum(e) >= compTh)
+        .sort((a, b) => getComplaintSum(b) - getComplaintSum(a));
+    document.getElementById('complaintWarningList').innerHTML = compList.length === 0
+        ? '<div class="empty-tip">✅ 无重渠投诉预警人员</div>'
+        : compList.map(e => `<div class="warning-item" onclick="toProfile('${e.employee_id}')" title="点击查看主任卡片"><span class="emp-name">${e.name}</span><span class="metric-value">重渠投诉 ${getComplaintSum(e)} 件</span></div>`).join('');
+
+    const violList = baseData.filter(e => getViolationSum(e) >= violTh)
+        .sort((a, b) => getViolationSum(b) - getViolationSum(a));
+    document.getElementById('violationWarningList').innerHTML = violList.length === 0
+        ? '<div class="empty-tip">✅ 无违规预警人员</div>'
+        : violList.map(e => `<div class="warning-item" onclick="toProfile('${e.employee_id}')" title="点击查看主任卡片"><span class="emp-name">${e.name}</span><span class="metric-value">三级以上违规 ${getViolationSum(e)} 次</span></div>`).join('');
+}
+
+function toProfile(id) {
+    if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'goToProfile', id }, '*');
+    }
+}
+
+['perfMin','perfMax'].forEach(id => document.getElementById(id).addEventListener('input', () => {
+    updateDualRange('perfMin','perfMax','perfFill','perfVal','%',120); renderAllWarnings();
+}));
+document.getElementById('complaintThreshold').addEventListener('input', function () {
+    document.getElementById('complaintVal').textContent = this.value; renderAllWarnings();
+});
+document.getElementById('violationThreshold').addEventListener('input', function () {
+    document.getElementById('violationVal').textContent = this.value; renderAllWarnings();
+});
+
+buildCityButtons();
+const maxComp = Math.max(1, ...EMPLOYEE_DATA.map(e => getComplaintSum(e)));
+const maxViol = Math.max(1, ...EMPLOYEE_DATA.map(e => getViolationSum(e)));
+document.getElementById('complaintThreshold').max = maxComp;
+document.getElementById('violationThreshold').max = maxViol;
+updateDualRange('perfMin','perfMax','perfFill','perfVal','%',120);
+renderAllWarnings();
+</script>
+</body>
+</html>

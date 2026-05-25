@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人才画像 | 能力雷达图 + AI分析</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script src="./employee_profile.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #f1f5f9; font-family: 'Inter', sans-serif; padding: 24px; color: #0f172a; }
+        .container { max-width: 1400px; margin: 0 auto; }
+
+        /* 两栏布局：底部对齐 */
+        .two-columns { display: flex; gap: 24px; align-items: stretch; }
+        .left-column  { flex: 2; min-width: 300px; display: flex; flex-direction: column; gap: 24px; }
+        .right-column { flex: 1; min-width: 320px; display: flex; flex-direction: column; gap: 24px; }
+        /* 两栏最后一张卡都撑满剩余高度，保证底部齐平 */
+        .left-column .card:last-child,
+        .right-column .card:last-child { flex-grow: 1; }
+
+        .card {
+            background: white; border-radius: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            padding: 18px 22px; border: 1px solid #eef2f6;
+        }
+        .card-title {
+            font-size: 18px; font-weight: 700;
+            border-left: 4px solid #3b82f6; padding-left: 12px;
+            margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+        }
+
+        /* 筛选器 */
+        .employee-selector {
+            background: white; border-radius: 28px; padding: 14px 24px;
+            margin-bottom: 24px; display: flex; align-items: center;
+            gap: 20px; flex-wrap: wrap; box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .filter-group { display: flex; align-items: center; gap: 8px; }
+        .filter-group label { font-size: 13px; color: #64748b; font-weight: 500; white-space: nowrap; }
+        select {
+            padding: 7px 14px; border-radius: 40px; border: 1px solid #cbd5e1;
+            background: #f8fafc; font-size: 14px; cursor: pointer; min-width: 110px;
+        }
+        select:focus { outline: none; border-color: #3b82f6; }
+
+        /* 基本信息两行 */
+        .info-row { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 10px; }
+        .info-row:last-child { margin-bottom: 0; }
+        .info-item { flex: 1; min-width: 100px; background: #f8fafc; border-radius: 16px; padding: 10px 14px; }
+        .info-label { font-size: 11px; color: #5b6e8c; margin-bottom: 4px; }
+        .info-value { font-size: 16px; font-weight: 700; }
+
+        /* 各板块子项 */
+        .section-block { margin-bottom: 18px; }
+        .section-block:last-child { margin-bottom: 0; }
+        .section-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+        .section-name { font-size: 14px; font-weight: 600; color: #334155; }
+        .section-stats { font-size: 14px; color: #334155; background: #f1f5f9; padding: 3px 12px; border-radius: 20px; font-weight: 500; }
+
+        /* 图表容器 */
+        .mini-chart-wrap  { height: 90px;  width: 100%; }
+        .trend-chart-wrap { height: 140px; width: 100%; }
+        .chart-container  { height: 180px; width: 100%; }
+
+        /* 雷达图 */
+        .radar-container { height: 300px; width: 100%; }
+        .diff-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 6px 16px; margin-top: 14px;
+        }
+        .diff-item {
+            display: flex; align-items: center; flex-wrap: wrap; gap: 4px;
+            padding: 5px 8px; background: #f8fafc; border-radius: 10px;
+        }
+        .diff-label { font-size: 12px; font-weight: 600; color: #334155; flex: 1; min-width: 80px; }
+        .diff-score { font-size: 13px; font-weight: 700; color: #0f172a; }
+        .badge-diff { font-size: 11px; padding: 2px 7px; border-radius: 20px; white-space: nowrap; }
+        .diff-up    { background: #dcfce7; color: #15803d; }
+        .diff-down  { background: #fee2e2; color: #b91c1c; }
+        .diff-equal { background: #e2e8f0; color: #475569; }
+
+        /* AI 分析卡片 */
+        .ai-card-body { display: flex; flex-direction: column; gap: 12px; }
+        .ai-section { padding: 10px 14px; border-radius: 14px; }
+        .ai-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+        .ai-section-body { font-size: 13px; line-height: 1.65; color: #1e293b; }
+        .ai-sec-overview { background: #eff6ff; border-left: 3px solid #3b82f6; }
+        .ai-sec-overview .ai-section-title { color: #1d4ed8; }
+        .ai-sec-strong  { background: #f0fdf4; border-left: 3px solid #22c55e; }
+        .ai-sec-strong  .ai-section-title { color: #15803d; }
+        .ai-sec-weak    { background: #fff7ed; border-left: 3px solid #f97316; }
+        .ai-sec-weak    .ai-section-title { color: #c2410c; }
+        .ai-sec-biz     { background: #f5f3ff; border-left: 3px solid #8b5cf6; }
+        .ai-sec-biz     .ai-section-title { color: #6d28d9; }
+        .ai-sec-suggest { background: #fff1f2; border-left: 3px solid #f43f5e; }
+        .ai-sec-suggest .ai-section-title { color: #be123c; }
+
+        .loading { text-align: center; padding: 50px; font-size: 16px; color: #64748b; }
+
+        /* 主管评价浮动 tooltip */
+        #supervisor-tooltip {
+            display: none; position: fixed; z-index: 9999;
+            background: #1e293b; color: #f8fafc;
+            padding: 10px 14px; border-radius: 12px;
+            font-size: 13px; line-height: 1.6;
+            max-width: 280px; box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            pointer-events: none;
+        }
+        #supervisor-tooltip::before {
+            content: '💬 主管评价';
+            display: block; font-size: 11px; font-weight: 700;
+            color: #94a3b8; margin-bottom: 5px; letter-spacing: 0.04em;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="app">
+    <div class="loading"><i class="fas fa-spinner fa-spin"></i> 加载数据中...</div>
+</div>
+<div id="supervisor-tooltip"></div>
+
+<script>
+    Chart.register(ChartDataLabels);
+    // 全局关闭默认 datalabels，各图表自行配置
+    Chart.defaults.set('plugins.datalabels', { display: false });
+
+    let employeesData = [];
+    let charts = {};
+
+    // ─── 来自预警/九宫格的跨页面跳转 ───
+    let pendingNavId = null;
+    window.addEventListener('message', function(e) {
+        if (e.data && e.data.type === 'selectEmployee') {
+            pendingNavId = e.data.id;
+            applyPendingNav();
+        }
+    });
+    function applyPendingNav() {
+        if (!pendingNavId || !employeesData.length) return;
+        const emp = employeesData.find(x => x.employee_id === pendingNavId);
+        const empSelect = document.getElementById('empSelect');
+        if (!emp || !empSelect) return;
+        const citySelect    = document.getElementById('citySelect');
+        const reporterSelect = document.getElementById('reporterSelect');
+        // 重置为全部城市/全部主管，确保目标人员在列表中
+        if (citySelect) citySelect.value = 'all';
+        if (reporterSelect) {
+            const allReporters = [...new Set(
+                employeesData.filter(e => e.status === '主任' || e.status === '见习主任')
+                    .map(e => e.reporter).filter(Boolean)
+            )].sort();
+            reporterSelect.innerHTML = '<option value="all">全部主管</option>' +
+                allReporters.map(r => `<option value="${r}">${r}</option>`).join('');
+            reporterSelect.value = 'all';
+        }
+        const allDirs = employeesData.filter(e => e.status === '主任' || e.status === '见习主任');
+        empSelect.innerHTML = allDirs.map(e =>
+            `<option value="${e.employee_id}">${e.name}（${e.status}）</option>`
+        ).join('');
+        empSelect.value = pendingNavId;
+        renderProfile(emp);
+        pendingNavId = null;
+    }
+
+    async function loadData() {
+        try {
+            if (typeof EMPLOYEE_DATA === 'undefined' || !EMPLOYEE_DATA.length)
+                throw new Error('employee_profile.js 未加载或无数据');
+            employeesData = EMPLOYEE_DATA;
+            renderSelector();
+        } catch (err) {
+            document.getElementById('app').innerHTML =
+                `<div class="loading" style="color:red;"><i class="fas fa-exclamation-triangle"></i> 错误：${err.message}<br><small>请确保 employee_profile.js 与 index.html 在同一目录</small></div>`;
+        }
+    }
+
+    function renderSelector() {
+        const allCities = [...new Set(employeesData.map(e => e.city))].sort();
+        document.getElementById('app').innerHTML = `
+            <div class="employee-selector">
+                <div class="filter-group">
+                    <label><i class="fas fa-city"></i> 城市：</label>
+                    <select id="citySelect">
+                        <option value="all">全部城市</option>
+                        ${allCities.map(c => `<option value="${c}">${c}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label><i class="fas fa-user-tie"></i> 主管：</label>
+                    <select id="reporterSelect"></select>
+                </div>
+                <div class="filter-group">
+                    <label><i class="fas fa-user"></i> 主任：</label>
+                    <select id="empSelect"></select>
+                </div>
+            </div>
+            <div class="two-columns">
+                <div class="left-column" id="leftCol"></div>
+                <div class="right-column" id="rightCol"></div>
+            </div>`;
+
+        const citySelect     = document.getElementById('citySelect');
+        const reporterSelect = document.getElementById('reporterSelect');
+        const empSelect      = document.getElementById('empSelect');
+
+        function getDirectors(city, reporter) {
+            return employeesData.filter(e =>
+                (city === 'all' || e.city === city) &&
+                (reporter === 'all' || e.reporter === reporter) &&
+                (e.status === '主任' || e.status === '见习主任')
+            );
+        }
+
+        function refreshReporters(city) {
+            const pool = employeesData.filter(e =>
+                (city === 'all' || e.city === city) &&
+                (e.status === '主任' || e.status === '见习主任')
+            );
+            const reporters = [...new Set(pool.map(e => e.reporter).filter(Boolean))].sort();
+            reporterSelect.innerHTML =
+                `<option value="all">全部主管</option>` +
+                reporters.map(r => `<option value="${r}">${r}</option>`).join('');
+        }
+
+        function refreshDirectors() {
+            const list = getDirectors(citySelect.value, reporterSelect.value);
+            if (!list.length) {
+                empSelect.innerHTML = '<option disabled>暂无主任/见习主任</option>';
+                document.getElementById('leftCol').innerHTML =
+                    '<div class="card" style="padding:24px;color:#64748b;">该筛选条件暂无主任或见习主任数据</div>';
+                document.getElementById('rightCol').innerHTML = '';
+                return;
+            }
+            empSelect.innerHTML = list.map(e =>
+                `<option value="${e.employee_id}">${e.name}（${e.status}）</option>`
+            ).join('');
+            renderProfile(list[0]);
+        }
+
+        citySelect.addEventListener('change', () => { refreshReporters(citySelect.value); refreshDirectors(); });
+        reporterSelect.addEventListener('change', refreshDirectors);
+        empSelect.addEventListener('change', e => {
+            const emp = employeesData.find(x => x.employee_id === e.target.value);
+            if (emp) renderProfile(emp);
+        });
+
+        refreshReporters('all');
+        refreshDirectors();
+        applyPendingNav();
+    }
+
+    function renderProfile(emp) {
+        Object.values(charts).forEach(c => c && c.destroy());
+        charts = {};
+
+        const mgmt = emp.management;
+
+        function calcMgmtStats(trend) {
+            const totalCount = trend.reduce((s, d) => s + (d.count || 0), 0);
+            const scored = trend.filter(d => d.avg_score > 0);
+            const avgScore = scored.length
+                ? (scored.reduce((s, d) => s + d.avg_score, 0) / scored.length).toFixed(1) : '0.0';
+            return { totalCount, avgScore };
+        }
+
+        const morningStats  = calcMgmtStats(mgmt.morning_evening.trend);
+        const pipStats      = calcMgmtStats(mgmt.pip.trend);
+        const coachingStats = calcMgmtStats(mgmt.coaching.trend);
+        const exitStats     = calcMgmtStats(mgmt.exit_interview.trend);
+
+        const goalTrend    = emp.business.goal_achievement_rate.trend;
+        const rankTrend    = emp.business.rank_percentile.trend;
+        const talkAvgTrend = emp.business.talk_avg_score.trend;
+        const talkAchTrend = emp.business.talk_achievement_rate.trend;
+
+        const latestRankDetail = rankTrend.length
+            ? (rankTrend[rankTrend.length - 1].rank_detail || '') : '';
+
+        // ---- 左栏 ----
+        document.getElementById('leftCol').innerHTML = `
+            <div class="card">
+                <div class="card-title"><i class="fas fa-id-card"></i> 基本信息</div>
+                <div class="info-row">
+                    ${infoItem('姓名', emp.name)}
+                    ${infoItem('城市', emp.city)}
+                    ${infoItem('状态', emp.status)}
+                    ${infoItem('工号', emp.employee_id)}
+                </div>
+                <div class="info-row">
+                    ${infoItem('汇报上级', emp.reporter || '-')}
+                    ${infoItem('队列', emp.queue || '-')}
+                    ${infoItem('任职时长', emp.tenure_months + ' 个月')}
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><i class="fas fa-chalkboard-user"></i> 培训表现</div>
+                <div class="info-row">
+                    <div class="info-item"><div class="info-label">累计培训课时</div><div class="info-value">${emp.training.total_hours}</div></div>
+                    <div class="info-item"><div class="info-label">培训考核平均分</div><div class="info-value">${emp.training.avg_score}</div></div>
+                    <div class="info-item"><div class="info-label">最近一次培训</div><div class="info-value" style="font-size:13px;font-weight:600;">${emp.training.last_training_date || '-'}</div></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><i class="fas fa-chart-simple"></i> 业务结果</div>
+
+                <div class="section-block">
+                    <div class="section-header">
+                        <span class="section-name">目标达成率</span>
+                        <span class="section-stats">近6个月均值：${pct(emp.business.goal_achievement_rate.last_3_months_avg)}</span>
+                    </div>
+                    <div class="trend-chart-wrap"><canvas id="chart-goal"></canvas></div>
+                </div>
+
+                <div class="section-block">
+                    <div class="section-header">
+                        <span class="section-name">排名占比</span>
+                        <span class="section-stats">近6个月均值：${pct(emp.business.rank_percentile.avg)}${latestRankDetail ? '，最新：' + latestRankDetail : ''}</span>
+                    </div>
+                    <div class="trend-chart-wrap"><canvas id="chart-rank"></canvas></div>
+                </div>
+
+                <div class="section-block">
+                    <div class="section-header">
+                        <span class="section-name">话术平均分</span>
+                        <span class="section-stats">近6个月均值：${emp.business.talk_avg_score.avg.toFixed(2)} 分</span>
+                    </div>
+                    <div class="trend-chart-wrap"><canvas id="chart-talk-avg"></canvas></div>
+                </div>
+
+                <div class="section-block">
+                    <div class="section-header">
+                        <span class="section-name">话术达成率</span>
+                        <span class="section-stats">近6个月均值：${pct(emp.business.talk_achievement_rate.avg)}</span>
+                    </div>
+                    <div class="trend-chart-wrap"><canvas id="chart-talk-ach"></canvas></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><i class="fas fa-shield-alt"></i> 风险与合规</div>
+
+                <div class="section-block">
+                    <div class="section-header">
+                        <span class="section-name">重渠投诉量趋势</span>
+                        <span class="section-stats">近6个月总量：${emp.risk.complaint.last_6_months_sum} 次</span>
+                    </div>
+                    <div class="chart-container"><canvas id="chart-complaint"></canvas></div>
+                </div>
+
+                <div class="section-block">
+                    <div class="section-header">
+                        <span class="section-name">三级及以上违规数量</span>
+                        <span class="section-stats">近6个月总量：${emp.risk.violation.last_6_months_sum} 次</span>
+                    </div>
+                    <div class="chart-container"><canvas id="chart-violation"></canvas></div>
+                </div>
+            </div>`;
+
+        // ---- 右栏：能力维度差异 ----
+        const ab = emp.ability;
+        const labels = ['角色认知与目标规划','过程管控与复盘','绩效推进与沟通','团队激励与士气','人才识别与授权','员工辅导与发展'];
+        const selfScores = [ab.self.role_goal, ab.self.process_review, ab.self.performance_comm,
+                            ab.self.team_morale, ab.self.talent_auth, ab.self.staff_dev];
+        const teamScores = [ab.team_avg.role_goal, ab.team_avg.process_review, ab.team_avg.performance_comm,
+                            ab.team_avg.team_morale, ab.team_avg.talent_auth, ab.team_avg.staff_dev];
+
+        const diffHtml = labels.map((lbl, i) => {
+            const d = selfScores[i] - teamScores[i];
+            let cls = 'diff-equal', txt = '持平';
+            if (d > 0.5)       { cls = 'diff-up';   txt = `+${d.toFixed(2)}`; }
+            else if (d < -0.5) { cls = 'diff-down'; txt = `${d.toFixed(2)}`; }
+            return `<div class="diff-item">
+                <span class="diff-label">${lbl}</span>
+                <span class="diff-score">${selfScores[i].toFixed(1)}</span>
+                <span class="badge-diff ${cls}">${txt}</span>
+            </div>`;
+        }).join('');
+
+        // ---- AI 分析结构化内容 ----
+        const weak   = labels.filter((_, i) => selfScores[i] - teamScores[i] < -0.5);
+        const strong = labels.filter((_, i) => selfScores[i] - teamScores[i] > 0.5);
+        const recentGoal = goalTrend.length ? goalTrend[goalTrend.length - 1].value : 0;
+        const cmpTrend   = emp.risk.complaint.trend;
+        const recentCmp  = cmpTrend.length ? cmpTrend[cmpTrend.length - 1].value : 0;
+
+        const overviewText = weak.length === 0
+            ? `${emp.name} 各项管理能力较为均衡，整体处于团队良好水平。`
+            : `${emp.name} 整体能力有待提升，存在 ${weak.length} 个短板维度，需针对性加强。`;
+
+        const strongText = strong.length
+            ? strong.map(s => `<strong>${s}</strong>`).join('、') + '，建议发挥标杆引领作用，承担赋能分享职责。'
+            : '暂无明显高于团队均值的优势维度。';
+
+        const weakText = weak.length
+            ? weak.map(w => `<strong>${w}</strong>`).join('、') + '，建议安排专项培训或导师辅导，制定阶段提升计划。'
+            : '各维度均达到团队平均水平，无明显短板。';
+
+        let bizText = '';
+        if (recentGoal < 0.7)       bizText += `近期目标达成率偏低（${(recentGoal*100).toFixed(0)}%），需关注业务策略与团队执行节奏。`;
+        else if (recentGoal > 0.9)  bizText += `近期目标达成优异（${(recentGoal*100).toFixed(0)}%），可作为城市标杆案例推广。`;
+        else                         bizText += `近期目标达成率正常（${(recentGoal*100).toFixed(0)}%），保持稳定节奏。`;
+        if (recentCmp > 2) bizText += ` 投诉量近期偏高（${recentCmp} 次），需加强合规意识与客诉处理能力培训。`;
+        if (mgmt.total_score.latest < 70) bizText += ` 管理过程总得分偏低（${mgmt.total_score.latest} 分），日常管理动作质量需系统提升。`;
+
+        const suggestText = `建议本月重点关注：${weak.length ? `<strong>${weak[0]}</strong> 的专项提升` : '<strong>团队激励与士气</strong> 的持续加强'}，结合业务复盘调整辅导方向，形成闭环。`;
+
+        const aiHtml = `
+            <div class="ai-card-body">
+                <div class="ai-section ai-sec-overview">
+                    <div class="ai-section-title"><i class="fas fa-chart-bar"></i> 综合评估</div>
+                    <div class="ai-section-body">${overviewText}</div>
+                </div>
+                <div class="ai-section ai-sec-strong">
+                    <div class="ai-section-title"><i class="fas fa-star"></i> 优势能力</div>
+                    <div class="ai-section-body">${strongText}</div>
+                </div>
+                <div class="ai-section ai-sec-weak">
+                    <div class="ai-section-title"><i class="fas fa-triangle-exclamation"></i> 重点短板</div>
+                    <div class="ai-section-body">${weakText}</div>
+                </div>
+                <div class="ai-section ai-sec-biz">
+                    <div class="ai-section-title"><i class="fas fa-briefcase"></i> 业务与合规</div>
+                    <div class="ai-section-body">${bizText}</div>
+                </div>
+                <div class="ai-section ai-sec-suggest">
+                    <div class="ai-section-title"><i class="fas fa-bullseye"></i> 辅导建议</div>
+                    <div class="ai-section-body">${suggestText}</div>
+                </div>
+            </div>`;
+
+        document.getElementById('rightCol').innerHTML = `
+            <div class="card">
+                <div class="card-title"><i class="fas fa-chart-pie"></i> 能力雷达图（vs 团队均值）</div>
+                <div class="radar-container"><canvas id="radarChart"></canvas></div>
+                <div class="diff-grid">${diffHtml}</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><i class="fas fa-chart-line"></i> 管理实战（近6个月）</div>
+
+                <div class="section-block">
+                    <div class="section-header">
+                        <span class="section-name">早会 / 夕会</span>
+                        <span class="section-stats">近6个月总次数：${morningStats.totalCount}，平均得分 ${morningStats.avgScore} 分</span>
+                    </div>
+                    <div class="mini-chart-wrap"><canvas id="chart-morning"></canvas></div>
+                </div>
+
+                <div class="section-block">
+                    <div class="section-header">
+                        <span class="section-name">PIP 面谈</span>
+                        <span class="section-stats">近6个月总次数：${pipStats.totalCount}，平均得分 ${pipStats.avgScore} 分</span>
+                    </div>
+                    <div class="mini-chart-wrap"><canvas id="chart-pip"></canvas></div>
+                </div>
+
+                <div class="section-block">
+                    <div class="section-header">
+                        <span class="section-name">人员辅导</span>
+                        <span class="section-stats">近6个月总次数：${coachingStats.totalCount}，平均得分 ${coachingStats.avgScore} 分</span>
+                    </div>
+                    <div class="mini-chart-wrap"><canvas id="chart-coaching"></canvas></div>
+                </div>
+
+                <div class="section-block">
+                    <div class="section-header">
+                        <span class="section-name">离职面谈</span>
+                        <span class="section-stats">近6个月总次数：${exitStats.totalCount}，平均得分 ${exitStats.avgScore} 分</span>
+                    </div>
+                    <div class="mini-chart-wrap"><canvas id="chart-exit"></canvas></div>
+                </div>
+
+                <div class="section-block">
+                    <div class="section-header">
+                        <span class="section-name">管理过程总得分</span>
+                        <span class="section-stats">最新得分：${mgmt.total_score.latest} 分</span>
+                    </div>
+                    <div class="mini-chart-wrap"><canvas id="chart-total"></canvas></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title"><i class="fas fa-robot"></i> AI 智能分析</div>
+                ${aiHtml}
+            </div>`;
+
+        // ---- 渲染图表 ----
+        charts.radar    = radarChart('radarChart', labels, emp.name, selfScores, teamScores, emp.supervisor_comment || '');
+
+        // 计算全员各管理类型均分均值（所有有记录的主任）
+        function computeMgmtGlobalAvg(mgmtType) {
+            const scores = [];
+            employeesData.forEach(e => {
+                const trend = e.management[mgmtType] && e.management[mgmtType].trend;
+                if (!trend) return;
+                trend.forEach(d => { if (d.avg_score > 0) scores.push(d.avg_score); });
+            });
+            return scores.length ? +(scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : null;
+        }
+        const morningGlobalAvg  = computeMgmtGlobalAvg('morning_evening');
+        const pipGlobalAvg      = computeMgmtGlobalAvg('pip');
+        const coachingGlobalAvg = computeMgmtGlobalAvg('coaching');
+        const exitGlobalAvg     = computeMgmtGlobalAvg('exit_interview');
+
+        charts.morning  = miniMgmtChart('chart-morning',  mgmt.morning_evening.trend, morningGlobalAvg);
+        charts.pip      = miniMgmtChart('chart-pip',       mgmt.pip.trend,             pipGlobalAvg);
+        charts.coaching = miniMgmtChart('chart-coaching',  mgmt.coaching.trend,        coachingGlobalAvg);
+        charts.exit     = miniMgmtChart('chart-exit',      mgmt.exit_interview.trend,  exitGlobalAvg);
+        charts.total    = miniLineChart('chart-total',
+            mgmt.total_score.trend.map(d => d.month),
+            mgmt.total_score.trend.map(d => d.score));
+
+        charts.goal    = pctLineChart('chart-goal',     goalTrend.map(d=>d.month),    goalTrend.map(d=>d.value));
+        charts.rank    = rankBarChart('chart-rank',     rankTrend.map(d=>d.month),    rankTrend.map(d=>d.value),    rankTrend.map(d=>d.rank_detail||''));
+        charts.talkAvg = scoreBarChart('chart-talk-avg',talkAvgTrend.map(d=>d.month), talkAvgTrend.map(d=>d.value));
+        charts.talkAch = pctLineChart('chart-talk-ach', talkAchTrend.map(d=>d.month), talkAchTrend.map(d=>d.value));
+        charts.cmp     = riskBarChart('chart-complaint',emp.risk.complaint.trend.map(d=>d.month), emp.risk.complaint.trend.map(d=>d.value));
+        charts.vio     = riskBarChart('chart-violation',emp.risk.violation.trend.map(d=>d.month), emp.risk.violation.trend.map(d=>d.value));
+    }
+
+    // ---- 图表工厂 ----
+
+    function radarChart(id, labels, name, self, team, supervisorComment) {
+        const canvas = document.getElementById(id);
+        const tip = document.getElementById('supervisor-tooltip');
+
+        if (supervisorComment) {
+            canvas.style.cursor = 'help';
+            canvas.addEventListener('mouseenter', () => {
+                tip.textContent = supervisorComment;
+                tip.style.display = 'block';
+            });
+            canvas.addEventListener('mousemove', e => {
+                const x = e.clientX + 14;
+                const y = e.clientY - tip.offsetHeight - 8;
+                tip.style.left = Math.min(x, window.innerWidth - tip.offsetWidth - 16) + 'px';
+                tip.style.top  = (y < 8 ? e.clientY + 14 : y) + 'px';
+            });
+            canvas.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+        }
+
+        return new Chart(canvas.getContext('2d'), {
+            type: 'radar',
+            data: { labels, datasets: [
+                { label: `${name}（本人）`, data: self,
+                  backgroundColor: 'rgba(59,130,246,0.2)', borderColor: '#3b82f6',
+                  borderWidth: 2, pointBackgroundColor: '#3b82f6' },
+                { label: '团队均值', data: team,
+                  backgroundColor: 'rgba(249,115,22,0.1)', borderColor: '#f97316',
+                  borderWidth: 2, pointBackgroundColor: '#f97316', borderDash: [5,5] }
+            ]},
+            options: {
+                responsive: true, maintainAspectRatio: true,
+                scales: { r: { beginAtZero: true, max: 10, ticks: { stepSize: 2 } } },
+                plugins: { datalabels: { display: false } }
+            }
+        });
+    }
+
+    // 迷你管理实战图（次数柱居中标签 + 均分折线，无图例，紧凑刻度）
+    function miniMgmtChart(id, trend, globalAvg) {
+        const datasets = [
+            {
+                label: '次数',
+                data: trend.map(d => d.count),
+                backgroundColor: 'rgba(59,130,246,0.75)',
+                yAxisID: 'y',
+                barPercentage: 0.85,
+                categoryPercentage: 0.7,
+                datalabels: {
+                    display: ctx => ctx.dataset.data[ctx.dataIndex] > 0,
+                    anchor: 'center', align: 'center',
+                    color: '#ffffff', font: { size: 11, weight: 'bold' },
+                    formatter: v => v
+                }
+            },
+            {
+                label: '均分',
+                data: trend.map(d => d.avg_score),
+                type: 'line',
+                borderColor: '#f97316',
+                yAxisID: 'y1',
+                fill: false, tension: 0.3, pointRadius: 3, borderWidth: 2, clip: false,
+                datalabels: { display: false }
+            }
+        ];
+
+        if (globalAvg !== null) {
+            datasets.push({
+                label: '全员均值',
+                data: trend.map(() => globalAvg),
+                type: 'line',
+                borderColor: 'rgba(100,116,139,0.85)',
+                borderDash: [5, 3],
+                yAxisID: 'y1',
+                fill: false, tension: 0, pointRadius: 0, borderWidth: 1.5, clip: false,
+                datalabels: {
+                    display: (ctx) => ctx.dataIndex === trend.length - 1,
+                    anchor: 'end', align: 'right',
+                    color: '#64748b', font: { size: 9, weight: '600' },
+                    formatter: v => `均 ${v}`
+                }
+            });
+        }
+
+        return new Chart(document.getElementById(id).getContext('2d'), {
+            type: 'bar',
+            data: { labels: trend.map(d => d.month), datasets },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                layout: { padding: { top: 0, right: 32 } },
+                plugins: {
+                    legend: { display: false },
+                    datalabels: { display: false }
+                },
+                scales: {
+                    x:  { ticks: { font: { size: 10 } } },
+                    y:  { beginAtZero: true, ticks: { font: { size: 10 }, maxTicksLimit: 3 } },
+                    y1: { position: 'right', beginAtZero: true,
+                          ticks: { font: { size: 10 }, maxTicksLimit: 3 },
+                          grid: { drawOnChartArea: false } }
+                }
+            }
+        });
+    }
+
+    // 迷你折线图（总得分，标签在上方，加顶部 padding 防截断）
+    function miniLineChart(id, labels, data) {
+        return new Chart(document.getElementById(id).getContext('2d'), {
+            type: 'line',
+            data: { labels, datasets: [{ data, borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59,130,246,0.08)', fill: true, tension: 0.3,
+                pointRadius: 3, borderWidth: 2, clip: false }] },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                layout: { padding: { top: 20 } },
+                plugins: {
+                    legend: { display: false },
+                    datalabels: {
+                        display: true, align: 'top', anchor: 'end',
+                        font: { size: 9, weight: 'bold' }, color: '#334155',
+                        formatter: v => v
+                    }
+                },
+                scales: {
+                    x: { ticks: { font: { size: 10 } } },
+                    y: { beginAtZero: false, ticks: { font: { size: 10 }, maxTicksLimit: 3 } }
+                }
+            }
+        });
+    }
+
+    // 百分比折线图（目标达成率、话术达成率），标签在上方
+    function pctLineChart(id, labels, data) {
+        return new Chart(document.getElementById(id).getContext('2d'), {
+            type: 'line',
+            data: { labels, datasets: [{ data, borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59,130,246,0.08)', fill: true, tension: 0.3,
+                pointRadius: 4, borderWidth: 2, clip: false }] },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                layout: { padding: { top: 24 } },
+                plugins: {
+                    legend: { display: false },
+                    datalabels: {
+                        display: true, align: 'top', anchor: 'end',
+                        font: { size: 10, weight: 'bold' }, color: '#334155',
+                        formatter: v => (v * 100).toFixed(2) + '%'
+                    }
+                },
+                scales: {
+                    x: { ticks: { font: { size: 11 } } },
+                    y: { beginAtZero: false,
+                         ticks: { font: { size: 10 }, maxTicksLimit: 4,
+                                  callback: v => (v * 100).toFixed(0) + '%' } }
+                }
+            }
+        });
+    }
+
+    // 排名占比柱状图（Y轴反转，值越小=排名越高，标签显示 rank_detail 如 "1/4"）
+    function rankBarChart(id, labels, data, rankDetails) {
+        return new Chart(document.getElementById(id).getContext('2d'), {
+            type: 'bar',
+            data: { labels, datasets: [{ data, rankDetails,
+                backgroundColor: 'rgba(99,102,241,0.75)', borderColor: '#6366f1', borderWidth: 1 }] },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                layout: { padding: { top: 4 } },
+                plugins: {
+                    legend: { display: false },
+                    datalabels: {
+                        display: true, anchor: 'center', align: 'center',
+                        font: { size: 11, weight: 'bold' }, color: '#ffffff',
+                        formatter: (v, ctx) => {
+                            const detail = ctx.dataset.rankDetails?.[ctx.dataIndex];
+                            return (detail && detail !== '') ? detail : (v * 100).toFixed(1) + '%';
+                        }
+                    }
+                },
+                scales: {
+                    x: { ticks: { font: { size: 11 } } },
+                    y: { reverse: true,
+                         ticks: { font: { size: 10 }, maxTicksLimit: 4,
+                                  callback: v => (v * 100).toFixed(0) + '%' } }
+                }
+            }
+        });
+    }
+
+    // 话术平均分柱状图（标签居中显示在柱内，0值不显示标签）
+    function scoreBarChart(id, labels, data) {
+        return new Chart(document.getElementById(id).getContext('2d'), {
+            type: 'bar',
+            data: { labels, datasets: [{ data,
+                backgroundColor: 'rgba(16,185,129,0.75)', borderColor: '#10b981', borderWidth: 1 }] },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                layout: { padding: { top: 4 } },
+                plugins: {
+                    legend: { display: false },
+                    datalabels: {
+                        display: ctx => ctx.dataset.data[ctx.dataIndex] > 0,
+                        anchor: 'center', align: 'center',
+                        font: { size: 11, weight: 'bold' }, color: '#ffffff',
+                        formatter: v => v.toFixed(2)
+                    }
+                },
+                scales: {
+                    x: { ticks: { font: { size: 11 } } },
+                    y: { beginAtZero: true, ticks: { font: { size: 10 }, maxTicksLimit: 4 } }
+                }
+            }
+        });
+    }
+
+    // 风险柱图（标签居中在柱内）
+    function riskBarChart(id, labels, data) {
+        return new Chart(document.getElementById(id).getContext('2d'), {
+            type: 'bar',
+            data: { labels, datasets: [{ data, backgroundColor: 'rgba(239,68,68,0.75)', borderColor: '#ef4444', borderWidth: 1 }] },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                layout: { padding: { top: 4 } },
+                plugins: {
+                    legend: { display: false },
+                    datalabels: {
+                        display: true, anchor: 'center', align: 'center',
+                        font: { size: 11, weight: 'bold' }, color: '#ffffff',
+                        formatter: v => v
+                    }
+                },
+                scales: {
+                    x: { ticks: { font: { size: 11 } } },
+                    y: { beginAtZero: true, ticks: { font: { size: 10 }, maxTicksLimit: 4 } }
+                }
+            }
+        });
+    }
+
+    // ---- 工具 ----
+    function infoItem(label, value) {
+        return `<div class="info-item"><div class="info-label">${label}</div><div class="info-value">${value}</div></div>`;
+    }
+    function pct(v) { return (v * 100).toFixed(1) + '%'; }
+
+    loadData();
+</script>
+</body>
+</html>
