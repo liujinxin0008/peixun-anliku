@@ -5,35 +5,89 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>培训主任实战案例库</title>
 <style>
-:root{--blue:#4A90E2;--blue-light:#e8f0fe;--bg:#f5f6fa;--card:#fff;--text:#2c3e50;--text-light:#666;--text-lighter:#999;--border:#e9ecef;--shadow:0 2px 8px rgba(0,0,0,0.05);--shadow-hover:0 6px 20px rgba(0,0,0,0.10);--radius:12px;--radius-sm:8px}
+:root{--blue:#4A90E2;--blue-dark:#357ABD;--blue-light:#e8f0fe;--bg:#f5f6fa;--card:#fff;--text:#2c3e50;--text-light:#666;--text-lighter:#999;--border:#e9ecef;--shadow:0 2px 8px rgba(0,0,0,0.05);--shadow-hover:0 6px 20px rgba(0,0,0,0.10);--radius:12px;--radius-sm:8px;--orange:#f39c12;--purple:#8e44ad;--green:#27ae60;--teal:#16a085}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+
+/* ====== WELCOME PAGE ====== */
+.welcome-page{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;background:linear-gradient(160deg,#f0f4ff 0%,#e8f0fe 30%,#f5f6fa 60%,#fef9e7 100%);position:relative;overflow:hidden}
+.welcome-page::before{content:'';position:absolute;top:-120px;right:-120px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(74,144,226,0.08) 0%,transparent 70%);pointer-events:none}
+.welcome-page::after{content:'';position:absolute;bottom:-80px;left:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(243,156,18,0.06) 0%,transparent 70%);pointer-events:none}
+.welcome-container{position:relative;z-index:1;max-width:800px;width:100%;text-align:center}
+.welcome-badge{display:inline-block;padding:6px 18px;border-radius:20px;background:rgba(74,144,226,0.1);color:var(--blue);font-size:0.85em;font-weight:600;margin-bottom:24px;letter-spacing:1px}
+.welcome-hero{margin-bottom:20px}
+.welcome-hero .hero-icon{font-size:3.5em;margin-bottom:16px;display:block;animation:float 3s ease-in-out infinite}
+.welcome-hero h1{font-size:2.4em;font-weight:800;background:linear-gradient(135deg,#2c3e50,#4A90E2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:12px;letter-spacing:2px}
+.welcome-hero .subtitle{font-size:1.05em;color:var(--text-light);line-height:1.7;max-width:520px;margin:0 auto}
+.welcome-features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:36px 0}
+.welcome-feature{background:#fff;border-radius:var(--radius);padding:24px 18px;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s;text-align:center}
+.welcome-feature:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover)}
+.welcome-feature .f-icon{font-size:2.2em;margin-bottom:12px;display:block}
+.welcome-feature h3{font-size:0.95em;margin-bottom:8px;color:var(--text)}
+.welcome-feature p{font-size:0.82em;color:var(--text-light);line-height:1.65}
+.welcome-stats{display:flex;gap:24px;justify-content:center;margin-bottom:32px;flex-wrap:wrap}
+.welcome-stat{text-align:center}
+.welcome-stat .ws-num{font-size:2em;font-weight:800;color:var(--blue)}
+.welcome-stat .ws-label{font-size:0.8em;color:var(--text-lighter);margin-top:2px}
+.btn-start{display:inline-flex;align-items:center;gap:8px;padding:14px 48px;background:linear-gradient(135deg,#4A90E2,#357ABD);color:#fff;border:none;border-radius:30px;font-size:1.1em;font-weight:700;cursor:pointer;transition:all .3s;box-shadow:0 4px 16px rgba(74,144,226,0.35);letter-spacing:1px}
+.btn-start:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(74,144,226,0.45)}
+.btn-start:active{transform:scale(0.97)}
+.btn-start .arrow{transition:transform .3s}
+.btn-start:hover .arrow{transform:translateX(4px)}
+
+/* ====== MAIN APP (hidden initially) ====== */
+.main-app{display:none;min-height:100vh;animation:fadeSlideIn .5s ease}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ====== TOP NAV BAR ====== */
+.top-nav{background:#fff;border-bottom:1px solid var(--border);padding:0 20px;position:sticky;top:0;z-index:50;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.top-nav-inner{max-width:1160px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:52px}
+.top-nav .nav-logo{font-weight:700;font-size:1.05em;color:var(--text);display:flex;align-items:center;gap:8px;cursor:pointer}
+.top-nav .nav-logo:hover{color:var(--blue)}
+.top-nav .nav-actions{display:flex;align-items:center;gap:12px}
+.top-nav .btn-back{background:none;border:1.5px solid #dde;padding:6px 14px;border-radius:18px;font-size:0.8em;cursor:pointer;color:var(--text-light);transition:all .2s}
+.top-nav .btn-back:hover{border-color:var(--blue);color:var(--blue)}
+.top-nav .btn-reset-nav{padding:6px 14px;border-radius:18px;border:1.5px solid #e74c3c;background:none;color:#e74c3c;font-size:0.8em;cursor:pointer;transition:all .2s}
+.top-nav .btn-reset-nav:hover{background:#e74c3c;color:#fff}
 .container{max-width:1160px;margin:0 auto;padding:16px 20px}
 
-/* Header */
-.header{text-align:center;padding:40px 20px 32px;background:linear-gradient(135deg,#4A90E2,#357ABD);color:#fff;border-radius:16px;margin-bottom:20px}
-.header h1{font-size:1.8em;font-weight:700;margin-bottom:6px;letter-spacing:1px}
-.header p{opacity:0.85;font-size:0.95em}
+/* ====== SECTION HEADERS ====== */
+.section-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.section-header .section-icon{font-size:1.3em}
+.section-header h2{font-size:1.05em;font-weight:700;color:var(--text)}
+.section-header .section-hint{font-size:0.78em;color:var(--text-lighter);margin-left:auto}
 
-/* Top bar: search + reset */
-.top-bar{display:flex;gap:10px;margin-bottom:14px;align-items:center}
-.search-input{flex:1;padding:10px 14px;border:1.5px solid #dde;border-radius:10px;font-size:0.95em;outline:none;transition:border-color .2s;background:#fff}
-.search-input:focus{border-color:var(--blue)}
-.btn-reset{padding:10px 18px;background:#fff;border:1.5px solid #e74c3c;color:#e74c3c;border-radius:10px;cursor:pointer;font-size:0.85em;white-space:nowrap;transition:all .2s}
-.btn-reset:hover{background:#e74c3c;color:#fff}
+/* ====== SEARCH SECTION ====== */
+.search-section{background:#fff;border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);margin-bottom:16px}
+.search-row{display:flex;gap:10px;align-items:center}
+.search-input-wrap{flex:1;position:relative}
+.search-input-wrap .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:1em;color:var(--text-lighter);pointer-events:none}
+.search-input{width:100%;padding:10px 14px 10px 40px;border:1.5px solid #dde;border-radius:10px;font-size:0.95em;outline:none;transition:border-color .2s;background:#fafbfc}
+.search-input:focus{border-color:var(--blue);background:#fff}
+.search-hint{font-size:0.75em;color:var(--text-lighter);margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.search-hint span{color:#bbb}
+.search-hint .hint-tag{display:inline-block;padding:2px 8px;border-radius:10px;background:#f0f4ff;color:var(--blue);font-size:0.75em;cursor:pointer;transition:all .15s}
+.search-hint .hint-tag:hover{background:var(--blue);color:#fff}
 
-/* Category tabs */
-.tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
-.tab{padding:7px 16px;border-radius:18px;border:1.5px solid #dde;background:#fff;cursor:pointer;font-size:0.84em;transition:all .2s;white-space:nowrap;color:var(--text-light)}
-.tab:hover{border-color:var(--blue);color:var(--blue)}
-.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+/* ====== CATEGORY TABS ====== */
+.category-section{margin-bottom:16px}
+.category-section .section-header{margin-bottom:10px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{padding:8px 18px;border-radius:20px;border:1.5px solid #e0e4ea;background:#fff;cursor:pointer;font-size:0.84em;transition:all .2s;white-space:nowrap;color:var(--text-light);font-weight:500}
+.tab:hover{border-color:var(--blue);color:var(--blue);background:#f8faff}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:600;box-shadow:0 2px 8px rgba(74,144,226,0.25)}
+.tab-all{font-weight:600}
 
-/* Stats bar */
-.stats{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
-.stat-card{position:relative;flex:1;min-width:100px;background:#fff;padding:12px 14px;border-radius:10px;text-align:center;box-shadow:var(--shadow);cursor:default}
-.stat-card .num{font-size:1.3em;font-weight:700;color:var(--blue)}
-.stat-card .label{font-size:0.75em;color:var(--text-lighter);margin-top:2px}
-.stat-card:hover{box-shadow:var(--shadow-hover)}
+/* ====== STATS DASHBOARD ====== */
+.stats-dashboard{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.stat-card{position:relative;background:#fff;padding:16px;border-radius:var(--radius-sm);text-align:center;box-shadow:var(--shadow);cursor:default;transition:transform .2s,box-shadow .2s;border-top:3px solid transparent}
+.stat-card:nth-child(1){border-top-color:var(--blue)}
+.stat-card:nth-child(2){border-top-color:var(--orange)}
+.stat-card:nth-child(3){border-top-color:var(--green)}
+.stat-card:nth-child(4){border-top-color:var(--purple)}
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover)}
+.stat-card .num{font-size:1.4em;font-weight:700;color:var(--text)}
+.stat-card .label{font-size:0.75em;color:var(--text-lighter);margin-top:4px}
 .stat-tip{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#2c3e50;color:#fff;padding:12px 16px;border-radius:8px;font-size:0.78em;line-height:1.7;white-space:nowrap;z-index:10;box-shadow:0 4px 16px rgba(0,0,0,0.2);text-align:left}
 .stat-tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#2c3e50}
 .stat-tip .bar-wrap{display:flex;align-items:center;gap:6px;margin:3px 0}
@@ -41,41 +95,60 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Micr
 .stat-tip .bar-fill{height:100%;border-radius:3px;background:#27ae60}
 .stat-card:hover .stat-tip{display:block}
 
-/* Case grid */
-.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(288px,1fr));gap:12px}
-.case-card{background:#fff;border-radius:var(--radius-sm);padding:14px 16px;box-shadow:var(--shadow);cursor:pointer;transition:transform .2s,box-shadow .2s;animation:cardIn .35s ease both;display:flex;flex-direction:column;gap:6px;border-left:3px solid transparent}
+/* ====== CASE GRID ====== */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(288px,1fr));gap:12px;margin-bottom:24px}
+.case-card{background:#fff;border-radius:var(--radius-sm);padding:16px 18px;box-shadow:var(--shadow);cursor:pointer;transition:transform .2s,box-shadow .2s;animation:cardIn .35s ease both;display:flex;flex-direction:column;gap:8px;border-left:4px solid transparent;position:relative;overflow:hidden}
+.case-card::after{content:'';position:absolute;top:0;right:0;width:60px;height:60px;border-radius:0 0 0 60px;opacity:0.04;transition:opacity .2s}
+.case-card:hover::after{opacity:0.08}
 .case-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-hover)}
 .case-card .card-head{display:flex;justify-content:space-between;align-items:center}
-.case-card .badge{font-size:0.7em;padding:2px 8px;border-radius:10px;background:var(--blue-light);color:var(--blue);font-weight:600}
-.case-card h3{font-size:0.92em;line-height:1.35;margin:1px 0}
-.case-card .scenario{font-size:0.78em;color:var(--text-light);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.case-card .card-foot{display:flex;justify-content:space-between;font-size:0.7em;color:var(--text-lighter)}
+.case-card .badge{font-size:0.7em;padding:3px 10px;border-radius:10px;font-weight:600;letter-spacing:0.5px}
+.case-card h3{font-size:0.95em;line-height:1.4;margin:2px 0;color:var(--text)}
+.case-card .scenario{font-size:0.78em;color:var(--text-light);line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.case-card .card-foot{display:flex;justify-content:space-between;font-size:0.72em;color:var(--text-lighter);margin-top:auto;padding-top:4px;border-top:1px solid #f5f5f5}
+
 /* Category tints */
-.case-card.cat-role{border-left-color:#f39c12;background:linear-gradient(135deg,#fff 90%,#fef9e7)}
-.case-card.cat-perf{border-left-color:#4A90E2;background:linear-gradient(135deg,#fff 90%,#f0f6ff)}
-.case-card.cat-talent{border-left-color:#8e44ad;background:linear-gradient(135deg,#fff 90%,#faf5fd)}
-.case-card.cat-coach{border-left-color:#27ae60;background:linear-gradient(135deg,#fff 90%,#eafaf1)}
-.case-card.cat-exec{border-left-color:#e67e22;background:linear-gradient(135deg,#fff 90%,#fef9f2)}
-.case-card.cat-problem{border-left-color:#16a085;background:linear-gradient(135deg,#fff 90%,#e8f8f5)}
+.case-card.cat-role{border-left-color:#f39c12}
+.case-card.cat-role .badge{background:#fef9e7;color:#b3740e}
+.case-card.cat-role::after{background:#f39c12}
+.case-card.cat-perf{border-left-color:#4A90E2}
+.case-card.cat-perf .badge{background:#e8f0fe;color:#2563eb}
+.case-card.cat-perf::after{background:#4A90E2}
+.case-card.cat-talent{border-left-color:#8e44ad}
+.case-card.cat-talent .badge{background:#faf5fd;color:#7c3aed}
+.case-card.cat-talent::after{background:#8e44ad}
+.case-card.cat-coach{border-left-color:#27ae60}
+.case-card.cat-coach .badge{background:#eafaf1;color:#1e7e34}
+.case-card.cat-coach::after{background:#27ae60}
+.case-card.cat-exec{border-left-color:#e67e22}
+.case-card.cat-exec .badge{background:#fef9f2;color:#c2410c}
+.case-card.cat-exec::after{background:#e67e22}
+.case-card.cat-problem{border-left-color:#16a085}
+.case-card.cat-problem .badge{background:#e8f8f5;color:#0d7d6b}
+.case-card.cat-problem::after{background:#16a085}
 @keyframes cardIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
-/* Modal */
+.empty-state{text-align:center;padding:60px 20px;color:#bbb;grid-column:1/-1}
+.empty-state .empty-icon{font-size:3em;margin-bottom:10px}
+
+/* ====== MODAL ====== */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:100;display:flex;align-items:center;justify-content:center;animation:fadeIn .2s ease;padding:20px}
 .modal{background:#fff;border-radius:16px;width:100%;max-width:760px;max-height:88vh;overflow-y:auto;box-shadow:0 16px 48px rgba(0,0,0,0.18);animation:slideUp .25s ease}
-.modal-head{padding:22px 24px 16px;position:sticky;top:0;background:#fff;z-index:2;border-bottom:1px solid #f0f0f0}
+.modal-head{padding:22px 24px 16px;position:sticky;top:0;background:#fff;z-index:2;border-bottom:1px solid #f0f0f0;border-radius:16px 16px 0 0}
 .modal-head .bread{font-size:0.78em;color:var(--text-lighter);margin-bottom:4px}
 .modal-head h2{font-size:1.2em;line-height:1.4}
 .modal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;border:none;background:#f0f1f5;font-size:1em;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s;color:#666}
 .modal-close:hover{background:#e0e2e8}
 .modal-body{padding:20px 24px 24px}
-
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
 /* Content modules */
-.module{margin-bottom:20px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.module-head{padding:12px 16px;background:#fafbfc;font-weight:600;font-size:0.92em;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;border-bottom:1px solid transparent}
+.module{margin-bottom:18px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.module-head{padding:12px 16px;font-weight:600;font-size:0.92em;display:flex;align-items:center;gap:8px;cursor:pointer;user-select:none;border-bottom:1px solid transparent;transition:background .2s}
 .module.open .module-head{border-bottom-color:var(--border)}
+.module-head:hover{filter:brightness(0.97)}
 .module-head .mod-arrow{margin-left:auto;transition:transform .25s;font-size:0.7em;color:#999}
 .module.open .module-head .mod-arrow{transform:rotate(180deg)}
 .module-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
@@ -92,7 +165,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Micr
 .mod-scripts .module-head{background:#f0f6ff;color:#2563eb}
 .mod-case .module-head{background:#f8f5fe;color:#6d28d9}
 .mod-methodology .module-head{background:#ecfef0;color:#065f46}
-.mod-quiz .module-head{background:#fff7ed;color:#c2410c}
 
 /* Script cards */
 .script-card{background:#f8fafd;border-radius:8px;padding:12px 14px;margin-bottom:8px;border-left:3px solid var(--blue)}
@@ -141,35 +213,130 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Micr
 .review-item .right-ans{color:#27ae60;font-weight:600}
 .review-item .explain{color:#999;margin-top:6px;font-size:0.85em}
 
-.empty-state{text-align:center;padding:60px 20px;color:#bbb}
-.empty-state .empty-icon{font-size:3em;margin-bottom:10px}
+/* Footer */
+.app-footer{text-align:center;padding:20px;color:var(--text-lighter);font-size:0.78em;border-top:1px solid var(--border);margin-top:24px}
 
+@media(max-width:768px){
+  .welcome-features{grid-template-columns:1fr;gap:12px}
+  .welcome-hero h1{font-size:1.7em}
+  .welcome-stats{gap:16px}
+  .stats-dashboard{grid-template-columns:repeat(2,1fr)}
+}
 @media(max-width:640px){
-  .header h1{font-size:1.4em}
   .card-grid{grid-template-columns:1fr}
   .modal{max-width:100%;max-height:100vh;border-radius:0;margin:0}
   .modal-overlay{padding:0;align-items:flex-start}
   .modal-head{border-radius:0;position:sticky;top:0}
   .container{padding:10px 12px}
-  .tabs{gap:4px}
-  .tab{padding:5px 10px;font-size:0.78em}
+  .tabs{gap:5px}
+  .tab{padding:6px 12px;font-size:0.78em}
+  .search-section{padding:12px 14px}
+  .top-nav{padding:0 12px}
+  .top-nav .nav-logo{font-size:0.9em}
 }
 </style>
 </head>
 <body>
-<div class="container">
-  <div class="header">
-    <h1>培训主任实战案例库</h1>
-    <p>遇到管理难题？找到你的场景 → 拆解案例 → 学习相关能力项 → 自测巩固</p>
+
+<!-- ====== WELCOME PAGE ====== -->
+<div class="welcome-page" id="welcomePage">
+  <div class="welcome-container">
+    <div class="welcome-badge">培训主任能力提升系统</div>
+    <div class="welcome-hero">
+      <span class="hero-icon">📚</span>
+      <h1>主任实战案例库</h1>
+      <p class="subtitle">从骨干到管理者，系统提升你的六项核心能力<br>找到场景 → 拆解案例 → 学习方法论 → 自测巩固</p>
+    </div>
+
+    <div class="welcome-features">
+      <div class="welcome-feature">
+        <span class="f-icon">🎯</span>
+        <h3>场景化学习</h3>
+        <p>27个真实管理场景，覆盖角色认知、绩效推进、人才识别、员工辅导、管理执行、问题解决六大板块</p>
+      </div>
+      <div class="welcome-feature">
+        <span class="f-icon">🛠️</span>
+        <h3>工具化方法论</h3>
+        <p>每个案例配套 GROW、BIC、SMART、5Why 等专业管理工具，学完即可落地应用</p>
+      </div>
+      <div class="welcome-feature">
+        <span class="f-icon">📊</span>
+        <h3>进度可视化</h3>
+        <p>6大能力项掌握度实时追踪，配套自测考题，学习效果清晰可见，薄弱环节一目了然</p>
+      </div>
+    </div>
+
+    <div class="welcome-stats">
+      <div class="welcome-stat"><div class="ws-num">27</div><div class="ws-label">实战案例</div></div>
+      <div class="welcome-stat"><div class="ws-num">6</div><div class="ws-label">能力板块</div></div>
+      <div class="welcome-stat"><div class="ws-num">36</div><div class="ws-label">自测考题</div></div>
+      <div class="welcome-stat"><div class="ws-num">6</div><div class="ws-label">管理工具</div></div>
+    </div>
+
+    <button class="btn-start" onclick="startLearning()">
+      开始学习 <span class="arrow">→</span>
+    </button>
   </div>
-  <div class="top-bar">
-    <input class="search-input" id="searchInput" placeholder="搜索管理难题，如：下属执行跑偏、新人留不住、团队动力不足..." oninput="renderCaseCards()">
-    <button class="btn-reset" onclick="resetProgress()">重置进度</button>
-  </div>
-  <div class="tabs" id="tabs"></div>
-  <div class="stats" id="stats"></div>
-  <div class="card-grid" id="cardGrid"></div>
 </div>
+
+<!-- ====== MAIN APP ====== -->
+<div class="main-app" id="mainApp">
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <div class="top-nav-inner">
+      <div class="nav-logo" onclick="goToWelcome()">📚 主任实战案例库</div>
+      <div class="nav-actions">
+        <button class="btn-back" onclick="goToWelcome()">← 返回首页</button>
+        <button class="btn-reset-nav" onclick="resetProgress()">重置进度</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Search Section -->
+    <div class="search-section">
+      <div class="search-row">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input class="search-input" id="searchInput" placeholder="搜索管理难题、能力项、场景关键词...">
+        </div>
+      </div>
+      <div class="search-hint">
+        💡 试试搜索：<span class="hint-tag" onclick="quickSearch('执行')">执行跑偏</span><span class="hint-tag" onclick="quickSearch('流失')">新人流失</span><span class="hint-tag" onclick="quickSearch('授权')">授权</span><span class="hint-tag" onclick="quickSearch('辅导')">辅导</span><span class="hint-tag" onclick="quickSearch('目标')">目标</span><span class="hint-tag" onclick="quickSearch('投诉')">投诉</span>
+      </div>
+    </div>
+
+    <!-- Category Section -->
+    <div class="category-section">
+      <div class="section-header">
+        <span class="section-icon">📂</span>
+        <h2>能力板块</h2>
+        <span class="section-hint">点击筛选案例</span>
+      </div>
+      <div class="tabs" id="tabs"></div>
+    </div>
+
+    <!-- Stats Dashboard -->
+    <div class="section-header">
+      <span class="section-icon">📈</span>
+      <h2>学习概览</h2>
+      <span class="section-hint">悬停卡片查看详情</span>
+    </div>
+    <div class="stats-dashboard" id="stats"></div>
+
+    <!-- Case Grid -->
+    <div class="section-header">
+      <span class="section-icon">📖</span>
+      <h2>案例列表</h2>
+      <span class="section-hint" id="caseCount"></span>
+    </div>
+    <div class="card-grid" id="cardGrid"></div>
+
+    <div class="app-footer">培训主任实战案例库 · 从骨干到管理者的系统提升工具</div>
+  </div>
+</div>
+
+<!-- Modal -->
 <div class="modal-overlay" id="modalOverlay" style="display:none" onclick="if(event.target===this)closeOrConfirm()">
   <div class="modal" id="modal"></div>
 </div>
@@ -178,524 +345,337 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Micr
 const STORAGE_KEY='competency_progress';
 let activeCategory='all',quizState=null;
 
-// ====== 案例库（完整知识库内容） ======
+// ====== 页面切换 ======
+function startLearning(){
+  document.getElementById('welcomePage').style.display='none';
+  document.getElementById('mainApp').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function goToWelcome(){
+  if(quizState&&quizState.answers.length>0){if(!confirm('确定返回首页？当前自测进度将不会保存。'))return}
+  quizState=null;
+  document.removeEventListener('keydown',quizKeyHandler);
+  closeModal();
+  document.getElementById('mainApp').style.display='none';
+  document.getElementById('welcomePage').style.display='flex';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function quickSearch(keyword){
+  startLearning();
+  setTimeout(()=>{
+    document.getElementById('searchInput').value=keyword;
+    setCategory('all');
+    renderCaseCards();
+    document.getElementById('searchInput').focus();
+  },400);
+}
+
+// ====== 案例库 ======
 const caseLibrary=[
-// ========== 角色认知与目标规划 ==========
 {id:1,title:"老员工不服新主任管怎么办",category:"角色认知与目标规划",icon:"💡",
  sections:[
   {type:"scene",title:"典型场景",body:`<p>李主任上任6个月，是从外部调入的，团队里有个叫张强的老员工做了3年，经验丰富但近期业绩连续下滑。李主任想进行一对一辅导，张强一开口就说："主任，你才来半年，我在这行都三年了，我的经验比你丰富多了，我知道怎么做。"</p><p>李主任愣住了，不知道该怎么往下说。</p>`},
   {type:"diagnosis",title:"问题诊断",body:`<p>老员工的抵触本质上不是"不尊重"，而是<strong>"我的价值没有被看见"</strong>。他的防御姿态源于对自身经验被否定的恐惧，以及对新主任能力的观望。</p><p>直接争论谁经验多只会让冲突升级——老员工需要的是被尊重、被看见，而非被教导。</p>`},
-  {type:"solution",title:"处理流程",body:`<ol class="step-list">
-<li data-num="1"><strong>承认对方价值，建立尊重基础</strong><br>不要正面争论谁经验多，先肯定他的价值，让他感受到被尊重。<br>"张强，你的经验确实比我丰富，这也是我一直很尊重你的原因。"<br><em>为什么：老员工的抵触本质上是"我的价值没有被看见"。先给尊重，才能打开对话的门。</em></li>
-<li data-num="2"><strong>用数据引导，把话题拉回事实</strong><br>不说主观判断，只呈现数据，引导他自己思考原因。<br>"我看了一下数据，你的电话接通率这个月从45%降到了30%，催收成功率从25%降到了15%。你觉得主要是什么原因？"</li>
-<li data-num="3"><strong>平等对话，邀请他成为方案制定者</strong><br>"以你的经验，你觉得怎么调整比较有效？我需要你的建议。"<br>把对抗关系转为合作关系，让他从"被管理者"变为"参与决策者"。</li>
-<li data-num="4"><strong>给出具体方案和承诺</strong><br>"接下来两周，我们每周过一遍数据，你主攻M3客户，我帮你协调名单分配。"<br>让他看到你的价值不只是"管理"，更是"支持"和"资源调配"。</li>
-<li data-num="5"><strong>建立跟进机制</strong><br>每周固定15分钟一对一，不是检查，是"同步信息+资源支持"。用持续的尊重和实际支持建立信任。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">打开僵局（承认价值）</div><div class="line">"张强，你的经验确实比我丰富，这也是我一直很尊重你的原因。我来找你，是想听听你对目前团队情况的看法。"</div></div>
-<div class="script-card"><div class="scene-label">用数据引导（避免主观判断）</div><div class="line">"我看了一下数据，你的电话接通率这个月从45%降到了30%。你觉得主要是什么原因？我想听听你的判断。"</div></div>
-<div class="script-card"><div class="scene-label">邀请参与（合作关系）</div><div class="line">"以你的经验，你觉得怎么调整比较有效？我需要你的建议——你对这批客户的了解比我深。"</div></div>
-<div class="script-card"><div class="scene-label">设定跟进（建立机制）</div><div class="line">"接下来两周，我们每周三下午花15分钟过一遍数据。你主攻M3，我帮你协调名单。有任何问题随时找我。"</div></div>`},
+  {type:"solution",title:"处理流程",body:`<ol class="step-list"><li data-num="1"><strong>承认对方价值，建立尊重基础</strong><br>不要正面争论谁经验多，先肯定他的价值，让他感受到被尊重。<br>"张强，你的经验确实比我丰富，这也是我一直很尊重你的原因。"<br><em>为什么：老员工的抵触本质上是"我的价值没有被看见"。先给尊重，才能打开对话的门。</em></li><li data-num="2"><strong>用数据引导，把话题拉回事实</strong><br>不说主观判断，只呈现数据，引导他自己思考原因。<br>"我看了一下数据，你的电话接通率这个月从45%降到了30%，催收成功率从25%降到了15%。你觉得主要是什么原因？"</li><li data-num="3"><strong>平等对话，邀请他成为方案制定者</strong><br>"以你的经验，你觉得怎么调整比较有效？我需要你的建议。"<br>把对抗关系转为合作关系，让他从"被管理者"变为"参与决策者"。</li><li data-num="4"><strong>给出具体方案和承诺</strong><br>"接下来两周，我们每周过一遍数据，你主攻M3客户，我帮你协调名单分配。"<br>让他看到你的价值不只是"管理"，更是"支持"和"资源调配"。</li><li data-num="5"><strong>建立跟进机制</strong><br>每周固定15分钟一对一，不是检查，是"同步信息+资源支持"。用持续的尊重和实际支持建立信任。</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">打开僵局（承认价值）</div><div class="line">"张强，你的经验确实比我丰富，这也是我一直很尊重你的原因。我来找你，是想听听你对目前团队情况的看法。"</div></div><div class="script-card"><div class="scene-label">用数据引导（避免主观判断）</div><div class="line">"我看了一下数据，你的电话接通率这个月从45%降到了30%。你觉得主要是什么原因？我想听听你的判断。"</div></div><div class="script-card"><div class="scene-label">邀请参与（合作关系）</div><div class="line">"以你的经验，你觉得怎么调整比较有效？我需要你的建议——你对这批客户的了解比我深。"</div></div><div class="script-card"><div class="scene-label">设定跟进（建立机制）</div><div class="line">"接下来两周，我们每周三下午花15分钟过一遍数据。你主攻M3，我帮你协调名单。有任何问题随时找我。"</div></div>`},
   {type:"case",title:"实战案例",body:`<p><strong>场景还原：</strong>李主任上任6个月，老员工张强做了3年但近期业绩下滑。李主任想辅导他，张强开口就是"我经验比你丰富"。</p><p><strong>处理过程：</strong>李主任没有争论谁经验多，而是先说"你的经验确实比我丰富，这也是我尊重你的原因"，然后用数据引导——"你的接通率从45%降到30%，你觉得原因是什么？"接着邀请张强参与方案制定——"以你的经验，你觉得怎么调整？"</p><p><strong>案例结果：</strong>张强从防御姿态转为合作姿态，主动分析了近期名单质量变化的原因，并同意每周过一遍数据、主攻M3客户的方案。</p><p><strong>案例分析：</strong>老员工不服管的本质是"我的价值你没看到"。第一步永远是先给尊重和认可，再用数据说话，最后让他参与方案制定——把"你要听我的"变成"我们一起定方案"。</p>`},
   {type:"methodology",title:"背后方法论：从骨干到管理者的角色转型",body:`<p>新主任完成角色转型需要完成<strong>三大转变</strong>：</p><ul><li><strong>从"自己做"到"带着做"</strong>——学会合理授权和有效辅导，让团队成员在实践中成长</li><li><strong>从"专注事"到"关注人"</strong>——不仅关注业务产出，更要关注成员的心理状态和职业发展</li><li><strong>从"线性思维"到"全局思维"</strong>——跳出单一执行视角，平衡短期业绩与长期发展</li></ul><p><strong>成熟主任三大核心价值：</strong>目标转化器（公司目标→团队行动）、问题解决者、人才孵化器。</p><p><strong>五大转型误区：</strong>事必躬亲、只盯数字忽视人、回避冲突当老好人、不善向上沟通、忽视自我成长。</p><p>本案例重点涉及<strong>误区三"回避冲突当老好人"</strong>的反面处理——用异议处理五步法把冲突转化为改进机会。</p>`}
  ],competencyId:1,questionIds:[1,2]},
 {id:2,title:"新人很忙但没有回款怎么办",category:"角色认知与目标规划",icon:"💡",
  sections:[
   {type:"scene",title:"典型场景",body:`<p>新人小陈每天忙得脚不沾地，打电话打到嗓子哑，但月底回款几乎为零。主任观察后发现，小陈确实在打电话，但他随机拨打名单，没有优先级，打了几百通电话但有效联系不到20通。</p><p>主任给的指令是"多打电话"——但"多"是多少？打给谁？什么算有效？这些都没说清楚。小陈按照自己的理解在"努力"，但方向完全错了。</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>新人缺乏清晰的<strong>"靶心"</strong>，不知道每天具体应该做到什么。问题不在于不努力，而在于主任用<strong>模糊目标</strong>管理新人——"多打电话"不是目标，"每天完成15通有效通话+产出3个意向客户"才是。</p><p>新人需要三样东西：①明确的量化目标 ②案件优先级判断方法 ③每日即时反馈。</p>`},
-  {type:"solution",title:"处理流程",body:`<ol class="step-list">
-<li data-num="1"><strong>用SMART原则把模糊目标转化为具体目标</strong><br>"每天至少完成15通有效通话（客户本人接听并完成沟通），每天产出至少3个意向客户。"<br>把"多打电话"翻译成可以每天检查的具体指标。</li>
-<li data-num="2"><strong>教会案件优先级判断</strong><br>给新人一个简单的判断口诀：先打高意向客户（近期有承诺/有还款能力），再打中等意向，最后打低意向。不要让新人自己去"摸索"优先级。</li>
-<li data-num="3"><strong>建立每日检查机制</strong><br>下班前5分钟看数据——今天有效通话几通？意向客户几个？偏离立刻提醒。不等月底才看结果。</li>
-<li data-num="4"><strong>前两周每日陪听1-2通电话</strong><br>打完立刻给反馈（先肯定再改进），不等到第二天。让新人每天都有"今天我进步了"的体验。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">把模糊目标变具体</div><div class="line">"小陈，这个月你的核心目标不是'多打电话'，而是'每天15通有效通话+3个意向客户'。来，我们一起看一下今天的数据达到了没有。"</div></div>
-<div class="script-card"><div class="scene-label">教优先级判断</div><div class="line">"拿到名单不要按顺序打。先看客户标签——红标的是高意向先打，黄标中等次之，绿标最后打。来，我们一起把今天的名单筛一遍。"</div></div>
-<div class="script-card"><div class="scene-label">每日即时反馈</div><div class="line">"今天你有效通话12通，差3通达标，但意向客户有4个——超了！你的方向是对的，继续保持，明天有效通话争取到15通。"</div></div>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>新人缺乏清晰的<strong>"靶心"</strong>，不知道每天具体应该做到什么。问题不在于不努力，而在于主任用<strong>模糊目标</strong>管理新人——"多打电话"不是目标，"每天完成15通有效通话+产出3个意向客户"才是。</p><p>新人需要三样东西：明确的量化目标、案件优先级判断方法、每日即时反馈。</p>`},
+  {type:"solution",title:"处理流程",body:`<ol class="step-list"><li data-num="1"><strong>用SMART原则把模糊目标转化为具体目标</strong><br>"每天至少完成15通有效通话（客户本人接听并完成沟通），每天产出至少3个意向客户。"<br>把"多打电话"翻译成可以每天检查的具体指标。</li><li data-num="2"><strong>教会案件优先级判断</strong><br>给新人一个简单的判断口诀：先打高意向客户（近期有承诺/有还款能力），再打中等意向，最后打低意向。不要让新人自己去"摸索"优先级。</li><li data-num="3"><strong>建立每日检查机制</strong><br>下班前5分钟看数据——今天有效通话几通？意向客户几个？偏离立刻提醒。不等月底才看结果。</li><li data-num="4"><strong>前两周每日陪听1-2通电话</strong><br>打完立刻给反馈（先肯定再改进），不等到第二天。让新人每天都有"今天我进步了"的体验。</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">把模糊目标变具体</div><div class="line">"小陈，这个月你的核心目标不是'多打电话'，而是'每天15通有效通话+3个意向客户'。来，我们一起看一下今天的数据达到了没有。"</div></div><div class="script-card"><div class="scene-label">教优先级判断</div><div class="line">"拿到名单不要按顺序打。先看客户标签——红标的是高意向先打，黄标中等次之，绿标最后打。来，我们一起把今天的名单筛一遍。"</div></div><div class="script-card"><div class="scene-label">每日即时反馈</div><div class="line">"今天你有效通话12通，差3通达标，但意向客户有4个——超了！你的方向是对的，继续保持，明天有效通话争取到15通。"</div></div>`},
   {type:"case",title:"实战案例",body:`<p><strong>场景还原：</strong>新人小陈每天打电话到嗓子哑，但月底回款为零。主任观察发现他随机拨打名单，有效联系不到20通。</p><p><strong>处理过程：</strong>把"多打电话"翻译成"每天15通有效通话+3个意向客户"，教会他按红/黄/绿标签判断优先级，下班前5分钟检查数据，前两周每天陪听1-2通并即时反馈。</p><p><strong>案例结果：</strong>两周后小陈的意向客户产出从0提升到日均2个，月底开始有了首笔回款。</p><p><strong>案例分析：</strong>新人"忙但没有结果"的根因是管理者给了模糊目标。主任的价值就是把一句话目标翻译成每个人明天能瞄准的具体靶心。</p>`},
-  {type:"methodology",title:"背后方法论：SMART目标制定与传递",body:`<p><strong>SMART五要素：</strong></p><ul><li><strong>S（Specific）具体的</strong>——用明确语言描述行为标准。如"每通电话完成客户需求确认+还款意愿判断+下次跟进约定"</li><li><strong>M（Measurable）可衡量</strong>——有明确数据作为衡量依据。如"日均回款从2000提升到3000"</li><li><strong>A（Achievable）可实现</strong>——有挑战但跳一跳够得着。如"新人首月日均回款500，次月800"</li><li><strong>R（Relevant）相关</strong>——与岗位职责关联。如"学会用日报表分析通话效率"而非"学会做PPT"</li><li><strong>T（Time-based）有时限</strong>——有明确时间节点。如"本周五下班前完成"而非"尽快"</li></ul><p><strong>目标解码三步法：</strong>①理解公司目标背后的"为什么"→ ②翻译成团队语言（组员听完能说出明天做什么不一样）→ ③分解到个人行动（结果目标→过程目标→行动目标）。</p>`}
- ],competencyId:1,questionIds:[3,4]},
-
-// ========== 绩效推进与沟通 ==========
-{id:5,title:"下属执行总是跑偏怎么办",category:"绩效推进与沟通",icon:"💬",
- sections:[
-  {type:"scene",title:"典型场景",body:`<p>主任老张给组员布置任务："这批案件你跟进一下，尽快处理。"组员点头说好。三天后老张发现，组员只联系了其中几单，而且用了错误的话术方式，完全没有达到预期效果。</p><p>老张很生气："我不是叫你跟进吗？"组员委屈："我确实跟进了啊……"</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>老张的指令存在严重的<strong>"沟通漏斗"</strong>——主任心里想100%，嘴上说80%，下属听到60%，真正执行的只有40%。</p><p>这背后缺失了四个关键信息：<strong>Why</strong>（为什么跟这批案件）、<strong>What</strong>（要达到什么效果）、<strong>How</strong>（用什么方式跟进）、<strong>Check</strong>（什么时候检查）。组员只能按自己的理解去执行，必然跑偏。</p>`},
-  {type:"solution",title:"处理流程——清晰派活四步法",body:`<ol class="step-list">
-<li data-num="1"><strong>说明Why与What</strong><br>"这批案件是月底冲刺的重点，需要在本周五前完成首轮跟进。目标是每单至少完成一次有效联系，记录客户的还款意愿和关键信息。"<br>先统一思想和标准，下属才有判断依据。</li>
-<li data-num="2"><strong>明确Who与When</strong><br>"小张你负责这一批，周五下班前完成。周三下午我检查一次进度。"<br>确定责任人和时间节点，避免任务石沉大海。</li>
-<li data-num="3"><strong>确认How</strong><br>"之前我们培训过针对这类案件的话术要点，你还记得吗？需要我再过一遍吗？"<br>确保下属知道用什么方法去执行。</li>
-<li data-num="4"><strong>Check复述确认</strong><br>"你花30秒跟我复述一下：这个任务最关键的目标和最重要的一步分别是什么？"<br>让下属主动复述验证理解，比问"听懂了吗"有效十倍。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">清晰派活（标准模板）</div><div class="line">"这批案件[Why+What]，由你负责[Who]，周五前完成[When]。之前培训的话术要点需要再过一遍吗？[How]。你花30秒复述一下最关键的目标是什么？[Check]"</div></div>
-<div class="script-card"><div class="scene-label">发现跑偏时</div><div class="line">"我看了一下你这两天的执行情况，方向和我预期的有些不同。我们来对齐一下——我当时的理解是XXX，你的理解是什么？我们一起重新校准。"</div></div>`},
-  {type:"case",title:"实战案例",body:`<p><strong>场景还原：</strong>老张说"这批案件跟进一下"，组员按自己的理解只联系了几单且用了错误话术。</p><p><strong>处理过程：</strong>重新用清晰派活四步法——说明Why+What（月底冲刺，每单完成有效联系并记录还款意愿）→明确Who+When（小张负责，周五前完成，周三检查）→确认How→让组员复述关键目标。</p><p><strong>案例结果：</strong>组员后续执行准确率大幅提升，不再出现理解偏差。</p><p><strong>案例分析：</strong>永远不要让下属猜你在想什么，不要假设"我说了=他听懂了"。对抗沟通漏斗的核心是让下属主动复述。</p>`},
-  {type:"methodology",title:"背后方法论：清晰派活四步法",body:`<p><strong>沟通漏斗原理：</strong>心里想100%→嘴上说80%→下属听到60%→执行40%。信息逐级传递中不断衰减，必须用结构化方法对抗漏斗效应。</p><p><strong>清晰派活四步法：</strong></p><ul><li>① <strong>Why + What</strong>：先讲目的和目标，统一思想和标准</li><li>② <strong>Who + When</strong>：确定责任人和时间节点</li><li>③ <strong>How</strong>：确认方法、资源和支持</li><li>④ <strong>Check</strong>：让下属主动复述验证理解（而不是问"你听懂了吗"）</li></ul><p><strong>高效听报三要素：</strong>听事实（非情绪）、听困难（非借口）、听方案（非只抛问题）。</p>`}
- ],competencyId:2,questionIds:[7,8,11]},
-
-{id:7,title:"下属汇报情绪化说不清楚怎么办",category:"绩效推进与沟通",icon:"💬",
- sections:[
-  {type:"scene",title:"典型场景",body:`<p>下午收案刚结束，组员小张来找主任："这批案子真的太烂了！客户不是失联就是耍无赖，今天打了一上午完全没进展，感觉没法搞！"</p><p>主任内心OS：到底什么情况？是案子本身问题，还是你能力问题？如果此时说"案子不差啊大家都在跟"，下属会觉得被否定更难沟通。如果随着情绪走，两人一起抱怨，问题还是没解决。</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>下属在汇报中用<strong>情绪词汇</strong>（"太烂了""完全没进展""没法搞"）替代了事实描述。这是典型的"情绪信号"——需要管理者用方法把模糊情绪拆解为可分析的客观事实。</p><p>关键信号词：模糊词（"好像""可能"）、夸张词（"烂透了""完全没用"）、以偏概全（"每次""总是""所有都"）。</p>`},
-  {type:"solution",title:"处理流程——共情→引导→转向三步法",body:`<ol class="step-list">
-<li data-num="1"><strong>共情——接住情绪，不要直接反驳</strong><br>"我完全理解你的挫败感，这批客户已经跟进好几轮了，每一轮都遇到新问题。"<br>目的不是"认可他的结论"，而是"让他感受到被理解"，为后续沟通打开门。<br><em>注意：不要说"但是……"这类立刻反转的话，会让下属关闭。</em></li>
-<li data-num="2"><strong>引导——用5W2H把情绪转化为事实</strong><br>"我们一起来把情况理清楚。今天上午你拨打了多少次？无人接听、关机、空号各多少个？有联系上的客户里，拒绝的理由主要是什么？"<br>用具体问题把"案子太烂"这个模糊结论拆解成可分析的数据。</li>
-<li data-num="3"><strong>转向——总结事实，推进分析解决</strong><br>"所以情况是这样：上午拨打了200个，无人接听约100个，关机40个，空号60个。根据你观察，联系难度高的原因主要是什么？你觉得有什么可以尝试的方法？"<br>用一句话总结事实，然后把问题引向分析和行动。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">识别情绪信号后共情</div><div class="line">"我完全理解你的挫败感。我们先不急着下结论，花两分钟把情况理清楚——今天具体的数据是怎样的？"</div></div>
-<div class="script-card"><div class="scene-label">面对以偏概全（"所有客户都不接"）</div><div class="line">"'所有客户都不接'——我们来数一下，今天100个里面有多少个真的没接？多少个是关机或空号？多少个是接了但拒绝？"</div></div>
-<div class="script-card"><div class="scene-label">总结事实推进解决</div><div class="line">"所以核心问题是这批新入催首轮接通率只有30%，低于平均。针对这个问题，你觉得有什么可以尝试的方法？"</div></div>`},
-  {type:"case",title:"实战案例",body:`<p><strong>场景还原：</strong>员工汇报"案子太差，联系不上"。主任用三步法把对话从"案子差"聚焦到"上午拨打新入催案件，无人接听率高达50%"这个具体事实上。</p><p><strong>处理过程：</strong>①共情——"我理解你的挫败感，新入催接通率低是真实挑战"；②引导——"上午联系了多少？接通了多少？不同失联类型各多少？"；③转向——"所以情况是100个里面50个无人接听。接通的里面谈成承诺的有多少？根据这个数据，你觉得是案件质量问题还是拨打策略问题？"</p><p><strong>案例分析：</strong>问题不在于"下属说话啰嗦"，而在于主任有没有用方法把模糊情绪转化为可操作的事实。只要用5W2H拆解，任何"说不清楚"的汇报都可以被引导成清晰的数据分析。</p>`},
-  {type:"methodology",title:"背后方法论：高效听报三要素（听事实而非情绪）",body:`<p><strong>高效听报三要素：</strong></p><ul><li><strong>听事实，而非情绪</strong>——识别情绪信号（模糊词/夸张词/以偏概全），用5W2H拉回客观事实</li><li><strong>听困难，而非借口</strong>——区分真困难（能力/资源不足）和假借口（外部归因/笼统概括）</li><li><strong>听方案，而非只抛问题</strong>——要求员工带着初步想法来汇报</li></ul><p>心理学研究表明，当一个人的情绪被"命名"和"接纳"时，情绪本身会降低约50%的强度，认知功能随之恢复。主任先共情，不是在"安慰"下属，而是在帮下属从情绪脑切换回理性脑。</p>`}
- ],competencyId:2,questionIds:[7,8,9]},
-
-// ========== 人才识别与授权 ==========
-{id:9,title:"每天被员工缠身没时间做管理",category:"人才识别与授权",icon:"🔑",
- sections:[
-  {type:"scene",title:"典型场景",body:`<p>主任老王每天都陷在组员的"求助"中——"王哥，这个客户说什么都不肯还钱怎么办？""王哥，系统又卡了帮我看看。""王哥，这个录音你帮我审一下。"</p><p>老王忙得团团转，但月底一看数据，团队业绩反而下降了。他每天加班到最晚，但做的全是组员应该自己解决的事。</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>这是典型的<strong>"王磊困局"</strong>——主任把时间都花在了替员工解决问题上，没有做真正的管理工作。审核录音、回答操作问题这些是"可授权的重复性工作"，应该培养组内骨干来分担。</p><p>管理者的时间是最稀缺的资源，永远做<strong>"只有你能做的事"</strong>——数据分析、策略优化、重点员工辅导。其他事情都应该授权出去。</p>`},
-  {type:"solution",title:"处理流程——有效授权六步法",body:`<ol class="step-list">
-<li data-num="1"><strong>设定目标</strong><br>向授权对象说清楚任务要达到什么结果："从下周起，你负责审核组内每天的通话录音，标准是每人每天至少抽检2通，发现问题当天反馈。"</li>
-<li data-num="2"><strong>明确边界</strong><br>权力边界："你可以直接给组员反馈话术问题，但涉及合规红线的问题必须同步给我。"<br>资源支持："你需要的话可以协调其他组的录音做对比参考。"<br>禁忌红线："绝对不能因为个人关系打人情分。"</li>
-<li data-num="3"><strong>确定汇报</strong><br>"每天下班前在群里发一条'今日录音审核小结'，每周五给我一份本周录音质量趋势简报。"</li>
-<li data-num="4"><strong>确认理解</strong><br>"你花一分钟复述一下：这个任务的核心目标和你拥有的权限边界分别是什么？"——让被授权者主动复述。</li>
-<li data-num="5"><strong>公开宣布</strong><br>在晨会上宣布："从下周起，录音审核由小刘负责。大家有录音相关问题直接找小刘，他会统一反馈给我。"——赋予正式权力。</li>
-<li data-num="6"><strong>跟进兜底</strong><br>第一周每天关注小刘的审核结果，有问题用教练式提问引导："你觉得今天这几通录音的反馈，哪个最到位？哪个还可以更具体？"而不是直接说"你不对"。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">识别授权机会</div><div class="line">"审核录音这件事，你来做可能比我做更好——你每天和组员在一起，更了解他们的通话习惯。我教你怎么审，你来负责日常审核。"</div></div>
-<div class="script-card"><div class="scene-label">教练式跟进（而非指令干预）</div><div class="line">"这周录音审核你最大的感受是什么？有遇到什么拿不准的情况吗？你觉得哪些类型的错误最频繁？针对这些你有什么改进建议？"</div></div>`},
-  {type:"case",title:"实战案例",body:`<p><strong>场景还原：</strong>王磊每天花2小时审核录音，导致无暇分析数据、优化策略。团队离开他就转不动。</p><p><strong>处理过程：</strong>识别出审核录音是可授权的重复性工作，选择组内能力强意愿高的小刘作为授权对象。用六步法走完全程——设定目标、明确边界、确定汇报、确认理解、公开宣布、跟进兜底。同时培养其他员工"带方案来"的习惯。</p><p><strong>案例结果：</strong>王磊每天省下2小时用于数据分析和策略优化，小刘获得成长机会，团队整体效率提升。</p><p><strong>案例分析：</strong>授权不是甩锅——六步法每一步都是为了防止"授权了但做不好"。特别是"公开宣布"和"跟进兜底"这两步，很多管理者跳过，导致授权形同虚设。</p>`},
-  {type:"methodology",title:"背后方法论：有效授权六步法",body:`<p><strong>授权与甩锅的本质区别：</strong>有效授权有目标、有过程支持、最终责任在管理者；甩锅是推卸责任。</p><p><strong>六步法：</strong>①设定目标 → ②明确边界（权力边界+资源支持+禁忌红线）→ ③确定汇报 → ④确认理解（让员工复述）→ ⑤公开宣布（赋予正式权力，团队知道"这件事他说了算"）→ ⑥跟进兜底（不等于不管）。</p><p><strong>选对人：</strong>用准备度矩阵，识别"高能力+高意愿"的明星员工作为优先授权对象。</p><p><strong>选对事：</strong>80%原则——如果下属能把事做到你期望的80%，就值得授权。剩下20%是成长空间。</p>`}
- ],competencyId:3,questionIds:[14,15,16,18]},
-
-// ========== 员工辅导与发展 ==========
-{id:13,title:"用GROW辅导时员工说不知道怎么办",category:"员工辅导与发展",icon:"🌱",
- sections:[
-  {type:"scene",title:"典型场景",body:`<p>主任用GROW模型对新员工小周进行辅导。问到Options阶段时，主任问："你觉得有哪些解决办法？"小周回答："不知道。"主任换了个角度又问，小周还是"不知道"。主任最后不得不自己给出答案，整个辅导变成了说教。</p><p>主任很沮丧：明明用了GROW，为什么还是走不下去？</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p><strong>"不知道"有四种类型，不能一刀切对待：</strong></p><ul><li><strong>真不知道</strong>——确实没想法，知识盲区 → 缩小范围问："如果你只能想到一个办法，会是什么？"</li><li><strong>怕说错</strong>——有想法但不敢说，怕被否定 → 先建立安全感："没关系，我们先发散，没有对错"</li><li><strong>敷衍抗拒</strong>——不想参与，被动应付 → 暂停辅导，先处理关系："我感觉你可能不太想聊这个话题，是不是我哪里没做到位？"</li><li><strong>认知盲区</strong>——不知道自己不知道 → 给一个示范打开思路："我之前遇到过一个类似情况，当时是这样做的……你觉得这个思路可以用在你这里吗？"</li></ul>`},
-  {type:"solution",title:"五种替代问法",body:`<ol class="step-list">
-<li data-num="1"><strong>给3秒沉默</strong><br>不要立刻接话。很多情况下员工只是需要一点思考时间，管理者急于填补沉默反而打断了思考。</li>
-<li data-num="2"><strong>缩小范围</strong><br>"如果你必须选一个方向，会是什么？" ——把无限选择变成有限选择。</li>
-<li data-num="3"><strong>假设条件</strong><br>"如果资源不是问题/如果你有足够的权限，你会怎么做？" ——卸下现实约束，打开思路。</li>
-<li data-num="4"><strong>参照经验</strong><br>"之前有没有遇到过类似情况？那时候怎么处理的？" ——从过往成功经验中找线索。</li>
-<li data-num="5"><strong>兜底策略——二选一</strong><br>"你觉得是A方案还是B方案更适合你？为什么？" ——至少让他做一个选择，避免辅导完全停滞。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">判断"不知道"的类型</div><div class="line">"你说不知道——是暂时还没想法，还是有想法但不太确定？没关系，我们今天不赶时间，你先想想。"</div></div>
-<div class="script-card"><div class="scene-label">缩小范围问</div><div class="line">"我们先不想那么多——如果你只能想到一个办法，哪怕不是最好的，那个办法会是什么？"</div></div>
-<div class="script-card"><div class="scene-label">兜底——二选一</div><div class="line">"我想到两个方向——A是升级施压，B是给客户一个台阶如分期方案。你觉得哪个更适合这个客户的实际情况？"</div></div>`},
-  {type:"case",title:"实战案例",body:`<p><strong>场景还原：</strong>主任用GROW辅导新员工小周，到Options阶段小周连续说"不知道"，辅导陷入僵局。</p><p><strong>处理过程：</strong>主任意识到可能是"怕说错"——小周是新人，怕自己的想法被否定。于是先给3秒沉默，然后说"没关系，我们只是先发散，没有对错，你随便说一个想法"。小周说了一个不太成熟的方案，主任没有否定，而是"这个方向有意思，我们顺着展开一下"。</p><p><strong>案例结果：</strong>小周逐渐放下戒备，后续辅导中主动发言的频率明显提高。</p><p><strong>案例分析：</strong>GROW辅导中员工说"不知道"很正常，这正是辅导的价值所在。关键是判断类型、选对策略。80%时间提问，20%时间建议——让员工自己说出答案远比直接告诉他更有力量。</p>`},
-  {type:"methodology",title:"背后方法论：GROW模型实战",body:`<p><strong>GROW四步法：</strong></p><ul><li><strong>G（Goal）目标设定</strong>——区分"会话目标"（今天聊完要找到什么）和"行动目标"（接下来一周要达到什么）。两个层次都要明确。</li><li><strong>R（Reality）现状分析</strong>——三个提问维度：客观事实（当前数据）、已做努力（试过什么方法）、障碍分析（卡点在哪）。不要追问"谁的错"。</li><li><strong>O（Options）方案探索</strong>——先发散后收敛。员工"不知道"时用五种替代问法。不要在这个阶段急于给答案。</li><li><strong>W（Will）行动确认</strong>——What做什么、When何时完成、Check如何验证、Support需要什么支持。用1-10分确认意愿，低于7分时探讨提升条件。</li></ul><p><strong>辅导的三个层次：</strong>纠错式（指出错误）→ 方法式（给方法+示范+练习）→ 教练式（提问激发+引导自悟+自主行动）。</p>`}
- ],competencyId:4,questionIds:[19,20,23]},
-
-// ========== 管理执行力 ==========
-{id:17,title:"定了目标团队就是不动怎么办",category:"管理执行力",icon:"⚡",
- sections:[
-  {type:"scene",title:"典型场景",body:`<p>公司下达了"本月回款提升15%"的目标，主任老刘第一时间在晨会上传达了："这个月我们团队回款要提升15%，大家打起精神来，好好干！"</p><p>一周过去了，老刘发现数据跟上周一模一样，没有任何变化。他在夕会上又说了一遍"目标很紧迫，你们要重视"，但第二周依然如故。老刘很不解："目标已经说得很清楚了，为什么大家就是不动？"</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>团队不动大多数情况不是因为<strong>"不想动"</strong>，而是因为<strong>"不知道该怎么动"</strong>。</p><p>检验标准：随便找一个组员问"为了完成这个月的目标，你明天准备怎么做？"如果他的回答是"多打点电话""多加把劲"之类的模糊表述，就说明他根本不知道具体该怎么动。</p><p>老刘做了"目标传声筒"——公司说什么就转述什么，没有做任何解码和翻译。</p>`},
-  {type:"solution",title:"处理流程——目标解码三步法",body:`<ol class="step-list">
-<li data-num="1"><strong>理解目标：自己先算一遍</strong><br>15%提升 ÷ 团队人数 → 人均需要多少？跟历史数据对比，差距在哪里？<br>"20万÷团队10人=人均2万。团队过去三个月人均1.5万，差距5000元。前面三周人均需要做到1.8万，最后一周冲刺2.5万。"<br>如果自己都不相信目标能达成，团队更不会相信。</li>
-<li data-num="2"><strong>翻译目标：把公司语言变成团队行为</strong><br>翻译标准：组员听完后能立刻说出来"我明天要做什么和以前不一样"。<br>"提升15%不是一句口号——你每天需要多打5通电话、多挖掘1个意向客户。这就是从1.5万到2万的距离。"</li>
-<li data-num="3"><strong>分解为个人每日行动</strong><br>结果目标（月回款2万）→ 过程目标（日均有效通话15通+意向客户3个）→ 行动目标（早上筛选5个高意向客户→上午集中外拨25通→下午25通+跟进意向客户→下班前更新跟踪表）。<br>必须分解到<strong>"明天早上9点具体做什么"</strong>的层级。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">目标解码：给团队算账</div><div class="line">"公司给我们的目标是20万。10个人人均2万，比上个月多了5000。多出来的这些从哪里来？如果我们每天多打5通电话、多挖掘1个意向客户，这个目标是可以够到的。我来给大家算一下……"</div></div>
-<div class="script-card"><div class="scene-label">帮员工拆到每日行动</div><div class="line">"你的月度目标是2万回款。按你的转化率大概需要多少个意向客户？嗯，那每天需要打出多少个意向？反过来，每天需要多少通有效通话？好，那你明天具体打算怎么安排时间？"</div></div>
-<div class="script-card"><div class="scene-label">检查理解</div><div class="line">"用你自己的话说一下，这个月你的核心目标是什么？你打算用哪些关键动作来实现它？你觉得自己最需要我帮什么？"</div></div>`},
-  {type:"case",title:"实战案例",body:`<p><strong>场景还原：</strong>老刘传达"本月回款提升15%"，一周后数据纹丝不动。团队不是不想动，是不知怎么动。</p><p><strong>处理过程：</strong>老刘重新做了目标解码——算了人均差距5000元→翻译成"每天多打5通电话+多挖1个意向客户"→拆到每个人每天上午打25通、下午25通、下班前更新跟踪表的具体动作。</p><p><strong>案例结果：</strong>第二周团队数据开始有明显变化，组员不再问"怎么做"，因为他们每天的动作清单已经清清楚楚。</p><p><strong>案例分析：</strong>目标本身没有动力，具体的行动才有动力。主任的价值就是把公司的一句话目标翻译成每个人明天的具体动作。不要做"目标传声筒"。</p>`},
-  {type:"methodology",title:"背后方法论：目标解码与执行落地",body:`<p><strong>目标解码三步法：</strong></p><ul><li>① <strong>理解目标背后的"为什么"</strong>——自己测算目标是否成立，如果自己都不信团队更不会信</li><li>② <strong>翻译成团队语言</strong>——翻译标准：组员听完能说出"明天要做什么不一样的事"</li><li>③ <strong>分解为个人行动</strong>——结果目标（月）→ 过程目标（日/周）→ 行动目标（每时段）</li></ul><p><strong>常见误区：</strong>"目标传声筒"——公司说什么直接转述；"只分解到月度"——月中才发现差一大截；"目标定得太低或太高"——用"跳一跳够得着"原则，比当前高20-30%。</p><p><strong>SMART原则配合使用：</strong>让每个分解后的目标都具体、可衡量、可实现、相关、有时限。</p>`}
- ],competencyId:5,questionIds:[25,26,29]},
-
-// ========== 团队问题分析与解决 ==========
-{id:21,title:"团队问题反复出现找不到根因",category:"团队问题分析与解决",icon:"🔍",
- sections:[
-  {type:"scene",title:"典型场景",body:`<p>"每个月的最后一周，团队的回款数据都会断崖式下跌。"主任老马已经连续三个月发现了这个规律。</p><p>每次都紧急开会、加班冲刺，勉强把月度目标完成，但下个月一切照旧。老马试过最后一周加大监督力度、把落后员工拉出来单独谈话、每天通报数据排名，但问题一直无法根除。他说："我知道这是个问题，但我不知道到底是哪里出了毛病。每次解决完下个月又回来了。"</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>老马每次都在处理<strong>"症状"</strong>（月底回款低），而不是解决<strong>"根因"</strong>（为什么月底回款低）。上次的"解决方案"只是加大力度临时冲刺——这就像发烧了只吃退烧药，不查感染源在哪里。</p><p><strong>判断标准：</strong></p><ul><li>这个问题以前出现过吗？出现了几次？</li><li>上次是怎么"解决"的？是解决了根因还是只处理了表面？</li><li>如果上次的解决方式是"加大力度临时冲刺"，那你很可能只处理了症状。</li></ul>`},
-  {type:"solution",title:"处理流程——5Why层层追问",body:`<ol class="step-list">
-<li data-num="1"><strong>Why 1：为什么月底回款断崖下跌？</strong><br>→ 因为最后一周大家打出去的承诺还款很多都跳票了（客户答应还但实际没还）。</li>
-<li data-num="2"><strong>Why 2：为什么承诺还款会跳票？</strong><br>→ 因为月初承诺的客户还款意愿正常，月底承诺的客户还款意愿明显偏低。</li>
-<li data-num="3"><strong>Why 3：为什么月底的客户还款意愿低？</strong><br>→ 因为月初大家先挑好打的客户（高意向/还款意愿强），难打的客户都留到了月底。</li>
-<li data-num="4"><strong>Why 4：为什么难打的都留到月底？</strong><br>→ 因为月初没有规定"每天必须按比例处理不同难度的案件"，大家都自然选择先打容易的。</li>
-<li data-num="5"><strong>Why 5 → 根因确认</strong><br>→ 缺少每日案件难度均衡分配机制。<br><strong>这不是员工态度问题，而是分配制度有漏洞。</strong></li></ol><p><strong>解决方案：</strong>每天分配案件时按照"难中易 = 3:4:3"的比例，避免好打案件月初消耗完。同时建立每周数据回顾机制，不让问题积累到月底才暴露。</p>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">5Why引导（合作姿态，非审问）</div><div class="line">"我们一起来梳理一下。你说月底回款总是跌——你觉得第一个可能的原因是什么？……嗯，那这个情况又是因为什么导致的呢？我们继续往下挖一层。"</div></div>
-<div class="script-card"><div class="scene-label">区分根因和症状</div><div class="line">"上次我们是靠加班冲刺解决的，但下个月又回来了。这说明我们上次处理的是症状而不是根因。这次我们需要找到'为什么这个事每个月都会发生'的真正原因。"</div></div>`},
-  {type:"case",title:"实战案例",body:`<p><strong>场景还原：</strong>老马连续三个月发现"月底回款断崖下跌"，每次都靠加班冲刺解决，但下个月一切照旧。</p><p><strong>处理过程：</strong>用5Why层层追问：月底回款跌→承诺跳票→月底客户意愿低→好打客户月初消耗完→没有均衡分配机制。找到了根因——分配制度有漏洞。</p><p><strong>案例结果：</strong>建立每日案件"难中易=3:4:3"分配机制后，月底回款断崖现象消失。同时设立了每周数据回顾，不再让问题积累到月底。</p><p><strong>案例分析：</strong>反复出现的问题说明你上次只处理了症状。5Why的核心不是追问"谁干的"，而是追问"为什么系统允许这个事发生"。根因通常不是某个人不努力，而是某个机制有漏洞。</p>`},
-  {type:"methodology",title:"背后方法论：问题识别与根因分析（5Why分析法）",body:`<p><strong>5Why分析法：</strong>从问题表象开始，连续追问"为什么"，每层答案作为下一层问题，层层深入直到找到可控且可改变的根本原因。</p><p><strong>核心要点：</strong></p><ul><li>不是追问"谁干的"（追责），而是追问"为什么系统允许这个事发生"（追因）</li><li>"5"不是硬性数字——有时3次就到根因，有时需要7次</li><li>追问必须保持<strong>合作姿态</strong>（"我们一起来看看"），而非审问姿态（"你说，为什么"）</li><li>坚持问到"这个原因<strong>可控且可改变</strong>"为止</li></ul><p><strong>配合工具——鱼骨图：</strong>适用多因素问题时，从人机料法环测六大维度系统梳理所有可能原因，再投票锁定关键原因。</p><p><strong>问题识别四维度：</strong>数据、行为、情绪、流程。关注"异常波动"而非绝对值——小异常是大问题的前兆。</p>`}
- ],competencyId:6,questionIds:[31,32,33,35]}
+  {type:"methodology",title:"背后方法论：SMART目标制定与传递",body:`<p><strong>SMART五要素：</strong></p><ul><li><strong>S（Specific）具体的</strong>——用明确语言描述行为标准</li><li><strong>M（Measurable）可衡量</strong>——有明确数据作为衡量依据</li><li><strong>A（Achievable）可实现</strong>——有挑战但跳一跳够得着</li><li><strong>R（Relevant）相关</strong>——与岗位职责关联</li><li><strong>T（Time-based）有时限</strong>——有明确时间节点</li></ul><p><strong>目标解码三步法：</strong>理解公司目标背后的"为什么"→ 翻译成团队语言 → 分解到个人行动。</p>`}
+ ],competencyId:1,questionIds:[3,4]}
 ];
 
-// ====== 剩余案例 ======
-// 角色认知与目标规划 - 案例3,4
+// ====== 追加案例 ======
 caseLibrary.push(
 {id:3,title:"团队目标模糊各自为政怎么办",category:"角色认知与目标规划",icon:"💡",
  sections:[
   {type:"scene",title:"典型场景",body:`<p>组长老张在月会上宣布："这个月我们要大力提升催收效果！"话音刚落，大家都点头称是。但一周后，老张发现：有人在拼命冲电话量（觉得打电话多就是努力）；有人在专攻小额案件（容易出数字）；有人觉得"加大力度"就是跟客户吵架。</p><p>到月底数据出来，整体老案回收率还是没动。复盘时每个人都说自己"努力了"，但目标没完成，却没人知道问题在哪。</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>模糊目标的核心问题是：<strong>不同人对同一句话的理解不一样</strong>。"大力提升催收效果"对不同人可能意味着完全不同的行动方向。</p><p>团队不是不想努力，而是努力的方向各不相同，力量分散了。管理者需要把模糊的形容词替换为可验证的数字和行为标准——让每个人都只有一种理解。</p>`},
-  {type:"solution",title:"处理流程",body:`<ol class="step-list">
-<li data-num="1"><strong>将模糊目标转化为统一量化指标</strong><br>"这个月我们的核心目标是：老案人均回收率提升3000元。为了达到这个目标，每人每天提报10个意向客户到我这里，我统一安排跟进策略。"有了量化目标和统一动作，考核就透明了。</li>
-<li data-num="2"><strong>在晨会上让员工参与拆解</strong><br>"咱们10个人，总回款需要增加30000元。现在各自算一下，你负责哪类案件，有多少个，能贡献多少？"让员工参与而非主任单方面分配。</li>
-<li data-num="3"><strong>建立过程追踪：每日检查</strong><br>"小刘，你今天提报的10个客户里有8个是500元以下的小额，我们的目标是老案回收，重点应该放在3000元以上的案件。来，一起重新筛一下名单。"</li>
-<li data-num="4"><strong>沉淀成功经验复制给全团队</strong><br>当有人用统一方法取得效果，立刻提炼成可复用的SOP。"王姐这周的重点案件筛选方法效果不错，今天复盘会上让她分享一下，大家可以参考。"</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">点出目标模糊问题</div><div class="line">"我说的'大力提升催收效果'，你理解是什么意思？——你看，咱们每个人理解都不一样，这就是问题所在。"</div></div>
-<div class="script-card"><div class="scene-label">转化为量化目标</div><div class="line">"这个月的核心是：老案人均回收率提升3000元，每天每人提报10个意向客户。"</div></div>`},
-  {type:"methodology",title:"背后方法论：SMART目标制定与传递",body:`<p><strong>SMART五要素：</strong>S具体、M可衡量、A可实现、R相关、T有时限。</p><p><strong>OKR视角：</strong>好的KR（关键结果）必须是可量化的，且任何看到它的人都能判断是否完成。"提升催收效果"是一个目标（O），而"老案人均回收率提升3000元+每日提报10个意向客户"才是可追踪的KR。管理者的核心工作之一就是帮团队把O转化为可执行的KR。</p><p><strong>信息论视角：</strong>模糊目标就是"高噪音信号"，每个人接收到的"意思"都不同。降低噪音的方法只有一个：量化、明确、让对方复述确认。</p>`}
+  {type:"diagnosis",title:"问题诊断",body:`<p>模糊目标的核心问题是：<strong>不同人对同一句话的理解不一样</strong>。"大力提升催收效果"对不同人可能意味着完全不同的行动方向。团队不是不想努力，而是努力的方向各不相同，力量分散了。</p>`},
+  {type:"solution",title:"处理流程",body:`<ol class="step-list"><li data-num="1"><strong>将模糊目标转化为统一量化指标</strong><br>"这个月我们的核心目标是：老案人均回收率提升3000元。为了达到这个目标，每人每天提报10个意向客户到我这里，我统一安排跟进策略。"</li><li data-num="2"><strong>在晨会上让员工参与拆解</strong><br>"咱们10个人，总回款需要增加30000元。现在各自算一下，你负责哪类案件，有多少个，能贡献多少？"</li><li data-num="3"><strong>建立过程追踪：每日检查</strong><br>"小刘，你今天提报的10个客户里有8个是500元以下的小额，我们的目标是老案回收，重点应该放在3000元以上的案件。"</li><li data-num="4"><strong>沉淀成功经验复制给全团队</strong><br>当有人用统一方法取得效果，立刻提炼成可复用的SOP。</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">点出目标模糊问题</div><div class="line">"我说的'大力提升催收效果'，你理解是什么意思？——你看，咱们每个人理解都不一样，这就是问题所在。"</div></div><div class="script-card"><div class="scene-label">转化为量化目标</div><div class="line">"这个月的核心是：老案人均回收率提升3000元，每天每人提报10个意向客户。"</div></div>`},
+  {type:"methodology",title:"背后方法论：SMART目标制定与传递",body:`<p><strong>SMART五要素：</strong>S具体、M可衡量、A可实现、R相关、T有时限。</p><p><strong>OKR视角：</strong>好的KR必须是可量化的，且任何看到它的人都能判断是否完成。"提升催收效果"是一个目标（O），而"老案人均回收率提升3000元+每日提报10个意向客户"才是可追踪的KR。</p>`}
  ],competencyId:1,questionIds:[3,4,6]},
 {id:4,title:"大任务无从下手如何拆解落地",category:"角色认知与目标规划",icon:"💡",
  sections:[
   {type:"scene",title:"典型场景",body:`<p>领导在月初给主任布置了任务："这个月，你们组要在3月15日之前把重渠投诉降下来，零重渠投诉，同时新人的上手周期也要缩短，还要做好PIP辅导。"</p><p>主任愣了一下，这几件事听起来都很重要，但不知道从哪儿开始，也不知道怎么分配给团队。回到工位，打开电脑，看着满屏的案件，不知道今天应该先做什么。</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>面对复杂任务时人容易产生<strong>"决策瘫痪"</strong>——因为不知道从哪里开始而什么都不做。问题不是没有能力，而是没有拆解方法。</p><p>需要把大目标按逻辑分解成<strong>可分配、可追踪、可验收的最小工作单元</strong>——拆到每个人每天知道该做什么。</p>`},
-  {type:"solution",title:"处理流程——WBS四步法",body:`<ol class="step-list">
-<li data-num="1"><strong>确定最终成果（不是过程，是结果）</strong><br>不是"降低投诉"，而是"3月15日前，重渠投诉控制在2单以内，无四级以上违规"。先明确"完成是什么样子"。</li>
-<li data-num="2"><strong>识别主要模块（按时间或功能划分）</strong><br>"降低投诉"→ 模块一：合规宣导前置 → 模块二：高风险客户识别与处理 → 模块三：投诉事后复盘机制。</li>
-<li data-num="3"><strong>逐层分解到每日可执行动作</strong><br>"合规宣导"→ 每日晨会5分钟宣讲一个合规案例 + 每周一法务提供识别技巧 + 新人入职第一天播放违规录音案例。拆到"今天谁来做这件事"。</li>
-<li data-num="4"><strong>检查分配，责任到人</strong><br>"合规宣导：张XX每日晨会负责；高风险标注：各组员拨打前自填台账，主任每日17点检查；投诉上报：所有人实时上报，主任统一处理。"配合PDCA每日跟踪。</li></ol>`},
-  {type:"case",title:"实战案例——315投诉风险防控",body:`<p><strong>郑州金港团队的WBS方案：</strong>成果——M31投诉队列从90单降至50单以内（降幅40%），重区域有责投诉≤2单。模块——①合规风险防控 ②话术规范 ③触达优先级 ④315专项警示。分解——历史高风险经办单独培训；每日晨会宣导客户风险识别；敏感工单当日复听并安抚。</p><p><strong>武汉团队的补充亮点：</strong>高风险客户专由话术优秀经办对接；客户提及敏感信息须当通电话安抚到位，未果立即上报闭环；每日复盘表扬优秀录音用于团队学习。</p><p><strong>案例分析：</strong>两个团队的共同点是把"降低投诉"拆到了每一个经办每天知道该做什么。把大目标拆成每日每人的最小动作，是WBS的核心价值。</p>`},
-  {type:"methodology",title:"背后方法论：WBS任务分解与计划落地",body:`<p><strong>WBS四步法：</strong>①确定最终成果（描述结果而非过程）→ ②识别主要模块（按时间或功能逻辑划分）→ ③逐层分解（拆到每人每天的最小动作，不要只拆到"模块"就停了）→ ④检查分配（查漏补缺+责任到人）。</p><p><strong>配合PDCA跟踪落地：</strong>计划（月初用WBS确定任务分配）→ 执行（每日按分解后的任务执行并记录台账）→ 检查（每日收尾/每周五核查台账、听录音）→ 调整（发现偏差即时指出并更新下一步计划）。</p><p><strong>认知负荷视角：</strong>WBS的价值之一就是把"无从下手"变成"现在做这一件事"，降低认知负荷，让行动变得容易。</p>`}
+  {type:"diagnosis",title:"问题诊断",body:`<p>面对复杂任务时人容易产生<strong>"决策瘫痪"</strong>——因为不知道从哪里开始而什么都不做。问题不是没有能力，而是没有拆解方法。需要把大目标按逻辑分解成<strong>可分配、可追踪、可验收的最小工作单元</strong>。</p>`},
+  {type:"solution",title:"处理流程——WBS四步法",body:`<ol class="step-list"><li data-num="1"><strong>确定最终成果（不是过程，是结果）</strong><br>不是"降低投诉"，而是"3月15日前，重渠投诉控制在2单以内，无四级以上违规"。</li><li data-num="2"><strong>识别主要模块（按时间或功能划分）</strong><br>"降低投诉"→ 模块一：合规宣导前置 → 模块二：高风险客户识别与处理 → 模块三：投诉事后复盘机制。</li><li data-num="3"><strong>逐层分解到每日可执行动作</strong><br>"合规宣导"→ 每日晨会5分钟宣讲一个合规案例 + 每周一法务提供识别技巧 + 新人入职第一天播放违规录音案例。</li><li data-num="4"><strong>检查分配，责任到人</strong><br>"合规宣导：张XX每日晨会负责；高风险标注：各组员拨打前自填台账，主任每日17点检查。"</li></ol>`},
+  {type:"case",title:"实战案例——315投诉风险防控",body:`<p><strong>郑州金港团队的WBS方案：</strong>成果——M31投诉队列从90单降至50单以内（降幅40%），重区域有责投诉≤2单。模块——合规风险防控、话术规范、触达优先级、315专项警示。</p><p><strong>武汉团队的补充亮点：</strong>高风险客户专由话术优秀经办对接；客户提及敏感信息须当通电话安抚到位，未果立即上报闭环；每日复盘表扬优秀录音用于团队学习。</p>`},
+  {type:"methodology",title:"背后方法论：WBS任务分解与计划落地",body:`<p><strong>WBS四步法：</strong>确定最终成果→识别主要模块→逐层分解→检查分配。配合PDCA每日跟踪。拆到每人每天的最小动作，把"无从下手"变成"现在做这一件事"。</p>`}
  ],competencyId:1,questionIds:[5,6]},
-
-// 绩效推进与沟通 - 案例6,8
+{id:5,title:"下属执行总是跑偏怎么办",category:"绩效推进与沟通",icon:"💬",
+ sections:[
+  {type:"scene",title:"典型场景",body:`<p>主任老张给组员布置任务："这批案件你跟进一下，尽快处理。"组员点头说好。三天后老张发现，组员只联系了其中几单，而且用了错误的话术方式，完全没有达到预期效果。</p><p>老张很生气："我不是叫你跟进吗？"组员委屈："我确实跟进了啊……"</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>老张的指令存在严重的<strong>"沟通漏斗"</strong>——主任心里想100%，嘴上说80%，下属听到60%，真正执行的只有40%。缺失了四个关键信息：<strong>Why</strong>、<strong>What</strong>、<strong>How</strong>、<strong>Check</strong>。</p>`},
+  {type:"solution",title:"处理流程——清晰派活四步法",body:`<ol class="step-list"><li data-num="1"><strong>说明Why与What</strong><br>"这批案件是月底冲刺的重点，需要在本周五前完成首轮跟进。目标是每单至少完成一次有效联系，记录客户的还款意愿和关键信息。"</li><li data-num="2"><strong>明确Who与When</strong><br>"小张你负责这一批，周五下班前完成。周三下午我检查一次进度。"</li><li data-num="3"><strong>确认How</strong><br>"之前我们培训过针对这类案件的话术要点，你还记得吗？需要我再过一遍吗？"</li><li data-num="4"><strong>Check复述确认</strong><br>"你花30秒跟我复述一下：这个任务最关键的目标和最重要的一步分别是什么？"</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">清晰派活（标准模板）</div><div class="line">"这批案件[Why+What]，由你负责[Who]，周五前完成[When]。之前培训的话术要点需要再过一遍吗？[How]。你花30秒复述一下最关键的目标是什么？[Check]"</div></div><div class="script-card"><div class="scene-label">发现跑偏时</div><div class="line">"我看了一下你这两天的执行情况，方向和我预期的有些不同。我们来对齐一下——我当时的理解是XXX，你的理解是什么？我们一起重新校准。"</div></div>`},
+  {type:"case",title:"实战案例",body:`<p><strong>场景还原：</strong>老张说"这批案件跟进一下"，组员按自己的理解只联系了几单且用了错误话术。</p><p><strong>处理过程：</strong>重新用清晰派活四步法——说明Why+What→明确Who+When→确认How→让组员复述关键目标。</p><p><strong>案例结果：</strong>组员后续执行准确率大幅提升，不再出现理解偏差。</p>`},
+  {type:"methodology",title:"背后方法论：清晰派活四步法",body:`<p><strong>沟通漏斗原理：</strong>心里想100%→嘴上说80%→下属听到60%→执行40%。</p><p><strong>清晰派活四步法：</strong>Why+What→Who+When→How→Check（让下属主动复述验证理解）。</p>`}
+ ],competencyId:2,questionIds:[7,8,11]},
+{id:7,title:"下属汇报情绪化说不清楚怎么办",category:"绩效推进与沟通",icon:"💬",
+ sections:[
+  {type:"scene",title:"典型场景",body:`<p>下午收案刚结束，组员小张来找主任："这批案子真的太烂了！客户不是失联就是耍无赖，今天打了一上午完全没进展，感觉没法搞！"</p><p>主任内心OS：到底什么情况？是案子本身问题，还是你能力问题？</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>下属在汇报中用<strong>情绪词汇</strong>（"太烂了""完全没进展""没法搞"）替代了事实描述。关键信号词：模糊词（"好像""可能"）、夸张词（"烂透了""完全没用"）、以偏概全（"每次""总是"）。</p>`},
+  {type:"solution",title:"处理流程——共情→引导→转向三步法",body:`<ol class="step-list"><li data-num="1"><strong>共情——接住情绪，不要直接反驳</strong><br>"我完全理解你的挫败感，这批客户已经跟进好几轮了，每一轮都遇到新问题。"</li><li data-num="2"><strong>引导——用5W2H把情绪转化为事实</strong><br>"我们一起来把情况理清楚。今天上午你拨打了多少次？无人接听、关机、空号各多少个？有联系上的客户里，拒绝的理由主要是什么？"</li><li data-num="3"><strong>转向——总结事实，推进分析解决</strong><br>"所以情况是这样：上午拨打了200个，无人接听约100个，关机40个，空号60个。你觉得有什么可以尝试的方法？"</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">识别情绪信号后共情</div><div class="line">"我完全理解你的挫败感。我们先不急着下结论，花两分钟把情况理清楚——今天具体的数据是怎样的？"</div></div><div class="script-card"><div class="scene-label">面对以偏概全</div><div class="line">"'所有客户都不接'——我们来数一下，今天100个里面有多少个真的没接？多少个是关机或空号？多少个是接了但拒绝？"</div></div>`},
+  {type:"case",title:"实战案例",body:`<p><strong>场景还原：</strong>员工汇报"案子太差，联系不上"。主任用三步法把对话从"案子差"聚焦到"上午拨打新入催案件，无人接听率高达50%"这个具体事实上。</p><p><strong>案例分析：</strong>问题不在于"下属说话啰嗦"，而在于主任有没有用方法把模糊情绪转化为可操作的事实。</p>`},
+  {type:"methodology",title:"背后方法论：高效听报三要素",body:`<p><strong>高效听报三要素：</strong>听事实而非情绪、听困难而非借口、听方案而非只抛问题。当一个人的情绪被"命名"和"接纳"时，情绪本身会降低约50%的强度。</p>`}
+ ],competencyId:2,questionIds:[7,8,9]},
 {id:6,title:"下属只抛问题不带方案怎么办",category:"绩效推进与沟通",icon:"💬",
  sections:[
-  {type:"scene",title:"典型场景",body:`<p>员工走过来说："主任，那个客户说要投诉我们，怎么办？"主任立刻停下手头的事，开始分析案件、给方案、安排处置……</p><p>这种情况每天发生十几次，主任越来越忙，员工越来越依赖，独立解决问题的能力越来越弱。</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>员工把<strong>"问题搬运"</strong>给了主任，主任成了"救火队长"。这不是员工的问题，而是主任的应对方式塑造了员工的依赖习惯——每次都给答案，员工自然不需要自己思考。</p><p>真正需要改变的，不是主任的处理速度，而是员工的思考习惯。</p>`},
-  {type:"solution",title:"处理流程",body:`<ol class="step-list">
-<li data-num="1"><strong>不要直接给答案——先反问</strong><br>"你发现了这个问题，很好。你觉得下一步应该怎么处理？"语气要平稳，是引导而非责备。</li>
-<li data-num="2"><strong>引导员工说出初步方案</strong><br>如果员工说"我不知道"，换个角度："如果由你来决定，第一步你会做什么？哪怕只是一个初步想法也好。"</li>
-<li data-num="3"><strong>补充和确认，而不是替代</strong><br>在员工说出方案后，补充缺失的关键点，而非推翻重来。"你说的第一步安抚是对的。安抚完之后，如果他坚持要投诉，按流程下一步怎么处理？"</li>
-<li data-num="4"><strong>建立"带方案来讨论"的团队规范</strong><br>"以后找我讨论问题前，先想好第一步怎么做。不需要是完美答案，但需要有想法。这样我们的讨论会更高效，你解决问题的能力也会越来越强。"</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">引导思考</div><div class="line">"很好，你发现了这个问题。对于这个问题，你的想法/建议是什么？"</div></div>
-<div class="script-card"><div class="scene-label">员工说不知道时</div><div class="line">"如果由你来决定，下一步你会怎么做？哪怕只是一个初步想法。"</div></div>
-<div class="script-card"><div class="scene-label">建立规范</div><div class="line">"我希望大家养成一个习惯：找我讨论问题的时候，先想好'如果我来处理，第一步怎么做'。不需要是完美答案，但需要有想法。"</div></div>`},
-  {type:"methodology",title:"背后方法论：高效听报三要素",body:`<p>高效听报三要素：①<strong>听事实而非情绪</strong>——识别情绪信号，用5W2H拉回客观事实；②<strong>听困难而非借口</strong>——区分真困难（能力/资源不足）和假借口（外部归因/笼统概括）；③<strong>听方案而非只抛问题</strong>——要求员工带着初步想法来汇报。</p><p>赋能式领导研究表明，当管理者习惯性"给答案"时，团队的问题解决能力会随时间下降。相反，"引导式提问"能在6-8周内显著提升员工自主决策的频率和质量。</p>`}
+  {type:"scene",title:"典型场景",body:`<p>员工走过来说："主任，那个客户说要投诉我们，怎么办？"主任立刻停下手头的事，开始分析案件、给方案、安排处置……这种情况每天发生十几次，主任越来越忙，员工越来越依赖。</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>员工把<strong>"问题搬运"</strong>给了主任，主任成了"救火队长"。这不是员工的问题，而是主任的应对方式塑造了员工的依赖习惯——每次都给答案，员工自然不需要自己思考。</p>`},
+  {type:"solution",title:"处理流程",body:`<ol class="step-list"><li data-num="1"><strong>不要直接给答案——先反问</strong><br>"你发现了这个问题，很好。你觉得下一步应该怎么处理？"</li><li data-num="2"><strong>引导员工说出初步方案</strong><br>如果员工说"我不知道"，换个角度："如果由你来决定，第一步你会做什么？"</li><li data-num="3"><strong>补充和确认，而不是替代</strong><br>在员工说出方案后，补充缺失的关键点，而非推翻重来。</li><li data-num="4"><strong>建立"带方案来讨论"的团队规范</strong><br>"以后找我讨论问题前，先想好第一步怎么做。不需要是完美答案，但需要有想法。"</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">引导思考</div><div class="line">"很好，你发现了这个问题。对于这个问题，你的想法/建议是什么？"</div></div><div class="script-card"><div class="scene-label">建立规范</div><div class="line">"我希望大家养成一个习惯：找我讨论问题的时候，先想好'如果我来处理，第一步怎么做'。"</div></div>`},
+  {type:"methodology",title:"背后方法论：高效听报三要素",body:`<p>高效听报三要素：听事实而非情绪、听困难而非借口、听方案而非只抛问题。当管理者习惯性"给答案"时，团队的问题解决能力会随时间下降。</p>`}
  ],competencyId:2,questionIds:[7,8]},
 {id:8,title:"绩效面谈员工防御沉默怎么办",category:"绩效推进与沟通",icon:"💬",
  sections:[
   {type:"scene",title:"典型场景",body:`<p>主任老李约组员小李做月度绩效面谈。老李一上来就说："你这个月回款没达标，接通率也下降了，问题挺多的。"小李立刻低下头，双手交叉在胸前，全程"嗯""知道了""我改"，面谈草草结束。下个月数据依然没有改善。</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>老李犯了三个错误：①以评价开场而非以提问开场——员工瞬间进入防御状态；②一口气指出所有问题——让员工感到"我做什么都不对"；③没有使用结构化面谈框架——面谈变成单向批评，没有产生共识和行动方案。</p>`},
-  {type:"solution",title:"处理流程——ART法则",body:`<ol class="step-list">
-<li data-num="1"><strong>A（评估现状，先听后说）</strong><br>"小李，你先说说你对这个月自己表现的评价？哪些地方你自己比较满意，哪些地方你觉得还有提升空间？"<br>让员工先开口，营造安全感。A环节只占面谈时间的25%。</li>
-<li data-num="2"><strong>R（反思探索）</strong><br>"你说接通率下降了，你觉得最主要的原因是什么？已经尝试过什么方法？"<br>深度挖掘，让员工自己分析问题。R+T环节占面谈时间的75%。</li>
-<li data-num="3"><strong>T（目标规划）</strong><br>"接下来一个月，我们聚焦提升接通率。你觉得可以设定一个什么目标？具体每天怎么安排？"<br>让员工参与制定改进方案，增强承诺感。</li>
-<li data-num="4"><strong>面谈后追踪六步</strong><br>T日内发纪要确认→建立追踪台账→制定IDP→3天/7天定期检查→兑现支持承诺→与绩效关联。只面谈不追踪=0。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">A环节开场（让员工先说）</div><div class="line">"小李，你先说说你自己对这个月表现的评价？哪些地方你自己比较满意，哪些地方你觉得还有提升空间？"</div></div>
-<div class="script-card"><div class="scene-label">BIC反馈（对事不对人）</div><div class="line">"今天上午10点与客户王先生的通话中，当他第三次表示经济困难时，你提高了音量说'你别找借口了'。这让客户感到被冒犯，可能导致投诉升级。下次遇到类似情况，我们先共情再推进，你觉得这样可以吗？"</div></div>`},
-  {type:"methodology",title:"背后方法论：绩效面谈三大工具",body:`<p><strong>ART法则：</strong>A评估现状（先听后说，25%时间）→ R反思探索（75%时间）→ T目标规划。核心是"先听后说"——让员工先自我评估。</p><p><strong>BIC有效反馈模型：</strong>B（Behavior）描述具体可观测的行为，包含时间、地点、情境 → I（Impact）说明该行为带来的直接后果 → C（Consequence）关联更广层面的长期影响，并转向未来的改进。</p><p><strong>面谈后追踪六步机制：</strong>①T日内发书面纪要确认 → ②建立追踪台账 → ③制定IDP → ④3天/7天后定期检查 → ⑤兑现管理者承诺的支持 → ⑥改善结果与绩效关联。</p><p><strong>差异化策略：</strong>高绩效员工→激励保留+标杆角色；稳定绩效→激发突破+发掘潜力点；低绩效→教练辅导+PIP计划。</p>`}
- ],competencyId:2,questionIds:[9,10,12]},
+  {type:"diagnosis",title:"问题诊断",body:`<p>老李犯了三个错误：以评价开场而非以提问开场；一口气指出所有问题；没有使用结构化面谈框架——面谈变成单向批评。</p>`},
+  {type:"solution",title:"处理流程——ART法则",body:`<ol class="step-list"><li data-num="1"><strong>A（评估现状，先听后说）</strong><br>"小李，你先说说你对这个月自己表现的评价？哪些地方你自己比较满意，哪些地方你觉得还有提升空间？"A环节只占面谈时间的25%。</li><li data-num="2"><strong>R（反思探索）</strong><br>"你说接通率下降了，你觉得最主要的原因是什么？已经尝试过什么方法？"R+T环节占面谈时间的75%。</li><li data-num="3"><strong>T（目标规划）</strong><br>"接下来一个月，我们聚焦提升接通率。你觉得可以设定一个什么目标？具体每天怎么安排？"</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">A环节开场（让员工先说）</div><div class="line">"小李，你先说说你自己对这个月表现的评价？哪些地方你自己比较满意，哪些地方你觉得还有提升空间？"</div></div><div class="script-card"><div class="scene-label">BIC反馈（对事不对人）</div><div class="line">"今天上午10点与客户王先生的通话中，当他第三次表示经济困难时，你提高了音量说'你别找借口了'。这让客户感到被冒犯。下次遇到类似情况，我们先共情再推进，你觉得这样可以吗？"</div></div>`},
+  {type:"methodology",title:"背后方法论：绩效面谈三大工具",body:`<p><strong>ART法则：</strong>A评估现状（先听后说）→ R反思探索 → T目标规划。</p><p><strong>BIC有效反馈模型：</strong>B描述具体行为 → I说明直接后果 → C关联长期影响并转向改进。</p><p><strong>面谈后追踪六步：</strong>纪要确认→建立台账→制定IDP→定期检查→兑现支持→绩效关联。</p>`}
+ ],competencyId:2,questionIds:[9,10,12]}
+);
 
-// 人才识别与授权 - 案例10,11,12
+// 继续追加更多案例
+caseLibrary.push(
+{id:9,title:"每天被员工缠身没时间做管理",category:"人才识别与授权",icon:"🔑",
+ sections:[
+  {type:"scene",title:"典型场景",body:`<p>主任老王每天都陷在组员的"求助"中——"王哥，这个客户说什么都不肯还钱怎么办？""王哥，系统又卡了帮我看看。""王哥，这个录音你帮我审一下。"老王忙得团团转，但月底一看数据，团队业绩反而下降了。</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>这是典型的<strong>"王磊困局"</strong>——主任把时间都花在了替员工解决问题上，没有做真正的管理工作。管理者的时间是最稀缺的资源，永远做<strong>"只有你能做的事"</strong>——数据分析、策略优化、重点员工辅导。</p>`},
+  {type:"solution",title:"处理流程——有效授权六步法",body:`<ol class="step-list"><li data-num="1"><strong>设定目标</strong><br>向授权对象说清楚任务要达到什么结果。</li><li data-num="2"><strong>明确边界</strong><br>权力边界："你可以直接给组员反馈话术问题，但涉及合规红线的问题必须同步给我。"</li><li data-num="3"><strong>确定汇报</strong><br>"每天下班前在群里发一条'今日录音审核小结'，每周五给我一份本周录音质量趋势简报。"</li><li data-num="4"><strong>确认理解</strong><br>"你花一分钟复述一下：这个任务的核心目标和你拥有的权限边界分别是什么？"</li><li data-num="5"><strong>公开宣布</strong><br>在晨会上宣布："从下周起，录音审核由小刘负责。"</li><li data-num="6"><strong>跟进兜底</strong><br>第一周每天关注小刘的审核结果，有问题用教练式提问引导。</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">识别授权机会</div><div class="line">"审核录音这件事，你来做可能比我做更好——你每天和组员在一起，更了解他们的通话习惯。我教你怎么审，你来负责日常审核。"</div></div><div class="script-card"><div class="scene-label">教练式跟进</div><div class="line">"这周录音审核你最大的感受是什么？有遇到什么拿不准的情况吗？"</div></div>`},
+  {type:"case",title:"实战案例",body:`<p><strong>场景还原：</strong>王磊每天花2小时审核录音，导致无暇分析数据、优化策略。团队离开他就转不动。</p><p><strong>处理过程：</strong>识别出审核录音是可授权的重复性工作，选择组内能力强意愿高的小刘作为授权对象，用六步法走完全程。</p><p><strong>案例结果：</strong>王磊每天省下2小时用于数据分析和策略优化，小刘获得成长机会。</p>`},
+  {type:"methodology",title:"背后方法论：有效授权六步法",body:`<p><strong>六步法：</strong>设定目标→明确边界→确定汇报→确认理解→公开宣布→跟进兜底。</p><p><strong>选对人：</strong>用准备度矩阵，识别"高能力+高意愿"的明星员工。</p><p><strong>选对事：</strong>80%原则——如果下属能把事做到你期望的80%，就值得授权。</p>`}
+ ],competencyId:3,questionIds:[14,15,16,18]},
+{id:13,title:"用GROW辅导时员工说不知道怎么办",category:"员工辅导与发展",icon:"🌱",
+ sections:[
+  {type:"scene",title:"典型场景",body:`<p>主任用GROW模型对新员工小周进行辅导。问到Options阶段时，主任问："你觉得有哪些解决办法？"小周回答："不知道。"主任换了个角度又问，小周还是"不知道"。主任最后不得不自己给出答案，整个辅导变成了说教。</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p><strong>"不知道"有四种类型：</strong>真不知道（知识盲区）、怕说错（有想法但不敢说）、敷衍抗拒（不想参与）、认知盲区（不知道自己不知道）。不能一刀切对待。</p>`},
+  {type:"solution",title:"五种替代问法",body:`<ol class="step-list"><li data-num="1"><strong>给3秒沉默</strong><br>不要立刻接话。很多情况下员工只是需要一点思考时间。</li><li data-num="2"><strong>缩小范围</strong><br>"如果你必须选一个方向，会是什么？"</li><li data-num="3"><strong>假设条件</strong><br>"如果资源不是问题/如果你有足够的权限，你会怎么做？"</li><li data-num="4"><strong>参照经验</strong><br>"之前有没有遇到过类似情况？那时候怎么处理的？"</li><li data-num="5"><strong>兜底策略——二选一</strong><br>"你觉得是A方案还是B方案更适合你？为什么？"</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">判断类型</div><div class="line">"你说不知道——是暂时还没想法，还是有想法但不太确定？没关系，我们今天不赶时间，你先想想。"</div></div><div class="script-card"><div class="scene-label">缩小范围问</div><div class="line">"我们先不想那么多——如果你只能想到一个办法，哪怕不是最好的，那个办法会是什么？"</div></div>`},
+  {type:"case",title:"实战案例",body:`<p><strong>场景还原：</strong>主任用GROW辅导新员工小周，到Options阶段小周连续说"不知道"。</p><p><strong>处理过程：</strong>主任意识到可能是"怕说错"，先给3秒沉默，然后说"没关系，我们只是先发散，没有对错"。小周说了一个不太成熟的方案，主任没有否定。</p><p><strong>案例分析：</strong>GROW辅导中员工说"不知道"很正常，关键是判断类型、选对策略。80%时间提问，20%时间建议。</p>`},
+  {type:"methodology",title:"背后方法论：GROW模型实战",body:`<p><strong>GROW四步法：</strong>G目标→R现状→O方案→W行动。辅导的三个层次：纠错式→方法式→教练式。</p>`}
+ ],competencyId:4,questionIds:[19,20,23]},
+{id:17,title:"定了目标团队就是不动怎么办",category:"管理执行力",icon:"⚡",
+ sections:[
+  {type:"scene",title:"典型场景",body:`<p>公司下达了"本月回款提升15%"的目标，主任老刘第一时间在晨会上传达了。一周过去了，老刘发现数据跟上周一模一样。他在夕会上又说了一遍"目标很紧迫"，但第二周依然如故。</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>团队不动大多数情况不是因为<strong>"不想动"</strong>，而是因为<strong>"不知道该怎么动"</strong>。老刘做了"目标传声筒"——公司说什么就转述什么，没有做任何解码和翻译。</p>`},
+  {type:"solution",title:"处理流程——目标解码三步法",body:`<ol class="step-list"><li data-num="1"><strong>理解目标：自己先算一遍</strong><br>"20万÷团队10人=人均2万。团队过去三个月人均1.5万，差距5000元。前面三周人均需要做到1.8万，最后一周冲刺2.5万。"</li><li data-num="2"><strong>翻译目标：把公司语言变成团队行为</strong><br>"提升15%不是一句口号——你每天需要多打5通电话、多挖掘1个意向客户。"</li><li data-num="3"><strong>分解为个人每日行动</strong><br>结果目标→过程目标→行动目标。必须分解到"明天早上9点具体做什么"的层级。</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">目标解码：给团队算账</div><div class="line">"公司给我们的目标是20万。10个人人均2万，比上个月多了5000。多出来的这些从哪里来？如果我们每天多打5通电话、多挖掘1个意向客户，这个目标是可以够到的。"</div></div><div class="script-card"><div class="scene-label">帮员工拆到每日行动</div><div class="line">"你的月度目标是2万回款。按你的转化率大概需要多少个意向客户？每天需要打出多少个意向？明天具体打算怎么安排时间？"</div></div>`},
+  {type:"case",title:"实战案例",body:`<p><strong>场景还原：</strong>老刘传达"本月回款提升15%"，一周后数据纹丝不动。团队不是不想动，是不知怎么动。</p><p><strong>处理过程：</strong>老刘重新做了目标解码——算了人均差距5000元→翻译成"每天多打5通电话+多挖1个意向客户"→拆到每个人每天上午打25通、下午25通、下班前更新跟踪表的具体动作。</p><p><strong>案例结果：</strong>第二周团队数据开始有明显变化，组员不再问"怎么做"，因为他们每天的动作清单已经清清楚楚。</p><p><strong>案例分析：</strong>目标本身没有动力，具体的行动才有动力。主任的价值就是把公司的一句话目标翻译成每个人明天的具体动作。不要做"目标传声筒"。</p>`},
+  {type:"methodology",title:"背后方法论：目标解码与执行落地",body:`<p><strong>目标解码三步法：</strong>①理解目标背后的"为什么"——自己测算目标是否成立；②翻译成团队语言——组员听完能说出"明天要做什么不一样的事"；③分解为个人行动——结果目标（月）→过程目标（日/周）→行动目标（每时段）。</p><p><strong>常见误区：</strong>"目标传声筒"——公司说什么直接转述；"只分解到月度"——月中才发现差一大截。</p>`}
+ ],competencyId:5,questionIds:[25,26,29]},
+{id:21,title:"团队问题反复出现找不到根因",category:"团队问题分析与解决",icon:"🔍",
+ sections:[
+  {type:"scene",title:"典型场景",body:`<p>"每个月的最后一周，团队的回款数据都会断崖式下跌。"主任老马已经连续三个月发现了这个规律。每次都紧急开会、加班冲刺，勉强把月度目标完成，但下个月一切照旧。</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>老马每次都在处理<strong>"症状"</strong>（月底回款低），而不是解决<strong>"根因"</strong>（为什么月底回款低）。这就像发烧了只吃退烧药，不查感染源在哪里。</p>`},
+  {type:"solution",title:"处理流程——5Why层层追问",body:`<ol class="step-list"><li data-num="1"><strong>Why 1：为什么月底回款断崖下跌？</strong>→ 因为最后一周大家打出去的承诺还款很多都跳票了。</li><li data-num="2"><strong>Why 2：为什么承诺还款会跳票？</strong>→ 因为月初承诺的客户还款意愿正常，月底承诺的客户还款意愿明显偏低。</li><li data-num="3"><strong>Why 3：为什么月底的客户还款意愿低？</strong>→ 因为月初大家先挑好打的客户，难打的客户都留到了月底。</li><li data-num="4"><strong>Why 4：为什么难打的都留到月底？</strong>→ 因为月初没有规定"每天必须按比例处理不同难度的案件"。</li><li data-num="5"><strong>Why 5 → 根因确认</strong>→ 缺少每日案件难度均衡分配机制。<strong>这不是员工态度问题，而是分配制度有漏洞。</strong></li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">5Why引导（合作姿态，非审问）</div><div class="line">"我们一起来梳理一下。你说月底回款总是跌——你觉得第一个可能的原因是什么？……嗯，那这个情况又是因为什么导致的呢？我们继续往下挖一层。"</div></div><div class="script-card"><div class="scene-label">区分根因和症状</div><div class="line">"上次我们是靠加班冲刺解决的，但下个月又回来了。这说明我们上次处理的是症状而不是根因。"</div></div>`},
+  {type:"case",title:"实战案例",body:`<p><strong>场景还原：</strong>老马连续三个月发现"月底回款断崖下跌"，每次都靠加班冲刺解决，但下个月一切照旧。</p><p><strong>处理过程：</strong>用5Why层层追问→找到根因：分配制度有漏洞。</p><p><strong>案例结果：</strong>建立每日案件"难中易=3:4:3"分配机制后，月底回款断崖现象消失。</p><p><strong>案例分析：</strong>反复出现的问题说明你上次只处理了症状。5Why的核心不是追问"谁干的"，而是追问"为什么系统允许这个事发生"。</p>`},
+  {type:"methodology",title:"背后方法论：问题识别与根因分析（5Why分析法）",body:`<p><strong>5Why分析法：</strong>从问题表象开始，连续追问"为什么"，直到找到可控且可改变的根本原因。核心要点：不是追问"谁干的"，而是追问"为什么系统允许这个事发生"。</p>`}
+ ],competencyId:6,questionIds:[31,32,33,35]}
+);
+
+// 追加更多案例
+caseLibrary.push(
 {id:10,title:"授权了但员工没做好怎么追责",category:"人才识别与授权",icon:"🔑",
  sections:[
-  {type:"scene",title:"典型场景",body:`<p>主任老赵把一项重要任务授权给了组员小刘，结果小刘做砸了。老赵很生气，当众批评了小刘。小刘觉得很委屈："你又没说清楚要怎么做。"此后老赵再也不愿意授权了，"还是我自己做比较靠谱"。</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>出问题后老赵的第一反应是追责，而不是复盘授权过程。授权失败有四种根因：①目标没设清楚；②边界没说清楚；③没有过程检查节点；④员工能力与任务不匹配。</p><p>需要先自检授权六步法是否到位，再区分员工失败的原因——是能力问题还是方法问题还是资源问题。</p>`},
-  {type:"solution",title:"处理流程——教练式复盘",body:`<ol class="step-list">
-<li data-num="1"><strong>先自检授权六步法</strong><br>目标是否SMART？边界是否清晰（权力边界/资源支持/禁忌红线）？检查节点是否设了？确认理解时员工是否复述过？</li>
-<li data-num="2"><strong>与员工一对一复盘</strong><br>"我们来一起回顾一下这次任务的执行过程。你先说说你觉得自己哪些地方做得好？哪些地方遇到了障碍？"——让员工先开口，而非先批评。</li>
-<li data-num="3"><strong>区分失败原因</strong><br>能力问题→培训+示范；方法问题→指导+陪练；资源问题→提供支持；意愿问题→绩效面谈。</li>
-<li data-num="4"><strong>制定改进计划</strong><br>明确下次授权的改进点，而非从此不再授权。员工搞砸了正是最好的辅导时机。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">教练式复盘</div><div class="line">"我们一起来回顾一下这次任务。你先说说自己哪些地方做得好？哪些地方遇到了障碍？我不是来追责的，我是来看看哪个环节可以做得更好。"</div></div>
-<div class="script-card"><div class="scene-label">区分失败原因</div><div class="line">"你说这次卡在了不知道怎么跟其他组协调资源——这是我们授权时边界没讲清楚。下次授权时，我会把'你可以协调哪些资源'这部分明确写出来。"</div></div>`},
-  {type:"methodology",title:"背后方法论：有效授权六步法（跟进兜底）",body:`<p>授权后必须建立固定跟进节奏：每日简短沟通→每周正式回顾。发现偏离时用<strong>教练式三维提问</strong>：问卡点（最大困难是什么）→ 问思考（试过哪些办法？还有什么想法）→ 问行动（接下来打算如何改进）。不要问"态度"（容易变指责）。</p><p><strong>授权者心态：</strong>授权的目的是培养人，不是推卸责任。最终责任永远在管理者身上。看到下属做不好就夺回来自己做——这是对授权最大的伤害。允许80分以上的不完美，指出风险但用提问引导员工自己找解法。</p>`}
+  {type:"scene",title:"典型场景",body:`<p>主任老赵把一项重要任务授权给了组员小刘，结果小刘做砸了。老赵很生气，当众批评了小刘。小刘觉得很委屈："你又没说清楚要怎么做。"此后老赵再也不愿意授权了。</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>出问题后老赵的第一反应是追责，而不是复盘授权过程。授权失败有四种根因：目标没设清楚、边界没说清楚、没有过程检查节点、员工能力与任务不匹配。</p>`},
+  {type:"solution",title:"处理流程——教练式复盘",body:`<ol class="step-list"><li data-num="1"><strong>先自检授权六步法</strong><br>目标是否SMART？边界是否清晰？检查节点是否设了？</li><li data-num="2"><strong>与员工一对一复盘</strong><br>"我们来一起回顾一下这次任务的执行过程。你先说说你觉得自己哪些地方做得好？"</li><li data-num="3"><strong>区分失败原因</strong><br>能力问题→培训+示范；方法问题→指导+陪练；资源问题→提供支持；意愿问题→绩效面谈。</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">教练式复盘</div><div class="line">"我们一起来回顾一下这次任务。你先说说自己哪些地方做得好？哪些地方遇到了障碍？我不是来追责的，我是来看看哪个环节可以做得更好。"</div></div>`},
+  {type:"methodology",title:"背后方法论：有效授权六步法（跟进兜底）",body:`<p>授权后必须建立固定跟进节奏。发现偏离时用<strong>教练式三维提问</strong>：问卡点→问思考→问行动。授权的目的是培养人，不是推卸责任。</p>`}
  ],competencyId:3,questionIds:[14,15,16,18]},
 {id:11,title:"新员工前三个月流失率高怎么办",category:"人才识别与授权",icon:"🔑",
  sections:[
-  {type:"scene",title:"典型场景",body:`<p>主任小陈发现，自己组里的新人平均做不过两个月：有的说"打不进去电话，太有压力了"，有的说"话术背了半天也没用"，有的什么也没说直接就不来了。她培训也安排了、话术也教了，但就是留不住人。</p><p>一个月后，又来了3个新人。她问老员工老张："这批新人你觉得能留下几个？"老张说："照这个带法，能留一个就不错了。"</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>新人离职的根因通常不是"这个人不行"，而是<strong>带教体系缺失</strong>。发手册≠教会，"自己打吧"≠放手成长。</p><p>新人缺三样东西：①<strong>明确的微目标</strong>（今天做到什么算完成）②<strong>结构化的示范</strong>（16字辅导法完整走完）③<strong>高频的情绪检测</strong>（每周2次非正式谈心，不是每月一次谈话）。</p>`},
-  {type:"solution",title:"处理流程——30天陪跑计划",body:`<ol class="step-list">
-<li data-num="1"><strong>72小时内识别"不会"vs"不敢"</strong><br>"不会"型——话术不熟、操作犯错 → 系统能力辅导（16字法）。"不敢"型——能背但不敢打、情绪波动大 → 心态干预+小成功体验。</li>
-<li data-num="2"><strong>30天陪跑计划</strong><br>指定带教师傅，每2天一次针对性反馈，每周2次非正式谈心。微目标拆解：第1-3天通5个有效接通；第4-7天通10个有效接通；第2周达成3个承诺还款。每天给一个今天就能完成的小目标。</li>
-<li data-num="3"><strong>三次关键沟通节点</strong><br>入职第一周——明确"第一个月做到什么算成功"；第一个月末——复盘进步+卡点+下月目标；第三个月——直接问"你现在是想继续做还是有别的想法"。</li>
-<li data-num="4"><strong>流失苗头立即介入</strong><br>流失信号：请假增加、早晨来晚、不再问问题。主动介入："我注意到你最近状态有点不一样，没有批评的意思，就是想了解——你现在打电话感觉怎么样？最难的是什么？"</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">识别不会还是不敢</div><div class="line">"今天打了多少个电话？其中感觉最难开口的是哪种客户？是不知道怎么说，还是有点不想开口？"</div></div>
-<div class="script-card"><div class="scene-label">建立小成功体验（不敢型）</div><div class="line">"这种客户很正常，我刚开始也怕。我们这样，我陪你打第一个，你按话术走一遍，打完我给你反馈。"</div></div>
-<div class="script-card"><div class="scene-label">流失苗头介入</div><div class="line">"我注意到你最近状态有点不同，没有批评的意思——你现在打电话的时候感觉怎么样？最难的部分是什么？"</div></div>`},
-  {type:"methodology",title:"背后方法论：员工成长链路识别与分层管理",body:`<p><strong>员工成长3+1阶段：</strong>适应期（0-3月，识别"不会"vs"不敢"）→ 成长期（3-12月，防自负和抗拒规范）→ 稳定期（1年+，防职业疲惫和隐性跳槽）→ 风险层（需三次谈话闭环）。</p><p><strong>16字辅导法：</strong>我说你听（讲标准）→ 我做你看（示范）→ 你做我看（观察）→ 你说我听（反思）。四步不能颠倒，最容易遗漏的是第四步。</p><p><strong>心理安全感视角：</strong>新人最容易流失的时间窗口是"第一次被客户拒绝后"和"第一个月月末绩效垫底时"。提前在这两个节点主动介入——帮新人建立心理预案，而非事后安慰。</p>`}
+  {type:"scene",title:"典型场景",body:`<p>主任小陈发现，自己组里的新人平均做不过两个月：有的说"打不进去电话，太有压力了"，有的说"话术背了半天也没用"，有的什么也没说直接就不来了。</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>新人离职的根因通常不是"这个人不行"，而是<strong>带教体系缺失</strong>。发手册≠教会，"自己打吧"≠放手成长。新人缺三样东西：明确的微目标、结构化的示范、高频的情绪检测。</p>`},
+  {type:"solution",title:"处理流程——30天陪跑计划",body:`<ol class="step-list"><li data-num="1"><strong>72小时内识别"不会"vs"不敢"</strong><br>"不会"型→系统能力辅导。"不敢"型→心态干预+小成功体验。</li><li data-num="2"><strong>30天陪跑计划</strong><br>指定带教师傅，每2天一次针对性反馈，每周2次非正式谈心。</li><li data-num="3"><strong>三次关键沟通节点</strong><br>入职第一周→第一个月末→第三个月。</li><li data-num="4"><strong>流失苗头立即介入</strong><br>流失信号：请假增加、早晨来晚、不再问问题。</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">识别不会还是不敢</div><div class="line">"今天打了多少个电话？其中感觉最难开口的是哪种客户？是不知道怎么说，还是有点不想开口？"</div></div><div class="script-card"><div class="scene-label">流失苗头介入</div><div class="line">"我注意到你最近状态有点不同，没有批评的意思——你现在打电话的时候感觉怎么样？最难的部分是什么？"</div></div>`},
+  {type:"methodology",title:"背后方法论：员工成长链路识别与分层管理",body:`<p><strong>员工成长3+1阶段：</strong>适应期→成长期→稳定期→风险层。</p><p><strong>16字辅导法：</strong>我说你听→我做你看→你做我看→你说我听。</p>`}
  ],competencyId:3,questionIds:[13,17]},
 {id:12,title:"老员工进入舒适区不求上进怎么办",category:"人才识别与授权",icon:"🔑",
  sections:[
   {type:"scene",title:"典型场景",body:`<p>骨干员工老赵做了快两年，业绩一直在中上水平，团队离不开他。但最近主任发现：他开始拒绝复杂案件（"那种案子太难搞了"），早会分享抢不到他发言，组织活动他也总是"有事先走"。</p><p>主任私下问他："最近怎么了，好像状态不太对？"老赵笑笑说："没啥，我就这样，反正业绩没掉就行了。"</p>`},
   {type:"diagnosis",title:"问题诊断",body:`<p>老员工进入舒适区有<strong>四种类型</strong>，混淆了就会用错方法：</p><ul><li><strong>只想多赚钱型</strong>——把收入和挑战任务挂钩</li><li><strong>职业疲惫型</strong>——需要职业路径对话激活内在动机</li><li><strong>没看到成长空间型</strong>——给出清晰晋升路径+带人机会</li><li><strong>被忽视型</strong>——曾经有贡献但未被认可，需要补做认可</li></ul>`},
-  {type:"solution",title:"处理流程",body:`<ol class="step-list">
-<li data-num="1"><strong>做一次职业路径对话</strong><br>不是谈绩效，而是帮员工看清"我在这里能得到什么、能走向哪里"。先认可现有贡献（具体不模糊），问他的短期/中长期方向，给出主任能提供的支持路径。</li>
-<li data-num="2"><strong>两种结果对应两种方案</strong><br>想往管理走→设立"带新人指标"进入绩效+给早会分享/复盘主持等影响力机会。只想多赚钱→把收入与挑战性任务挂钩+设立专项激励。</li>
-<li data-num="3"><strong>用"影响力任务"代替"加任务"</strong><br>不要给骨干更多重复性任务，而是让他从"多干活的人"变成"会带人的人"——主持案例分享、授权某类案件策略制定、带新人指标进入绩效。</li>
-<li data-num="4"><strong>设定清晰的进阶标准</strong><br>"你如果连续3个月业绩前3+带出1个新人首月达标，我们正式启动你的骨干认证流程。这个标准你觉得合理吗？"</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">职业路径探测</div><div class="line">"老赵，最近有些时间想跟你聊聊你的发展方向——不是绩效问题，是我想知道你接下来想怎么做。你现在是继续做好手上的单子多拿钱，还是有想法往带人/管理这条路走走？"</div></div>
-<div class="script-card"><div class="scene-label">给出影响力任务</div><div class="line">"我想让你来主持下周复盘会的案例分享，就10分钟，讲你上周处理那个特别难缠的M3案件的思路。这种经验对组里新人很有价值，你觉得怎么样？"</div></div>`},
+  {type:"solution",title:"处理流程",body:`<ol class="step-list"><li data-num="1"><strong>做一次职业路径对话</strong><br>不是谈绩效，而是帮员工看清"我在这里能得到什么、能走向哪里"。先认可现有贡献（具体不模糊），问他的短期/中长期方向，给出主任能提供的支持路径。</li><li data-num="2"><strong>两种结果对应两种方案</strong><br>想往管理走→设立"带新人指标"进入绩效+给早会分享/复盘主持等影响力机会。只想多赚钱→把收入与挑战性任务挂钩+设立专项激励。</li><li data-num="3"><strong>用"影响力任务"代替"加任务"</strong><br>不要给骨干更多重复性任务，而是让他从"多干活的人"变成"会带人的人"——主持案例分享、授权某类案件策略制定、带新人指标进入绩效。</li><li data-num="4"><strong>设定清晰的进阶标准</strong><br>"你如果连续3个月业绩前3+带出1个新人首月达标，我们正式启动你的骨干认证流程。这个标准你觉得合理吗？"</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">职业路径探测</div><div class="line">"老赵，最近有些时间想跟你聊聊你的发展方向——不是绩效问题，是我想知道你接下来想怎么做。你现在是继续做好手上的单子多拿钱，还是有想法往带人/管理这条路走走？"</div></div><div class="script-card"><div class="scene-label">给出影响力任务</div><div class="line">"我想让你来主持下周复盘会的案例分享，就10分钟，讲你上周处理那个特别难缠的M3案件的思路。这种经验对组里新人很有价值，你觉得怎么样？"</div></div>`},
   {type:"methodology",title:"背后方法论：员工成长链路识别与分层管理（稳定期策略）",body:`<p><strong>员工四维分类模型：</strong>明星型（高能力高意愿→授权挑战+舞台+成长空间）、新人/转型期（低能力高意愿→重点培养+逐步授权）、老油条型（高能力低意愿→激活内在动机+影响力任务）、问题型（双低→绩效干预）。</p><p><strong>马斯洛需求视角：</strong>稳定期的骨干员工基本物质需求已满足，驱动他们的是"归属感、尊重和自我实现"。如果主任只提供金钱激励而忽略这些，激励会越来越低效。"让能力被团队看见"本身就是一种强激励。</p>`}
  ],competencyId:3,questionIds:[13,17]},
-
-// 员工辅导与发展 - 案例14,15,16
 {id:14,title:"辅导时员工抗拒不开口怎么办",category:"员工辅导与发展",icon:"🌱",
  sections:[
   {type:"scene",title:"典型场景",body:`<p>主任想对组员小陈进行一次辅导面谈，小陈从进门开始就低着头不说话。主任问："最近工作怎么样？"小陈："还行。""有什么困难吗？""没有。""数据有点下降，你知道吗？""嗯。"整个谈话持续了不到5分钟就以沉默结束。</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>员工抗拒不开口有<strong>五种原因</strong>：①不信任——之前被"辅导"伤害过；②体验差——以前辅导=挨批；③有情绪——正在情绪低谷期；④怕批评——害怕暴露问题后被追责；⑤性格内向——不知道怎么说。</p><p>辅导的前提是信任，没有信任的辅导就是审问。如果员工抗拒，先检查关系——TA以前的"辅导"体验是什么样的？</p>`},
-  {type:"solution",title:"处理流程",body:`<ol class="step-list">
-<li data-num="1"><strong>判断类型</strong><br>回想之前的互动，TA是一贯如此还是这次特殊？最近是否发生过什么可能影响TA状态的事？</li>
-<li data-num="2"><strong>关系问题→暂停辅导，先建立信任</strong><br>用"非辅导式谈话"建立信任——聊聊生活、聊聊TA的过往成功经历、聊聊TA的优点。不要一上来就谈数据和改进。</li>
-<li data-num="3"><strong>关系修复话术</strong><br>"我今天不是来给你挑毛病的。我就是想了解一下你最近的工作状态，看看有没有什么我能帮上忙的。你想聊什么都可以，不想聊也可以直接告诉我。"</li>
-<li data-num="4"><strong>建立正向体验</strong><br>前几次辅导聚焦在肯定和鼓励上，只聊TA做得好的地方，重塑"辅导≠挨批"的认知。等信任建立后再逐步引入改进话题。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">关系修复</div><div class="line">"我今天不是来给你挑毛病的。我就是想了解一下你最近的工作状态，看看有没有什么我能帮上忙的。你想聊什么都可以，不想聊也可以直接告诉我，没关系。"</div></div>
-<div class="script-card"><div class="scene-label">建立正向体验</div><div class="line">"我最近注意到你在处理XX类型的客户时，话术比之前自然了很多，尤其是那个共情的部分——你是怎么做到的？能跟我分享一下吗？"</div></div>
-<div class="script-card"><div class="scene-label">面对沉默时</div><div class="line">"没关系，不想说也可以。我就坐这陪你待几分钟。如果你想聊点什么，随时可以开口。"</div></div>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>员工抗拒不开口有五种原因：不信任、体验差（以前辅导=挨批）、有情绪、怕批评、性格内向。辅导的前提是信任，没有信任的辅导就是审问。</p>`},
+  {type:"solution",title:"处理流程",body:`<ol class="step-list"><li data-num="1"><strong>判断类型</strong><br>回想之前的互动，TA是一贯如此还是这次特殊？</li><li data-num="2"><strong>关系问题→暂停辅导，先建立信任</strong><br>用"非辅导式谈话"建立信任。</li><li data-num="3"><strong>关系修复话术</strong><br>"我今天不是来给你挑毛病的。我就是想了解一下你最近的工作状态，看看有没有什么我能帮上忙的。"</li><li data-num="4"><strong>建立正向体验</strong><br>前几次辅导聚焦在肯定和鼓励上，重塑"辅导≠挨批"的认知。</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">关系修复</div><div class="line">"我今天不是来给你挑毛病的。我就是想了解一下你最近的工作状态，看看有没有什么我能帮上忙的。"</div></div><div class="script-card"><div class="scene-label">面对沉默时</div><div class="line">"没关系，不想说也可以。我就坐这陪你待几分钟。如果你想聊点什么，随时可以开口。"</div></div>`},
   {type:"methodology",title:"背后方法论：辅导者角色认知与反馈技巧",body:`<p><strong>三种辅导层次：</strong>纠错式（发现问题指出错误）→ 方法式（给方法+示范+练习）→ 教练式（提问激发+引导自悟+自主行动）。不同阶段用不同层次——新手多给方法和示范，成长期方法式+教练式搭配，成熟期多用教练式。</p><p><strong>反馈黄金比例3:1：</strong>三次肯定对应一次纠错。正面反馈要即时、具体、公开；负面反馈要私下、具体、对事不对人。正面反馈三步法：描述具体行为→说明正面影响→表达认可鼓励延续。</p>`}
  ],competencyId:4,questionIds:[19,20,21,24]},
 {id:15,title:"新人带教总是学了就忘怎么办",category:"员工辅导与发展",icon:"🌱",
  sections:[
-  {type:"scene",title:"典型场景",body:`<p>师傅小王已经带了新人小李两周了。每次教完话术，小李当天说"明白了"，第二天就忘。同样的话术讲了三四遍，同样的操作演示了五六次——下一次遇到同样场景，小李还是愣住不知道怎么办。</p><p>小王开始烦了："是不是这个人学习能力不行？或者说他根本不想学？"</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p><strong>"学了就忘"有四种可能：</strong></p><ul><li><strong>没真学会</strong>——16字法没走完，最关键的第四步"你说我听"被跳过了</li><li><strong>学了不敢用</strong>——怕做错，说"忘了"当借口</li><li><strong>信息过载</strong>——一次教太多，大脑处理不过来</li><li><strong>态度问题</strong>——意愿不足，需要先做意愿谈话</li></ul><p>绝大部分"学了就忘"是因为16字法只走了一半。最容易遗漏的是第四步——<strong>能讲清楚=真正理解，讲不清楚=还有盲区</strong>。</p>`},
-  {type:"solution",title:"处理流程",body:`<ol class="step-list">
-<li data-num="1"><strong>16字法自检——最容易遗漏第四步</strong><br>让新人用自己的话讲一遍操作逻辑："好，现在角色调换——你当师傅，给我这个新人讲一遍这个话术该怎么用，为什么这么用。"能讲清楚逻辑=真会了。讲不清楚=回到第二步重来。</li>
-<li data-num="2"><strong>把"一次教很多"改成"每日一技"</strong><br>第2周周一只练开场白；周二只练倾听；周三只练共情回应；周四只练方案提出；周五只练收尾确认。当天练的内容一整天都围绕这个点来。</li>
-<li data-num="3"><strong>用场景模拟代替重复说教</strong><br>不要"我再说一遍"，要"来，我们模拟一下——你是催收员，我是客户。我说'你们怎么天天打电话，烦不烦'，你回我。"比讲三遍理论高十倍效果。</li>
-<li data-num="4"><strong>给速查卡降低记忆负担</strong><br>把关键场景的速查卡贴显示器旁边——客户说没钱→1.共情2.追问具体困难3.给灵活方案4.确认下一步。新人独立通话时突然卡住，不是没学过，是信息检索不出来。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">检查是否真学会</div><div class="line">"好，现在角色调换——你当师傅，给我这个新人讲一遍这个话术该怎么用、为什么这么用。"</div></div>
-<div class="script-card"><div class="scene-label">安排每日一技</div><div class="line">"今天你只练一件事：客户说'我没钱'之后你怎么办。其他任何问题你都可以先放掉。今天就搞定这一个。"</div></div>
-<div class="script-card"><div class="scene-label">鼓励试错</div><div class="line">"你刚开始独立打，犯错很正常。我的要求不是你不犯错，是你犯了错之后告诉我，我们一起看怎么改进。"</div></div>`},
-  {type:"methodology",title:"背后方法论：新人上岗标准带教流程",body:`<p><strong>四阶段带教体系：</strong>准备期（第1周）→ 基础带教期（第2-4周，渐进放手20%→50%→70%）→ 独立实践期（第2-3月，落差期高发）→ 稳定成长期（第4-6月，习惯固化+能力进阶）。</p><p><strong>艾宾浩斯遗忘曲线：</strong>新知识在学习后1小时内遗忘约50%，1天后遗忘约70%。好的带教不是"一次教到位"，而是"教完→实战→当天复习→第二天再测→一周后再测"。用"间隔复习"代替"重复教"。</p><p><strong>学习风格匹配：</strong>听觉型→听一遍就会；视觉型→要看文字/表格；动觉型→必须上手做。如果教了N遍记不住，换一种呈现方式。</p>`}
+  {type:"scene",title:"典型场景",body:`<p>师傅小王已经带了新人小李两周了。每次教完话术，小李当天说"明白了"，第二天就忘。同样的话术讲了三四遍，同样的操作演示了五六次。</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p><strong>"学了就忘"有四种可能：</strong>没真学会（16字法第四步被跳过）、学了不敢用、信息过载、态度问题。绝大部分是因为16字法只走了一半——能讲清楚=真正理解，讲不清楚=还有盲区。</p>`},
+  {type:"solution",title:"处理流程",body:`<ol class="step-list"><li data-num="1"><strong>16字法自检</strong><br>让新人用自己的话讲一遍操作逻辑。能讲清楚逻辑=真会了。</li><li data-num="2"><strong>把"一次教很多"改成"每日一技"</strong><br>第2周周一只练开场白；周二只练倾听；周三只练共情回应。</li><li data-num="3"><strong>用场景模拟代替重复说教</strong><br>"来，我们模拟一下——你是催收员，我是客户。"</li><li data-num="4"><strong>给速查卡降低记忆负担</strong><br>把关键场景的速查卡贴显示器旁边。</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">检查是否真学会</div><div class="line">"好，现在角色调换——你当师傅，给我这个新人讲一遍这个话术该怎么用、为什么这么用。"</div></div><div class="script-card"><div class="scene-label">安排每日一技</div><div class="line">"今天你只练一件事：客户说'我没钱'之后你怎么办。其他任何问题你都可以先放掉。"</div></div>`},
+  {type:"methodology",title:"背后方法论：新人上岗标准带教流程",body:`<p><strong>四阶段带教体系：</strong>准备期→基础带教期→独立实践期→稳定成长期。</p><p><strong>艾宾浩斯遗忘曲线：</strong>新知识在学习后1小时内遗忘约50%，1天后遗忘约70%。好的带教用"间隔复习"代替"重复教"。</p>`}
  ],competencyId:4,questionIds:[21,22,24]},
 {id:16,title:"低绩效员工面谈后没改善怎么办",category:"员工辅导与发展",icon:"🌱",
  sections:[
-  {type:"scene",title:"典型场景",body:`<p>主任已经跟小李谈过两次了。第一次谈完，小李说"我知道了，我会努力的"，但一周过去，数据没变化。第二次再谈，还是同样的话，还是同样的结果。主任很无奈："跟他谈了有什么用？说了也不改。"</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>问题不在于"有没有谈"，而在于<strong>面谈之后有没有建立追踪机制</strong>。只面谈不跟进 = 0。面谈只完成了改善循环的50%，后续追踪（纪要确认→台账记录→IDP计划→定期检查→兑现支持→绩效关联）才是决定成效的关键。</p>`},
-  {type:"solution",title:"处理流程——追踪六步机制",body:`<ol class="step-list">
-<li data-num="1"><strong>面谈当天发书面纪要</strong><br>"今天我们谈的内容整理如下——核心问题+改进方向+具体行动+时间节点。你确认一下？"把口头承诺变成双方知悉的约定。</li>
-<li data-num="2"><strong>共同制定IDP个人发展计划</strong><br>改进目标（2周内XX指标从X提升到Y）+ 每日行动 + 每周验证 + 主任支持 + 检查节点（3天/7天）。让员工参与制定增强认同感。</li>
-<li data-num="3"><strong>按节点主动回顾，不等月底看数据</strong><br>3天后→"旁听计划完成了吗？遇到什么卡点？"未执行→"是觉得方式不合适还是遇到困难？我们可以调整。"</li>
-<li data-num="4"><strong>兑现支持承诺</strong><br>主任承诺的（安排旁听资源、每周演练话术、申请权限）必须做到。如果承诺了不做到，下次面谈的信任基础彻底崩塌。</li>
-<li data-num="5"><strong>区分"执行困难"和"意愿问题"</strong><br>执行困难→提供具体帮助（旁听资源、话术演练、案件分析）。意愿问题→明确后果，关联绩效考核，严重时启动PIP。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">面谈后发纪要</div><div class="line">"今天我们谈的内容整理如下：①核心问题②改进方向③具体行动④时间节点。你确认一下？有什么补充或想法吗？"</div></div>
-<div class="script-card"><div class="scene-label">3天后回顾</div><div class="line">"我们说好了三天后回顾。你这几天的旁听计划完成情况怎么样？有没有遇到什么卡点？"</div></div>
-<div class="script-card"><div class="scene-label">直接对话意愿</div><div class="line">"我们已经谈过两次了，我也提供了[具体支持]。但数据没有变化，改进行动也没有执行。我想直接问你：你对这份工作的状态是什么？你需要我提供什么样的帮助？"</div></div>`},
-  {type:"methodology",title:"背后方法论：绩效面谈追踪机制+PDCA循环",body:`<p>追踪六步机制：①T日内发书面纪要确认 → ②建立追踪台账 → ③制定IDP → ④3天/7天后定期检查 → ⑤兑现管理者承诺的支持 → ⑥改善结果与绩效关联。使用台账记录每次面谈的时间、对象、行动项、验证方式、节点，让主任对每个员工的改进状态保持清晰的感知。</p><p><strong>PDCA视角：</strong>单次面谈只完成了Plan，后续追踪才是Check和Act。没有追踪的面谈相当于只做P就停下来。</p><p><strong>承诺一致性效应：</strong>让员工自己说出行动计划、自己写下来（IDP），比管理者单方面宣布要求，执行率高出30-50%。</p>`}
- ],competencyId:4,questionIds:[12,19,20]},
+  {type:"scene",title:"典型场景",body:`<p>主任已经跟小李谈过两次了。第一次谈完，小李说"我知道了，我会努力的"，但一周过去，数据没变化。第二次再谈，还是同样的话，还是同样的结果。</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>问题不在于"有没有谈"，而在于<strong>面谈之后有没有建立追踪机制</strong>。只面谈不跟进 = 0。</p>`},
+  {type:"solution",title:"处理流程——追踪六步机制",body:`<ol class="step-list"><li data-num="1"><strong>面谈当天发书面纪要</strong><br>"今天我们谈的内容整理如下——核心问题+改进方向+具体行动+时间节点。你确认一下？"</li><li data-num="2"><strong>共同制定IDP个人发展计划</strong><br>改进目标+每日行动+每周验证+主任支持+检查节点。</li><li data-num="3"><strong>按节点主动回顾，不等月底看数据</strong><br>3天后→"旁听计划完成了吗？遇到什么卡点？"</li><li data-num="4"><strong>兑现支持承诺</strong><br>主任承诺的必须做到。</li><li data-num="5"><strong>区分"执行困难"和"意愿问题"</strong><br>执行困难→提供具体帮助。意愿问题→明确后果，关联绩效考核。</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">面谈后发纪要</div><div class="line">"今天我们谈的内容整理如下：核心问题、改进方向、具体行动、时间节点。你确认一下？"</div></div><div class="script-card"><div class="scene-label">直接对话意愿</div><div class="line">"我们已经谈过两次了，我也提供了支持。但数据没有变化。我想直接问你：你对这份工作的状态是什么？"</div></div>`},
+  {type:"methodology",title:"背后方法论：绩效面谈追踪机制+PDCA循环",body:`<p>追踪六步机制：纪要确认→建立台账→制定IDP→定期检查→兑现支持→绩效关联。单次面谈只完成了Plan，后续追踪才是Check和Act。</p>`}
+ ],competencyId:4,questionIds:[12,19,20]}
+);
 
-// 管理执行力 - 案例18,19,20
+caseLibrary.push(
 {id:18,title:"计划总是执行不到位怎么办",category:"管理执行力",icon:"⚡",
  sections:[
-  {type:"scene",title:"典型场景",body:`<p>主任老赵月初制定了详细的月度执行计划，把目标分解到了每个人每天。第一周执行得热火朝天，但到了第二周中，老赵发现两件事不对劲：小张的有效通话数连续3天从目标的50通降到了30通左右；小李的数据看起来正常，但仔细看发现他每天只打老客户电话，新人名单完全没动。</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>老赵的问题在于：计划做得很细，但追踪只看了表面数字。没有设定<strong>"关键检查节点"</strong>，导致问题发展了一周才发现。发现了也没有及时纠偏，想着"再观察两天"。</p><p>执行力的核心不是"开始时的冲劲"，而是<strong>"中途不走样、困难时不放弃、偏差时能纠偏"</strong>的持续能力。</p>`},
-  {type:"solution",title:"处理流程——三管齐下",body:`<ol class="step-list">
-<li data-num="1"><strong>小张——立即轻度纠偏</strong><br>当天就私下找小张了解情况，发现他被分配了一批新案件不会处理，花了很多时间在"研究"上。当场示范了如何快速判断案件优先级，给了3个具体的话术参照，约定次日下午再检查通话数据。</li>
-<li data-num="2"><strong>小李——中度纠偏（结构化反馈）</strong><br>正式一对一谈话："我注意到你最近主要在处理老客户，新人名单推进比较慢。如果一直是这个节奏，到月底新名单这块可能会有比较大的缺口。我们聊一下，是新人名单有什么问题吗？"发现原因是新手名单难打不愿意碰。制定了"每天必须先打5个新人名单，再打老客户"的规则，设定隔日检查节点。</li>
-<li data-num="3"><strong>团队层面——建立可见度</strong><br>在团队白板上贴出每日关键数据，每个人都能看到自己和别人的进度。每天夕会3分钟快速过数据，偏离超过20%的当场提醒。关键：纠偏不是纠完就完了，必须设定下一次检查节点。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">轻度纠偏</div><div class="line">"我看了一下你这两天的数据，有效通话数从50降到了30，是不是遇到了什么情况？需要我帮你看看吗？"</div></div>
-<div class="script-card"><div class="scene-label">结构化纠偏（BIC模型）</div><div class="line">"你负责的这个任务我们约定周五完成。今天是周三，进度大约在40%。如果按这个节奏周五大概率完成不了。我们来看一下遇到了什么障碍，接下来两天怎么调整。"</div></div>
-<div class="script-card"><div class="scene-label">纠偏后设定追踪</div><div class="line">"今天聊的改进方向我们明确了三点。我们大后天下午这个时间再过一遍，看看效果怎么样。中间有任何问题随时找我。"</div></div>`},
-  {type:"methodology",title:"背后方法论：执行力管控与纠偏机制",body:`<p><strong>纠偏三个层次：</strong></p><ul><li><strong>轻度纠偏（日常提醒）：</strong>适用于偶尔轻微偏离。私下简短提醒，一次说清楚。"我注意到你今天有效通话数有点下降，是遇到什么困难了吗？"</li><li><strong>中度纠偏（结构化反馈）：</strong>适用于连续3天以上偏离。正式一对一谈话，使用BIC或GROW模型。结构：事实→影响→原因探讨→改进方案→下次检查时间。</li><li><strong>重度纠偏（正式干预）：</strong>适用于持续偏离且影响团队整体目标。正式面谈+书面记录+明确的改善计划和时间节点+未达标的后果。</li></ul><p><strong>纠偏黄金法则：</strong>越快越好→先问后说→聚焦未来→对事不对人→纠偏之后必须有追踪。最容易被忽略的是最后一条——纠偏不是纠完就完了，必须设定下一次检查节点形成闭环。</p>`}
+  {type:"scene",title:"典型场景",body:`<p>主任老赵月初制定了详细的月度执行计划，第一周执行得热火朝天，但到了第二周中，小张的有效通话数连续3天从50通降到了30通；小李只打老客户电话，新人名单完全没动。</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>计划做得很细，但追踪只看了表面数字。没有设定<strong>"关键检查节点"</strong>，发现了也没有及时纠偏。执行力的核心是"中途不走样、困难时不放弃、偏差时能纠偏"的持续能力。</p>`},
+  {type:"solution",title:"处理流程——三管齐下",body:`<ol class="step-list"><li data-num="1"><strong>小张——立即轻度纠偏</strong><br>当天就私下找小张了解情况，发现他被分配了一批新案件不会处理。</li><li data-num="2"><strong>小李——中度纠偏（结构化反馈）</strong><br>正式一对一谈话，制定了"每天必须先打5个新人名单"的规则。</li><li data-num="3"><strong>团队层面——建立可见度</strong><br>在团队白板上贴出每日关键数据，每天夕会3分钟快速过数据。</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">轻度纠偏</div><div class="line">"我看了一下你这两天的数据，有效通话数从50降到了30，是不是遇到了什么情况？需要我帮你看看吗？"</div></div><div class="script-card"><div class="scene-label">结构化纠偏（BIC模型）</div><div class="line">"你负责的这个任务我们约定周五完成。今天是周三，进度大约在40%。如果按这个节奏周五大概率完成不了。我们来看一下遇到了什么障碍。"</div></div>`},
+  {type:"methodology",title:"背后方法论：执行力管控与纠偏机制",body:`<p><strong>纠偏三个层次：</strong>轻度纠偏（日常提醒）→中度纠偏（结构化反馈）→重度纠偏（正式干预）。</p><p><strong>纠偏黄金法则：</strong>越快越好→先问后说→聚焦未来→对事不对人→纠偏之后必须有追踪。</p>`}
  ],competencyId:5,questionIds:[27,28,30]},
 {id:19,title:"执行中期团队动力衰减怎么办",category:"管理执行力",icon:"⚡",
  sections:[
-  {type:"scene",title:"典型场景",body:`<p>每月的节奏似乎固定：第一周热火朝天，第二周出现疲态，第三周气氛明显降下来——晨会时大家低着头，数据曲线趋平，有人开始摸鱼，有人开始抱怨目标太高。</p><p>主任老赵很焦虑："目标还差40%呢，现在泄气月底肯定完蛋。怎么给他们打鸡血？"但"打鸡血"只能管用半天，第二天一切照旧。</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>动力衰减通常不是"懒"，而是四种类型之一：①<strong>疲劳型</strong>（节奏设计不合理，没有缓冲）→ 调整节奏而非加大力度；②<strong>挫败型</strong>（努力两周数据没改善）→ 用数据给信心；③<strong>无聊型</strong>（重复性工作没有新鲜感）→ 加入挑战元素；④<strong>目标断裂型</strong>（月初目标被遗忘）→ 重新可视化。</p>`},
-  {type:"solution",title:"处理流程",body:`<ol class="step-list">
-<li data-num="1"><strong>疲劳型→调整节奏</strong><br>不要说"坚持就是胜利"，而是承认疲劳正常。"今天下午我们不追产量，改为复盘前两周的经验和调整策略。"把整天高强度改成"高强度上午+轻度下午"，中间给15分钟缓冲。</li>
-<li data-num="2"><strong>挫败型→用数据给信心</strong><br>"虽然回款数据还没变化，但我注意到大家的有效通话率从40%升到了55%——方法是对的，客户需要时间反馈。按这个趋势下周应该能看到回款变化。"</li>
-<li data-num="3"><strong>设置中期里程碑和"小胜利"</strong><br>把一个月拆成4个小周目标：起步周→小胜利周→冲刺周→收官周。每周五庆祝当周小目标完成，让团队持续感受"我在进步"。</li>
-<li data-num="4"><strong>管理者中期亲自上阵</strong><br>每天至少跟3个组员简短交流了解真实状态，主动帮遇到困难的组员解决实际问题，以身作则不松懈。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">发现泄气时</div><div class="line">"我注意到这周大家的劲头没有第一周那么足了，这很正常。今天不喊口号，我们花10分钟回顾一下——前两周我们哪些地方做对了？哪些地方卡住了？接下来两周怎么调整？"</div></div>
-<div class="script-card"><div class="scene-label">努力了但数据没变时</div><div class="line">"表面上数据还是老样子，但你们的话术比两周前专业了很多。数据是有延迟的，今天的努力可能要一周后才体现在回款上。我们再坚持一周。"</div></div>`},
-  {type:"methodology",title:"背后方法论：执行动力维持策略",body:`<p><strong>执行动力三阶段策略：</strong></p><ul><li><strong>启动期：</strong>点燃紧迫感——讲清楚"为什么现在必须做"、"做成之后意味着什么"</li><li><strong>执行中：</strong>维持节奏感——用数据反馈维持动力+树立标杆分享方法+第一时间帮员工解决障碍</li><li><strong>收尾期：</strong>冲刺爆发力——设立挑战目标+增加正向激励+关注落后员工一对一帮助</li></ul><p><strong>峰值-终点法则：</strong>诺贝尔奖得主卡尼曼的研究发现，人对一段经历的评价主要取决于峰值时刻和终点时刻。在月度执行中段制造一个"正向峰值"会极大改善团队对整个月的执行体验。</p>`}
+  {type:"scene",title:"典型场景",body:`<p>每月的节奏似乎固定：第一周热火朝天，第二周出现疲态，第三周气氛明显降下来——晨会时大家低着头，数据曲线趋平，有人开始摸鱼，有人开始抱怨目标太高。</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>动力衰减通常不是"懒"，而是四种类型：疲劳型（节奏设计不合理）、挫败型（努力两周数据没改善）、无聊型（重复性工作）、目标断裂型（月初目标被遗忘）。</p>`},
+  {type:"solution",title:"处理流程",body:`<ol class="step-list"><li data-num="1"><strong>疲劳型→调整节奏</strong><br>"今天下午我们不追产量，改为复盘前两周的经验和调整策略。"</li><li data-num="2"><strong>挫败型→用数据给信心</strong><br>"虽然回款数据还没变化，但大家的有效通话率从40%升到了55%——方法是对的。"</li><li data-num="3"><strong>设置中期里程碑和"小胜利"</strong><br>把一个月拆成4个小周目标：起步周→小胜利周→冲刺周→收官周。</li><li data-num="4"><strong>管理者中期亲自上阵</strong><br>每天至少跟3个组员简短交流了解真实状态。</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">发现泄气时</div><div class="line">"我注意到这周大家的劲头没有第一周那么足了，这很正常。今天不喊口号，我们花10分钟回顾一下——前两周我们哪些地方做对了？哪些地方卡住了？"</div></div>`},
+  {type:"methodology",title:"背后方法论：执行动力维持策略",body:`<p><strong>执行动力三阶段策略：</strong>启动期（点燃紧迫感）→执行中（维持节奏感）→收尾期（冲刺爆发力）。</p><p><strong>峰值-终点法则：</strong>人对一段经历的评价主要取决于峰值时刻和终点时刻。在月度执行中段制造一个"正向峰值"。</p>`}
  ],competencyId:5,questionIds:[27,28]},
 {id:20,title:"目标总在中途被推翻怎么办",category:"管理执行力",icon:"⚡",
  sections:[
-  {type:"scene",title:"典型场景",body:`<p>月初，主任老周花了三天时间制定了月度目标和执行计划，跟团队对齐后大家信心满满。第二周刚开始，上级突然通知"战略调整，这个月重点从回款转到投诉率控制"，原来的目标和计划被全盘推翻。</p><p>老周很崩溃："我辛辛苦苦做的计划就这么废了？团队那边怎么交代？他们肯定觉得'定目标就是走个过场'。"更崩溃的是——这种情况不是第一次了。</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>目标变化本身不伤害团队，伤害团队的是<strong>管理者面对变化时的回避和含糊</strong>。需要区分三种情况：完全推翻（方向180度转）、优先级调整（大方向不变阶段重点移）、外部冲击（不可抗力）。</p><p>对团队最差的做法是"悄悄换目标，假装一直就是这样的"——团队不是傻子，他们会得出一个结论："目标就是闹着玩的"。</p>`},
-  {type:"solution",title:"处理流程",body:`<ol class="step-list">
-<li data-num="1"><strong>坦诚沟通，不要假装什么都没发生</strong><br>"跟大家说一下，公司今天发了新通知，这个月重心从回款转到投诉控制。我知道月初我们才刚定完回款目标，大家花了不少精力做计划。这个调整确实来得突然，但在目前阶段投诉控制确实比回款更优先。前两周已执行的保留，从第三周开始切换。"</li>
-<li data-num="2"><strong>把旧目标的积累转化为新目标的资产</strong><br>"前两周我们为回款优化的话术，在投诉控制中同样有用——高质量沟通是减少客户投诉最好的方法。所以前两周的努力没有白费。"</li>
-<li data-num="3"><strong>为下一次做准备——制定目标时就预判变量</strong><br>这个月可能有什么外部变化？如果发生最坏情况Plan B是什么？哪些目标不管外部怎么变都需要完成？</li>
-<li data-num="4"><strong>向上管理，减少被推翻的概率</strong><br>接目标时多问一句："这个月的工作重点有没有可能在哪些情况下会做调整？"月中主动沟通感知风向变化。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">坦诚沟通变化</div><div class="line">"计划确实变了。月初我们定的目标是X，现在公司最新要求接下来一个月重点是Y。这不是我们做不好X，而是公司层面判断Y在现阶段优先级更高。我对大家的期望一样——不管做什么，拿出我们做X时那个劲头。"</div></div>
-<div class="script-card"><div class="scene-label">建立新旧连接</div><div class="line">"目标会变，但能力不会变。前两周我们练的精准话术，其实就是减少投诉最好的武器——高质量沟通的价值不会因为目标变了就消失。"</div></div>`},
-  {type:"methodology",title:"背后方法论：韧性领导力",body:`<p>VUCA时代，目标的调整不是例外而是常态。优秀的管理者不是"最会做计划"的人，而是"最能帮助团队在变化中保持稳定感"的人。</p><p>目标可以变，但管理者给团队的三样东西不能变：①坦诚的沟通（不回避不隐瞒）②清晰的方向（快速给出新方向的具体行动方案）③对团队能力的信心（让团队看到旧能力在新目标中同样有价值）。</p>`}
+  {type:"scene",title:"典型场景",body:`<p>月初，主任老周花了三天时间制定了月度目标和执行计划，跟团队对齐后大家信心满满。第二周刚开始，上级突然通知"战略调整，这个月重点从回款转到投诉率控制"。</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>目标变化本身不伤害团队，伤害团队的是<strong>管理者面对变化时的回避和含糊</strong>。对团队最差的做法是"悄悄换目标，假装一直就是这样的"。</p>`},
+  {type:"solution",title:"处理流程",body:`<ol class="step-list"><li data-num="1"><strong>坦诚沟通，不要假装什么都没发生</strong><br>"计划确实变了。月初我们定的目标是X，现在公司最新要求是Y。"</li><li data-num="2"><strong>把旧目标的积累转化为新目标的资产</strong><br>"前两周我们为回款优化的话术，在投诉控制中同样有用。"</li><li data-num="3"><strong>为下一次做准备——制定目标时就预判变量</strong><br>这个月可能有什么外部变化？如果发生最坏情况Plan B是什么？</li><li data-num="4"><strong>向上管理，减少被推翻的概率</strong><br>接目标时多问一句："这个月的工作重点有没有可能在哪些情况下会做调整？"</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">坦诚沟通变化</div><div class="line">"计划确实变了。月初我们定的目标是X，现在公司最新要求接下来一个月重点是Y。这不是我们做不好X，而是公司层面判断Y在现阶段优先级更高。"</div></div>`},
+  {type:"methodology",title:"背后方法论：韧性领导力",body:`<p>VUCA时代，目标的调整不是例外而是常态。目标可以变，但管理者给团队的三样东西不能变：坦诚的沟通、清晰的方向、对团队能力的信心。</p>`}
  ],competencyId:5,questionIds:[25,29]},
-
-// 团队问题分析与解决 - 案例22,23,24
 {id:22,title:"问题解决后很快复发怎么办",category:"团队问题分析与解决",icon:"🔍",
  sections:[
-  {type:"scene",title:"典型场景",body:`<p>主任老孙发现团队通话质量下滑严重，花了三周时间——分析问题、制定话术模板、培训演练、每日抽查、一对一辅导。通话质量从60分提升到85分。老孙很有成就感，开始关注其他工作。一个月后回头看，通话质量又跌回了65分。</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>老孙完成了PDCA的P-D-C三个环节，但漏掉了最关键的<strong>A（Action）环节</strong>。问题解决了但没有固化——没有把有效的做法变成团队的"肌肉记忆"。</p><p>管理的真正价值在A阶段：把经验固化下来、把教训预防住。做完D和C就停手的人，迟早要回来再救火。</p>`},
-  {type:"solution",title:"处理流程——PDCA的A阶段",body:`<ol class="step-list">
-<li data-num="1"><strong>标准化——写入流程文档</strong><br>把验证有效的话术要点写入团队《标准操作手册》，每个新人都要学。不是"这次做到了"，而是"以后每次都这样做"。</li>
-<li data-num="2"><strong>分享化——让经验变成团队能力</strong><br>让这次改善中表现最好的员工在周会上分享——一个人解决的问题变成大家的能力。</li>
-<li data-num="3"><strong>预防化——建立自动预警</strong><br>反思"为什么通话质量会下滑"，建立每周自动抽检机制，在质量跌破80分时就触发预警——不需要等到出问题再行动。</li>
-<li data-num="4"><strong>设定防复发机制</strong><br>每月固定第一周进行通话质量回顾，建立"本月质量回顾→下月改进重点"的持续循环。从解决一个问题到预防一类问题。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">总结固化经验</div><div class="line">"这次我们把通话质量从60提到85，中间有几个关键动作非常有效。我们把它们整理成一份SOP，以后每个新人入职都按这个标准学，我们自己也每个月回顾一次。"</div></div>
-<div class="script-card"><div class="scene-label">复盘复发时</div><div class="line">"上次我们做到了85分，但一个月后又跌回65分。这不是方案本身有问题，而是我们没有把好做法固化下来。这次我们不光要做，还要把它写进流程。"</div></div>`},
-  {type:"methodology",title:"背后方法论：问题解决与PDCA闭环",body:`<p><strong>PDCA循环：</strong></p><ul><li><strong>P（Plan）：</strong>明确问题表现与范围 → 设定SMART改善目标 → 头脑风暴方案 → 制定行动计划（谁/做什么/什么时间/怎么检查）</li><li><strong>D（Do）：</strong>按计划推进，保留执行记录，关注关键节点的执行质量</li><li><strong>C（Check）：</strong>对比执行前后数据 → 确认目标达成度 → 收集执行中的偏差和人员反馈</li><li><strong>A（Action）：</strong>有效的做法标准化 → 经验分享化 → 源头预防化 → 设定防复发机制</li></ul><p><strong>A阶段三件事——标准化、分享化、预防化——才是管理者真正的价值所在。</strong>质量改善不是做完就完，是把它变成团队不会丢失的能力。</p>`}
+  {type:"scene",title:"典型场景",body:`<p>主任老孙发现团队通话质量下滑严重，花了三周时间——分析问题、制定话术模板、培训演练、每日抽查、一对一辅导。通话质量从60分提升到85分。一个月后回头看，通话质量又跌回了65分。</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>老孙完成了PDCA的P-D-C三个环节，但漏掉了最关键的<strong>A（Action）环节</strong>。问题解决了但没有固化——没有把有效的做法变成团队的"肌肉记忆"。</p>`},
+  {type:"solution",title:"处理流程——PDCA的A阶段",body:`<ol class="step-list"><li data-num="1"><strong>标准化——写入流程文档</strong><br>把验证有效的话术要点写入团队《标准操作手册》。</li><li data-num="2"><strong>分享化——让经验变成团队能力</strong><br>让改善中表现最好的员工在周会上分享。</li><li data-num="3"><strong>预防化——建立自动预警</strong><br>建立每周自动抽检机制，在质量跌破80分时就触发预警。</li><li data-num="4"><strong>设定防复发机制</strong><br>每月固定第一周进行通话质量回顾。</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">总结固化经验</div><div class="line">"这次我们把通话质量从60提到85，中间有几个关键动作非常有效。我们把它们整理成一份SOP，以后每个新人入职都按这个标准学。"</div></div>`},
+  {type:"methodology",title:"背后方法论：问题解决与PDCA闭环",body:`<p><strong>PDCA循环：</strong>P→D→C→A。A阶段三件事——标准化、分享化、预防化——才是管理者真正的价值所在。</p>`}
  ],competencyId:6,questionIds:[34,36]},
 {id:23,title:"出了问题大家都推卸责任怎么办",category:"团队问题分析与解决",icon:"🔍",
  sections:[
-  {type:"scene",title:"典型场景",body:`<p>月底质检结果出来了，团队出现了两起客户投诉。主任老张在复盘会上说："这个月我们有两起投诉，大家一起看看是什么问题，怎么避免。"话音刚落——小刘说系统问题，小王说流程问题，小李说客户难缠，小赵沉默不语（因为他也有一起潜在投诉只是还没被记录）。</p><p>一场本该是复盘改进的会议，变成了甩锅大会。老张很沮丧："明明就是大家的问题，为什么没一个人愿意站出来？"</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>员工推卸责任通常不是因为人品差，而是因为<strong>环境告诉他"承认错误等于找死"</strong>。</p><p>回忆一下以前出错了你是怎么反应的——是追问"为什么"还是一上来就问"谁干的"？有人主动承认过错误吗？承认之后得到了什么对待？<strong>团队文化是管理者一手塑造的——你的第一反应决定了团队的下一次反应。</strong></p>`},
-  {type:"solution",title:"处理流程——从追责文化到学习文化",body:`<ol class="step-list">
-<li data-num="1"><strong>复盘会改变问法：不追问"谁干的"，追问"哪个环节出了问题"</strong><br>"这次投诉事件中，具体是哪个环节出了问题？我们的流程里有没有不合理的地方？如果是流程问题我们改流程，执行问题我们改培训，意外情况加预警机制。"</li>
-<li data-num="2"><strong>管理者带头承认自己的问题</strong><br>"这次出现问题首先我的责任——我在过程检查上做得不够，没有在问题发生前发现苗头。我先检讨。接下来我们一起来看怎么改进。"</li>
-<li data-num="3"><strong>有人主动承认错误时，正向强化</strong><br>"谢谢你第一个说出来，这需要很大的勇气。这个信息对我们太重要了——如果不是你说出来，我们可能会下个月再踩一次坑。"</li>
-<li data-num="4"><strong>设立"问题贡献奖"</strong><br>周会固定环节："本周你发现的一个隐患/问题"。主动暴露问题的给予正向评价。重点不是"谁造成的"而是"谁帮我们提前发现了"。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">复盘会开场（改变调性）</div><div class="line">"今天我们不是来追责的，追责解决不了问题。我们是来一起找原因的——流程、工具、培训、协作，看看是哪个环节可以改进。每个人都可以大胆说，不说名字、不追责任。"</div></div>
-<div class="script-card"><div class="scene-label">管理者带头反思</div><div class="line">"我先说一个我这周发现的问题——我上周有一个任务布置得很模糊，导致执行方向偏差。我已经复盘过了，以后会先确认对方完全理解。好，接下来大家说说看。"</div></div>
-<div class="script-card"><div class="scene-label">正向强化主动承认</div><div class="line">"谢谢你第一个说出来，这需要很大的勇气。我们看看这种情况怎么从流程上避免——不是为了追谁的责任，是为了以后不再发生。"</div></div>`},
-  {type:"methodology",title:"背后方法论：心理安全感与学习文化",body:`<p><strong>哈佛研究：</strong>高绩效团队有一个共同特征——成员有"心理安全感"，敢于表达不同意见和承认错误，而不担心被惩罚。这种安全感不是"大家友善"的自然结果，而是管理者刻意创造的——通过面对错误时的反应方式。</p><p><strong>追责文化 vs 学习文化：</strong>"谁干的？"→ 防御。"发生了什么？"→ 学习。"你怎么搞的？"→ 隐瞒。"我们怎么避免下次再出？"→ 改进。</p><p>从今天开始，面对错误的第一个问题从"谁干的"改成"我们哪个环节可以改进"——坚持两个月，团队文化就会开始转变。</p>`}
+  {type:"scene",title:"典型场景",body:`<p>月底质检结果出来了，团队出现了两起客户投诉。主任老张在复盘会上说："这个月我们有两起投诉，大家一起看看是什么问题，怎么避免。"话音刚落——小刘说系统问题，小王说流程问题，小李说客户难缠。</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>员工推卸责任通常不是因为人品差，而是因为<strong>环境告诉他"承认错误等于找死"</strong>。团队文化是管理者一手塑造的——你的第一反应决定了团队的下一次反应。</p>`},
+  {type:"solution",title:"处理流程——从追责文化到学习文化",body:`<ol class="step-list"><li data-num="1"><strong>复盘会改变问法：不追问"谁干的"，追问"哪个环节出了问题"</strong></li><li data-num="2"><strong>管理者带头承认自己的问题</strong><br>"这次出现问题首先我的责任——我在过程检查上做得不够。"</li><li data-num="3"><strong>有人主动承认错误时，正向强化</strong><br>"谢谢你第一个说出来，这需要很大的勇气。"</li><li data-num="4"><strong>设立"问题贡献奖"</strong><br>周会固定环节："本周你发现的一个隐患/问题"。</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">复盘会开场（改变调性）</div><div class="line">"今天我们不是来追责的，追责解决不了问题。我们是来一起找原因的——流程、工具、培训、协作，看看是哪个环节可以改进。"</div></div><div class="script-card"><div class="scene-label">管理者带头反思</div><div class="line">"我先说一个我这周发现的问题——我上周有一个任务布置得很模糊，导致执行方向偏差。"</div></div>`},
+  {type:"methodology",title:"背后方法论：心理安全感与学习文化",body:`<p><strong>哈佛研究：</strong>高绩效团队有一个共同特征——成员有"心理安全感"，敢于表达不同意见和承认错误。从今天开始，面对错误的第一个问题从"谁干的"改成"我们哪个环节可以改进"。</p>`}
  ],competencyId:6,questionIds:[31,33,35]},
 {id:24,title:"团队问题太多不知从何入手",category:"团队问题分析与解决",icon:"🔍",
  sections:[
-  {type:"scene",title:"典型场景",body:`<p>新主任小郑刚接手团队一个月，感觉自己陷进了问题沼泽：业绩下滑、老员工不服管、新人带教跟不上、流程执行混乱、团队氛围低迷……每天一睁眼就是一堆问题，不知道从哪里下手。</p><p>他试着同时推进所有问题，结果一个都没解决好。到了月底，问题更多了。</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>多问题并发时，<strong>"排好队"比"同时冲"更重要</strong>。花一小时做问题排序，值过后面的所有努力。同时在所有问题上平均用力 = 在所有问题上都没用力。</p><p>需要在所有问题中找到<strong>"杠杆问题"</strong>——解决它，其他问题也会跟着松动的那个。通常是流程/机制层面的问题。</p>`},
-  {type:"solution",title:"处理流程——问题优先级排序",body:`<ol class="step-list">
-<li data-num="1"><strong>把所有问题全部写下来</strong><br>不要评价不要分类，先全部列出来。写得越具体越好——不是"团队不行"，而是"3个新人日均通话量低于团队均值30%"。写完后你通常会惊讶——问题没有你想象的那么多。</li>
-<li data-num="2"><strong>用"紧急度×影响度"矩阵排序</strong><br>紧急+高影响=第一优先级；不紧急+高影响=第二优先级；紧急+低影响=快速处理不花太多精力；不紧急+低影响=先放一放。</li>
-<li data-num="3"><strong>找到"杠杆问题"</strong><br>这个问题是其他问题的上游吗？解决了能立刻产生正向反馈给团队信心吗？在你的能力范围内可以主导解决吗？</li>
-<li data-num="4"><strong>单点突破——本周只聚焦一个</strong><br>在团队中公开宣布"本周我们集中解决XXXX"，其他问题记录在待解决清单中排队。解决完一个再做下一个，让团队建立"问题是可以被解决的"信心。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">坦诚问题多但不乱阵脚</div><div class="line">"我接手团队这一个多月，发现我们需要改进的地方确实不少。但我不想搞成'运动式整改'——同时搞十件事一件都搞不好。从这周开始，我们每次聚焦解决一个问题。本周我们要集中搞定的重点是XXXX。"</div></div>
-<div class="script-card"><div class="scene-label">搁置次要问题</div><div class="line">"关于XX这个问题，我看到了，也记下了，但它不是本周最紧急的事。我们先把眼下的核心问题解决了，下下周专门来讨论这个。"</div></div>`},
-  {type:"methodology",title:"背后方法论：约束理论TOC",body:`<p><strong>TOC约束理论：</strong>任何系统在一个时间点上只有一个最薄弱的约束瓶颈。管理者的核心任务是找到这"唯一"的瓶颈并突破它，瓶颈转移了再去处理新的瓶颈。</p><p><strong>杠杆问题的特征：</strong>①是其他问题的上游原因（如流程混乱→导致新人带教困难+执行力差）②解决后能立刻产生正向反馈③在你的能力范围内可以主导解决。</p><p><strong>单点突破原则：</strong>一次聚焦解决一个问题效果远好于同时解决多个问题。解决完一个再进入下一个，让团队持续积累"问题是可以被解决的"信心。</p>`}
+  {type:"scene",title:"典型场景",body:`<p>新主任小郑刚接手团队一个月，感觉自己陷进了问题沼泽：业绩下滑、老员工不服管、新人带教跟不上、流程执行混乱、团队氛围低迷……每天一睁眼就是一堆问题。</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>多问题并发时，<strong>"排好队"比"同时冲"更重要</strong>。花一小时做问题排序，值过后面的所有努力。需要在所有问题中找到<strong>"杠杆问题"</strong>——解决它，其他问题也会跟着松动的那个。</p>`},
+  {type:"solution",title:"处理流程——问题优先级排序",body:`<ol class="step-list"><li data-num="1"><strong>把所有问题全部写下来</strong><br>写得越具体越好——不是"团队不行"，而是"3个新人日均通话量低于团队均值30%"。<li data-num="2"><strong>用"紧急度×影响度"矩阵排序</strong><br>紧急+高影响=第一优先级。</li><li data-num="3"><strong>找到"杠杆问题"</strong><br>这个问题是其他问题的上游吗？解决了能立刻产生正向反馈吗？</li><li data-num="4"><strong>单点突破——本周只聚焦一个</strong><br>在团队中公开宣布"本周我们集中解决XXXX"。</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">坦诚问题多但不乱阵脚</div><div class="line">"我接手团队这一个多月，发现我们需要改进的地方确实不少。但我不想同时搞十件事一件都搞不好。从这周开始，我们每次聚焦解决一个问题。"</div></div>`},
+  {type:"methodology",title:"背后方法论：约束理论TOC",body:`<p><strong>TOC约束理论：</strong>任何系统在一个时间点上只有一个最薄弱的约束瓶颈。管理者的核心任务是找到这"唯一"的瓶颈并突破它。一次聚焦解决一个问题效果远好于同时解决多个。</p>`}
  ],competencyId:6,questionIds:[34,35,36]}
 );
-// 3 个追加案例，严格匹配源文件夹
+
+// 3 个追加案例
 caseLibrary.push(
 {id:25,title:"如何用BIC给员工做有效反馈",category:"绩效推进与沟通",icon:"💬",
  sections:[
-  {type:"scene",title:"典型场景",body:`<p>主任在旁听录音时，发现组员小李在客户第三次表示"这个月工资还没发，真的没办法"后，提高音量说了"你别找借口了，我看你就是不想还！"——客户随后投诉。</p><p>主任要给小李反馈，但怎么说才能让他真正听进去，而不是反驳或沉默？用"你态度太差"——下属会觉得被攻击；用"以后注意语气"——下属不知道具体哪里要改。BIC模型解决的就是这个问题：让反馈有事实依据、有清晰影响、有未来导向。</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>反馈失败的核心原因：<strong>指向"人格"而非"行为"</strong>。当反馈指向人格（"你态度差"），接受者本能地进行自我保护性反驳；当反馈指向具体行为（"你在X时刻做了Y"），接受者更容易承认事实并进入反思状态。</p><p>BIC本质上是利用这个心理规律，把反馈从"攻击自我"变成"分析行为"——下属听完脑子里出现的是具体画面，而不是模糊的"你不好"。</p>`},
-  {type:"solution",title:"处理流程——BIC三步法",body:`<ol class="step-list">
-<li data-num="1"><strong>B（Behavior）——描述具体、可观测的行为</strong><br>说的是一行为，不是人格。要有时间、地点、情境，下属无法否认。<br>✅"小李，今天下午3点你与王先生的通话中，在他第三次提到工资未发、无力还款时，你提高了音量说'你别找借口了，我看你就是不想还'。"<br>❌"你今天态度太差了。"（描述人格）/"你说话太激动了。"（模糊）<br><em>自检：我说的行为，是有人亲眼看到/听到的，还是我的推断？</em></li>
-<li data-num="2"><strong>I（Impact）——说明直接、可见的影响</strong><br>说的是这个行为直接造成了什么。<br>✅"这导致王先生情绪激动，挂断了电话，失去了本次协商的机会，后续跟进的信任基础也破裂了。"<br>❌"这样很不好。"（模糊）/"客户会不满意的。"（推测）<br><em>自检：影响是这个行为"直接"导致的，还是我在推测？</em></li>
-<li data-num="3"><strong>C（Consequence）——关联更广的后果，并转向未来</strong><br>后果要关联个人、团队、公司三个层面，然后用提问把话题引向"怎么改"。<br>✅"如果这种应对方式延续，你的有责投诉率会持续上升，直接影响绩效考核。团队整体合规形象也会受影响。所以我想和你一起分析一下：当客户第三次给出类似理由时，你觉得有哪些更有效的应对方式？"<br>❌"你这样下去会扣绩效的！"（只有威胁，没有出路）<br><em>关键：C之后必须转向"接下来怎么做"，否则BIC变成批评而非反馈。</em></li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">BIC完整句式（通话中打断客户）</div><div class="line">"小李，[B]今天下午3点你与王先生的通话里，他第三次提到还不上钱时，你提高音量说了'你别找借口了'。[I]这直接导致王先生情绪激动挂断电话，最可能转化的案件机会丢失了。[C]如果这种方式成为习惯，投诉率会持续上升，影响你的绩效。所以我想问你：当客户连续说'没钱'的时候，你觉得当时有没有更好的处理方式？"</div></div>
-<div class="script-card"><div class="scene-label">BIC完整句式（跟案记录不及时）</div><div class="line">"[B]我注意到今天你的20个案件中，有8个在首次联系后超过3小时才更新跟进记录。[I]这让我无法准确了解案件进展，同事协访时也拿不到最新信息。[C]如果持续会影响你的案件处理效率和团队协作。所以我想问你：记录更新慢，是有什么具体困难，还是时间管理上有挑战？"</div></div>`},
-  {type:"case",title:"实战案例",body:`<p><strong>场景还原：</strong>催收员小李工作努力但技巧不足，投诉率有上升趋势。主任需要用BIC模型进行反馈。</p><p><strong>常见错误：</strong>❌"你这样下去不行的，要注意语气。"（没有B，只有模糊评价）；❌"客户说要投诉你，你知道这会影响团队的吧？"（没有B和I，直接跳到后果）。</p><p><strong>案例分析：</strong>BIC的价值在于下属听完后脑子里出现的是具体画面（那一刻发生了什么），而不是模糊的"你不好"。有了画面，才能真正分析"我当时应该怎么做"。BIC特别适合即时反馈场景（当天发现的问题），对于需要系统性改进的绩效问题，建议BIC之后衔接GROW模型一起制定完整的改进计划。</p>`},
-  {type:"methodology",title:"背后方法论：BIC有效反馈模型",body:`<p><strong>BIC模型三要素：</strong></p><ul><li><strong>B（Behavior）行为</strong>——描述具体可观测的行为，包含时间、地点、情境。锚定事实而非人格评价</li><li><strong>I（Impact）影响</strong>——说明该行为带来的直接、可见的后果</li><li><strong>C（Consequence）后果</strong>——关联更广层面的长期影响（个人绩效+团队形象），并转向未来的改进</li></ul><p><strong>BIC vs 无效反馈：</strong>无效反馈指向人格（"你态度差"）→接受者本能反驳。BIC指向行为（"你在X时刻做了Y"）→接受者承认事实并进入反思。本质上是利用认知失调理论，把反馈从"攻击自我"变成"分析行为"。</p><p><strong>BIC后衔接GROW：</strong>BIC适合即时反馈场景，做完BIC后如果涉及到系统性改进，建议衔接GROW模型一起制定完整的改进计划。</p>`}
+  {type:"scene",title:"典型场景",body:`<p>主任在旁听录音时，发现组员小李在客户第三次表示"这个月工资还没发，真的没办法"后，提高音量说了"你别找借口了，我看你就是不想还！"——客户随后投诉。</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>反馈失败的核心原因：<strong>指向"人格"而非"行为"</strong>。当反馈指向人格（"你态度差"），接受者本能地进行自我保护性反驳；当反馈指向具体行为（"你在X时刻做了Y"），接受者更容易承认事实。</p>`},
+  {type:"solution",title:"处理流程——BIC三步法",body:`<ol class="step-list"><li data-num="1"><strong>B（Behavior）——描述具体、可观测的行为</strong><br>要有时间、地点、情境，下属无法否认。<br>✅"小李，今天下午3点你与王先生的通话中，在他第三次提到工资未发时，你提高音量说'你别找借口了'。"<br>❌"你今天态度太差了。"<li data-num="2"><strong>I（Impact）——说明直接、可见的影响</strong><br>✅"这导致王先生情绪激动，挂断了电话，失去了本次协商的机会。"<li data-num="3"><strong>C（Consequence）——关联更广的后果，并转向未来</strong><br>✅"如果这种应对方式延续，你的有责投诉率会持续上升。所以我想和你一起分析：当客户第三次给出类似理由时，你觉得有哪些更有效的应对方式？"</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">BIC完整句式（通话中打断客户）</div><div class="line">"小李，[B]今天下午3点你与王先生的通话里，他第三次提到还不上钱时，你提高音量说了'你别找借口了'。[I]这直接导致王先生情绪激动挂断电话。[C]如果这种方式成为习惯，投诉率会持续上升。所以我想问你：当客户连续说'没钱'的时候，你觉得当时有没有更好的处理方式？"</div></div>`},
+  {type:"case",title:"实战案例",body:`<p><strong>常见错误：</strong>❌"你这样下去不行的，要注意语气。"（没有B，只有模糊评价）；❌"客户说要投诉你，你知道这会影响团队的吧？"（没有B和I，直接跳到后果）。</p><p><strong>案例分析：</strong>BIC的价值在于下属听完后脑子里出现的是具体画面，而不是模糊的"你不好"。</p>`},
+  {type:"methodology",title:"背后方法论：BIC有效反馈模型",body:`<p><strong>BIC模型三要素：</strong>B行为、I影响、C后果。BIC后衔接GROW一起制定完整的改进计划。</p>`}
  ],competencyId:2,questionIds:[10]},
 {id:26,title:"推行新管理规范团队抵触怎么办",category:"角色认知与目标规划",icon:"💡",
  sections:[
-  {type:"scene",title:"典型场景",body:`<p>新主任刚上任，前任管理风格宽松，团队自由散漫但氛围还好。新主任宣布从明天开始要执行新规范：每日填催收台账、参加晨夕会、按标准话术作业。</p><p>第二天，几个核心员工私下议论："以前没这么多事业绩也还行，搞这么多形式主义，新官上任三把火。"其中一个员工代表大家找到主任说："主任，大家觉得这些规定太繁琐了，能不能不用这样？"</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>人们抵触变化，本质上是对<strong>"不确定性"的焦虑</strong>——不知道新规范会带来什么，担心工作量增加、被监控、失去自主感。</p><p>直接讲"这是规定，必须执行"只会激化对抗。需要走<strong>"情绪先行→事实说明→共创方案→试行+复盘"</strong>的路径，把团队从"被规范的对象"变成"规范的参与者"。</p>`},
-  {type:"solution",title:"处理流程——五步化解抵触",body:`<ol class="step-list">
-<li data-num="1"><strong>先处理情绪，不急于解释规定</strong><br>主动召集小型沟通会："这两天我听到大家对新流程有些想法，今天咱们不聊执行，先聊聊感受。大家觉得哪些地方最别扭、最担心，都说出来，咱们一起看看怎么调。"先给情绪出口，对方才会进入理性对话模式。</li>
-<li data-num="2"><strong>倾听并总结顾虑，不评判对错</strong><br>让每位员工轮流发言，主任只做记录和澄清。最后总结："我总结一下大家的顾虑——一是担心增加工作量；二是觉得过去不写记录也出过成绩，没看到直接价值；三是怕被'监控'，感觉不被信任。大家看是这样吗？"被准确复述的人才会感到被理解。</li>
-<li data-num="3"><strong>用事实和数据说明必要性</strong><br>"我拉了一下过去半年的数据：咱们回款主要靠几个老员工撑，新人流失率偏高，很多投诉源于记录不全、口径不一致。再看做了这套流程的A组，新人上手周期缩短40%，投诉率降了一半。流程不是为了管大家，而是让每个人的努力都能沉淀下来。"</li>
-<li data-num="4"><strong>寻求双赢，让团队参与方案制定</strong><br>"核心框架必须执行，但具体怎么落地大家可以一起定。比如晨会控制在5分钟内，只聚焦数据和难点；台账模板上哪些字段你们觉得真正有用、哪些可以简化，咱们一起优化一版'团队专属版'。这个方案由你们来提，我来帮大家协调资源。"</li>
-<li data-num="5"><strong>明确试行期，建立反馈机制</strong><br>"先试行两周。第一周结束后咱们开一次复盘会，把流程中卡点的地方再优化一轮。我来负责跟上面沟通汇报的格式调整。两周后如果大家觉得某个环节确实价值不大，我们再一起论证调整。"试行期降低了"永远都要这样"的心理压力。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">开场处理情绪</div><div class="line">"今天咱们不聊执行，先聊聊感受。大家觉得哪些地方最别扭，都说出来。"</div></div>
-<div class="script-card"><div class="scene-label">总结顾虑确认理解</div><div class="line">"我总结一下大家的顾虑……大家看是这样吗？"</div></div>
-<div class="script-card"><div class="scene-label">数据说话</div><div class="line">"流程不是为了管大家，而是让每个人的努力都能沉淀下来，新人也能有章可循。"</div></div>
-<div class="script-card"><div class="scene-label">共创方案</div><div class="line">"核心框架必须执行，但具体怎么落地，大家可以一起定。这个方案由你们来提，我来帮大家协调资源。"</div></div>
-<div class="script-card"><div class="scene-label">设定试行期</div><div class="line">"先试行两周，第一周后我们一起复盘，有不合理的地方再调整。"</div></div>`},
-  {type:"case",title:"实战案例",body:`<p><strong>武汉田东阳方案：</strong>单独面谈代表员工，拿同队列优秀组数据对比，提出"试行一周+下周复盘"机制，让团队看到成效后自然接受。</p><p><strong>新乡穆宏宇方案：</strong>强调新流程可以优化绩效、减少加班，推动共同探讨、分层监管（主任检查关键节点，其余日常自查）。</p><p><strong>重庆向豪方案：</strong>反思自己是否没讲清楚规范的初衷，主张先树立内部标杆——找到最早适应新流程的成员，用实际数据说服其他人。</p><p><strong>案例分析：</strong>三种方案的共同点是"讲清楚为什么+给团队参与感+用数据说话"，而不是靠权力压制。关键动作：情绪先行→事实说明→共创方案→试行+复盘。</p>`},
-  {type:"methodology",title:"背后方法论：变革管理与异议处理",body:`<p><strong>变革管理视角：</strong>科特"变革8步模型"指出，推行变革失败的最常见原因是"没有建立足够的紧迫感"和"没有让利益相关方参与"。本案例的处理思路与之高度吻合：先用数据说明"为什么要变"，再让团队"参与制定怎么变"。</p><p><strong>心理学视角：</strong>人们抵触变化本质上是对"不确定性"的焦虑。当主任把试行期、调整机制、反馈渠道都明确了，团队的焦虑就从"不知道会变成什么样"变成了"我们一起看两周"。确定性的增加会显著降低抵触情绪。</p><p><strong>关联能力：</strong>异议处理五步法——用"情绪→事实→方案→试行→复盘"的路径，把冲突转化为改进机会。配合WBS将新规范拆解为可落地的每日动作。</p>`}
+  {type:"scene",title:"典型场景",body:`<p>新主任刚上任，前任管理风格宽松。新主任宣布从明天开始要执行新规范：每日填催收台账、参加晨夕会、按标准话术作业。第二天，几个核心员工私下议论："新官上任三把火。"</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>人们抵触变化，本质上是对<strong>"不确定性"的焦虑</strong>。需要走"情绪先行→事实说明→共创方案→试行+复盘"的路径，把团队从"被规范的对象"变成"规范的参与者"。</p>`},
+  {type:"solution",title:"处理流程——五步化解抵触",body:`<ol class="step-list"><li data-num="1"><strong>先处理情绪，不急于解释规定</strong><br>"这两天我听到大家对新流程有些想法，今天咱们不聊执行，先聊聊感受。"</li><li data-num="2"><strong>倾听并总结顾虑，不评判对错</strong><br>"我总结一下大家的顾虑——一是担心增加工作量；二是觉得过去不写记录也出过成绩。"</li><li data-num="3"><strong>用事实和数据说明必要性</strong><br>"我拉了一下过去半年的数据：看了做了这套流程的A组，新人上手周期缩短40%。"</li><li data-num="4"><strong>寻求双赢，让团队参与方案制定</strong><br>"核心框架必须执行，但具体怎么落地大家可以一起定。"</li><li data-num="5"><strong>明确试行期，建立反馈机制</strong><br>"先试行两周。第一周结束后咱们开一次复盘会。"</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">开场处理情绪</div><div class="line">"今天咱们不聊执行，先聊聊感受。大家觉得哪些地方最别扭，都说出来。"</div></div><div class="script-card"><div class="scene-label">共创方案</div><div class="line">"核心框架必须执行，但具体怎么落地，大家可以一起定。这个方案由你们来提，我来帮大家协调资源。"</div></div>`},
+  {type:"case",title:"实战案例",body:`<p><strong>武汉田东阳方案：</strong>单独面谈代表员工，拿同队列优秀组数据对比，提出"试行一周+下周复盘"机制。</p><p><strong>案例分析：</strong>三种方案的共同点是"讲清楚为什么+给团队参与感+用数据说话"。关键动作：情绪先行→事实说明→共创方案→试行+复盘。</p>`},
+  {type:"methodology",title:"背后方法论：变革管理与异议处理",body:`<p><strong>变革管理视角：</strong>科特"变革8步模型"指出，推行变革失败的最常见原因是"没有建立足够的紧迫感"和"没有让利益相关方参与"。</p>`}
  ],competencyId:1,questionIds:[1,2]},
 {id:27,title:"风险员工沟通多次仍无改善怎么办",category:"人才识别与授权",icon:"🔑",
  sections:[
-  {type:"scene",title:"典型场景",body:`<p>老员工老刘做了2年，最近半年业绩持续下滑，而且时不时在背后发牢骚，说"这个案件系统太烂"、"制度越来越死"。主任跟他谈过两次，第一次他当场表态"我会努力"，第二次他说"最近家里有事，给我点时间"。</p><p>结果是：谈完还是那样，业绩没改善，牢骚没少。主任开始担心：他这样下去会不会影响团队里的新人？如果处理依据是什么？如果不处理他什么时候是个头？</p>`},
-  {type:"diagnosis",title:"问题诊断",body:`<p>主任的谈话没有结构——没有明确目的、没有留痕、没有具体改善目标、没有检查节点。员工感受到的是"主任只是来说几句"，而不是"这件事主任认真在跟"。</p><p><strong>"结构"本身就是管理信号：</strong>随机谈话=不认真；正式约谈+记录+节点=认真。结构的存在会让员工知道"这次主任是动真格的"，本身就会改变员工的行为。</p><p>首先需要判断是<strong>"可挽救"还是"难挽救"</strong>：可挽救信号——曾有过良好绩效且近期下滑有明确诱因、愿意谈且态度有松动、核心能力没退化。难挽救信号——长期绩效下滑且无法解释原因、对改善建议敷衍应付、负面情绪外溢主动影响他人。</p>`},
-  {type:"solution",title:"处理流程——结构化三次谈话",body:`<ol class="step-list">
-<li data-num="1"><strong>第一次谈话：理解现状（听，不是压）</strong><br>目的是了解，不是施压。问清楚：他自己觉得问题出在哪？最近工作上/生活上有没有影响状态的事？他对未来有什么想法？不要在第一次谈话里提警告或后果，先理解再说。<br>"老刘，我注意到你最近几个月状态有些变化，业绩比之前下滑了一些。我不是来批评你的，我想先了解一下——你自己觉得最近哪里出了问题？"</li>
-<li data-num="2"><strong>第二次谈话：共同制定改善计划（1-2周后）</strong><br>基于他说的根因，和他一起制定改善方案。具体目标：接下来4周通量/回收率达到什么水平。支持条件：主任提供什么帮助（辅导、案件调整等）。检查节点：每周三对一次数据。<br><em>关键：让他说出改善计划，不是主任单方面下达——这样他才有承诺感。</em></li>
-<li data-num="3"><strong>第三次谈话：评估结果，做决定（改善期结束时）</strong><br>用数据说话——达标：认可并正式记录，继续跟踪；未达标但有进步：视进步幅度决定是否延长或调整岗位；无改善：启动正式流程（岗位调整、转岗或退出）。每次谈话要留痕——主任自己写备忘录记录时间、内容、员工反馈、后续约定。</li>
-<li data-num="4"><strong>把负面影响控制在小范围</strong><br>改善期内不在团队公开场合点名批评；发现他在背后抱怨时私下一对一说清楚；让他专注处理自己的案件，暂时不安排带新人或团队分享。</li>
-<li data-num="5"><strong>如果确实需要岗位调整</strong><br>用制度和数据，不用情绪。对照绩效考核制度说清楚"连续X个月不达标对应的岗位调整"；提前预告给缓冲时间；整个过程有记录确保程序合规。留痕记录是唯一可以说清"已经给过机会、做过支持"的证据。</li></ol>`},
-  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">第一次谈话开场</div><div class="line">"老刘，我注意到你最近几个月状态有些变化，业绩比之前下滑了一些。我不是来批评你的，我想先了解一下——你自己觉得最近哪里出了问题？"</div></div>
-<div class="script-card"><div class="scene-label">探究根因</div><div class="line">"你觉得是案件质量的问题，还是你自己在哪个环节卡住了？还是说有什么外部原因影响了你的状态？"</div></div>
-<div class="script-card"><div class="scene-label">共同制定改善计划</div><div class="line">"根据上次聊的，你说问题主要是话术在长期客户上不顺。那我们来定一个接下来4周的目标——你觉得做到什么程度，算是改善了？"</div></div>
-<div class="script-card"><div class="scene-label">结果评估（未达标）</div><div class="line">"老刘，这4周我们一起对过进度，现在来看一下数据。按我们约好的目标，这次没有达到。这种情况下，我需要跟你说清楚接下来的安排……"</div></div>
-<div class="script-card"><div class="scene-label">处理负面情绪外溢</div><div class="line">"我听到一些反映说你最近在背后对一些制度有意见。我理解可能有你的看法，但这样的方式会影响团队的状态。如果有问题我们直接谈，该改的我来推动——但在这个范围外传对谁都不好。"</div></div>`},
-  {type:"case",title:"实战案例",body:`<p><strong>场景还原：</strong>风险层员工老刘，任职超2年，近半年绩效下滑，负面情绪多。主任非正式地"谈"过好几次，但都是边走边说，没有记录，也没有明确后续。每次谈完员工表态说"会改"，但实际上没变化。</p><p><strong>问题分析：</strong>主任的谈话没有结构——没有明确目的、没有留痕、没有具体改善目标、没有检查节点。员工感受到的是"主任只是来说几句"而不是"这件事主任认真在跟"。</p><p><strong>处理过程：</strong>重新启动三次正式谈话——第一次做了1小时深度了解（发现员工其实有家庭问题导致注意力分散），第二次共同制定了具体改善目标（4周通量目标+每周三节点对比），第三次用数据评估结果。</p><p><strong>案例结果：</strong>员工发现主任"认真在管"后，状态逐渐好转，4周后通量恢复到改善前水平，负面情绪也明显减少。关键转变在于主任用结构化流程代替了随机谈话。</p>`},
-  {type:"methodology",title:"背后方法论：风险层员工管理与三次谈话原则",body:`<p><strong>风险层员工识别：</strong>业绩持续下滑超过2个月、频繁请假或迟到早退、对团队活动明显疏离、负面情绪外溢影响他人。</p><p><strong>三次谈话原则：</strong>第一次了解原因并给予支持（深度倾听，不提警告）→第二次明确预期和底线（共同制定改善计划+检查节点）→第三次做出明确去留决定（用数据说话，留痕记录）。</p><p><strong>留痕的重要性：</strong>如果最终需要启动岗位调整流程，留痕记录是唯一可以说清"已经给过机会、做过支持"的证据。"我们谈过很多次"在没有记录的情况下没有管理效力。每次谈话后主任自己写备忘录：时间+内容+员工反馈+后续约定。</p><p><strong>"结构"本身就是管理信号：</strong>员工会根据主任的行为来判断"这件事主任认不认真"。随机谈话=不认真；正式约谈+记录+节点=认真。</p>`}
+  {type:"scene",title:"典型场景",body:`<p>老员工老刘做了2年，最近半年业绩持续下滑，而且时不时在背后发牢骚。主任跟他谈过两次，第一次他当场表态"我会努力"，第二次他说"最近家里有事，给我点时间"。结果是：谈完还是那样。</p>`},
+  {type:"diagnosis",title:"问题诊断",body:`<p>主任的谈话没有结构——没有明确目的、没有留痕、没有具体改善目标、没有检查节点。<strong>"结构"本身就是管理信号：</strong>随机谈话=不认真；正式约谈+记录+节点=认真。</p>`},
+  {type:"solution",title:"处理流程——结构化三次谈话",body:`<ol class="step-list"><li data-num="1"><strong>第一次谈话：理解现状（听，不是压）</strong><br>"老刘，我注意到你最近几个月状态有些变化，业绩比之前下滑了一些。我不是来批评你的，我想先了解一下。"</li><li data-num="2"><strong>第二次谈话：共同制定改善计划（1-2周后）</strong><br>具体目标+支持条件+检查节点。</li><li data-num="3"><strong>第三次谈话：评估结果，做决定（改善期结束时）</strong><br>用数据说话——达标：认可并正式记录；未达标但有进步：视情况延长或调整；无改善：启动正式流程。</li></ol>`},
+  {type:"scripts",title:"关键话术",body:`<div class="script-card"><div class="scene-label">第一次谈话开场</div><div class="line">"老刘，我注意到你最近几个月状态有些变化，业绩比之前下滑了一些。我不是来批评你的，我想先了解一下——你自己觉得最近哪里出了问题？"</div></div><div class="script-card"><div class="scene-label">处理负面情绪外溢</div><div class="line">"我听到一些反映说你最近在背后对一些制度有意见。如果有问题我们直接谈，该改的我来推动——但在这个范围外传对谁都不好。"</div></div>`},
+  {type:"case",title:"实战案例",body:`<p><strong>问题分析：</strong>主任的谈话没有结构——没有明确目的、没有留痕、没有具体改善目标。员工感受到的是"主任只是来说几句"而不是"这件事主任认真在跟"。</p><p><strong>案例结果：</strong>员工发现主任"认真在管"后，状态逐渐好转。关键转变在于主任用结构化流程代替了随机谈话。</p>`},
+  {type:"methodology",title:"背后方法论：风险层员工管理与三次谈话原则",body:`<p><strong>三次谈话原则：</strong>第一次了解原因并给予支持→第二次明确预期和底线→第三次做出明确去留决定。</p><p><strong>留痕的重要性：</strong>"我们谈过很多次"在没有记录的情况下没有管理效力。每次谈话后主任自己写备忘录。</p>`}
  ],competencyId:3,questionIds:[17]}
 );
 
-// ====== 方法论库（能力项） ======
+// ====== 方法论库 ======
 const competencies=[
 {id:1,title:"角色认知与目标规划",icon:"💡",
- detail:`<p><strong>主任的首要任务：</strong>完成从"个人贡献者"到"团队赋能者"的角色转型。</p>
-<p><strong>三大转变：</strong></p><ul>
-<li><strong>从"自己做"到"带着做"</strong>——学会合理授权和有效辅导，让团队成员在实践中快速成长，而非事必躬亲</li>
-<li><strong>从"专注事"到"关注人"</strong>——不仅关注业务产出，更要关注成员的心理状态、真实需求和职业发展。效率（把事做对）vs 效能（做对的事）</li>
-<li><strong>从"线性思维"到"全局思维"</strong>——跳出单一执行视角，以全局视野思考问题，平衡短期业绩目标与长期战略发展</li></ul>
-<p><strong>成熟主任三大核心价值：</strong>目标转化器（公司目标→团队可执行的行动）、问题解决者（及时发现和解决团队问题）、人才孵化器（培养和发展团队成员，输送优秀人才）。</p>
-<p><strong>SMART原则：</strong>S具体（用明确语言描述行为标准）、M可衡量（有明确数据指标）、A可实现（跳一跳够得着）、R相关（与岗位职责关联）、T有时限（明确完成节点）。</p>
-<p><strong>WBS任务分解四步法：</strong>确定最终成果→识别主要模块→逐层分解→检查分配。拆到每人每天的最小动作。</p>
-<p><strong>五大转型误区：</strong>事必躬亲、只盯数字忽视人、回避冲突当老好人、不善向上沟通、忽视自我成长。</p>`},
+ detail:`<p><strong>主任的首要任务：</strong>完成从"个人贡献者"到"团队赋能者"的角色转型。</p><p><strong>三大转变：</strong>从"自己做"到"带着做"、从"专注事"到"关注人"、从"线性思维"到"全局思维"。</p><p><strong>成熟主任三大核心价值：</strong>目标转化器、问题解决者、人才孵化器。</p><p><strong>SMART原则+WBS任务分解：</strong>把模糊目标转化为可追踪的量化指标，再分解到每人每天的最小动作。</p>`},
 {id:2,title:"绩效推进与沟通",icon:"💬",
- detail:`<p><strong>对抗沟通漏斗：</strong>心里想100%→嘴上说80%→下属听到60%→执行40%。必须用结构化方法对抗信息衰减。</p>
-<p><strong>清晰派活四步法：</strong>①Why+What（先讲目的和目标）→ ②Who+When（确定责任人和时间节点）→ ③How（确认方法和资源）→ ④Check（让下属复述验证理解，而非问"你听懂了吗"）。</p>
-<p><strong>高效听报三要素：</strong>①听事实而非情绪（识别信号词→5W2H拉回事实）→ ②听困难而非借口（区分真困难和假借口）→ ③听方案而非只抛问题（培养下属独立思考习惯）。</p>
-<p><strong>绩效面谈三大工具：</strong></p><ul>
-<li><strong>GROW教练式辅导：</strong>Goal目标→Reality现状→Options方案→Will行动。80%时间提问，20%时间建议</li>
-<li><strong>ART周期复盘法则：</strong>A评估现状（先听后说，25%时间）→R反思探索（75%时间）→T目标规划</li>
-<li><strong>BIC有效反馈模型：</strong>B描述具体行为→I说明直接后果→C关联长期影响并转向改进</li></ul>
-<p><strong>面谈后追踪六步机制：</strong>纪要确认→建立台账→制定IDP→定期检查→兑现支持→绩效关联。只面谈不追踪=0。</p>
-<p><strong>差异化面谈策略：</strong>高绩效（激励保留+标杆角色）→ 稳定绩效（激发突破+发掘潜力点）→ 低绩效（教练辅导+PIP计划）。</p>`},
+ detail:`<p><strong>对抗沟通漏斗：</strong>心里想100%→嘴上说80%→下属听到60%→执行40%。必须用结构化方法对抗信息衰减。</p><p><strong>清晰派活四步法+高效听报三要素+BIC有效反馈+ART绩效面谈法则。</strong></p><p><strong>面谈后追踪六步机制：</strong>纪要确认→建立台账→制定IDP→定期检查→兑现支持→绩效关联。</p>`},
 {id:3,title:"人才识别与授权",icon:"🔑",
- detail:`<p><strong>员工分层识别：</strong></p><ul>
-<li><strong>能力×意愿矩阵：</strong>明星型（高能力高意愿→授权挑战+舞台）| 新人/转型期（低能力高意愿→重点带教）| 老油条型（高能力低意愿→激活内在动机）| 问题型（双低→绩效干预）</li>
-<li><strong>员工成长3+1阶段：</strong>适应期（0-3月，识别"不会"vs"不敢"）→ 成长期（3-12月，防自负和抗拒规范）→ 稳定期（1年+，防职业疲惫）→ 风险层（需三次谈话闭环）</li></ul>
-<p><strong>16字辅导法：</strong>我说你听（讲标准）→ 我做你看（示范）→ 你做我看（观察）→ 你说我听（反思）。四步不能颠倒，最容易遗漏第四步。</p>
-<p><strong>有效授权六步法：</strong>①设定目标 → ②明确边界（权力边界+资源支持+禁忌红线）→ ③确定汇报 → ④确认理解（让员工复述）→ ⑤公开宣布（赋予正式权力）→ ⑥跟进兜底（不等于完全放手）。</p>
-<p><strong>授权三原则：</strong>用准备度矩阵选对人、用80%原则选对事（下属能做到你期望的80%就值得授权）、授权后看到不好不要夺回来——用教练式提问代替指令干预。</p>`},
+ detail:`<p><strong>员工分层识别：</strong>能力×意愿矩阵（明星型/新人型/老油条型/问题型）。</p><p><strong>员工成长3+1阶段：</strong>适应期→成长期→稳定期→风险层。</p><p><strong>16字辅导法+有效授权六步法+80%原则。</strong></p>`},
 {id:4,title:"员工辅导与发展",icon:"🌱",
- detail:`<p><strong>辅导的本质：</strong>不是"教员工做事"，而是"帮助员工成长"。主任要完成从"只会纠正错误"到"懂得激发潜能"的辅导角色升级。</p>
-<p><strong>三种辅导层次：</strong></p><ul>
-<li><strong>纠错式辅导：</strong>发现问题→指出错误→要求改正。短期有效但员工依赖性强</li>
-<li><strong>方法式辅导：</strong>发现不足→给方法→示范→练习。中期有效，员工能力提升</li>
-<li><strong>教练式辅导：</strong>提问激发→引导自悟→自主行动。长期有效，员工自主成长</li></ul>
-<p><strong>GROW模型四步：</strong>G目标（区分会话目标vs行动目标）→ R现状（三个维度：客观事实+已做努力+障碍分析）→ O方案（先发散后收敛，五种替代问法应对"不知道"）→ W行动（What/When/Check/Support四要素+1-10分意愿确认）。</p>
-<p><strong>新人带教四阶段：</strong>准备期（第1周）→ 基础带教期（第2-4周，渐进放手20%→50%→70%）→ 独立实践期（第2-3月，落差期高发）→ 稳定成长期（第4-6月）。30天陪跑检核表+红黄牌机制。</p>
-<p><strong>反馈黄金比例3:1：</strong>三次肯定对应一次纠错。正面反馈即时、具体、公开；负面反馈私下、具体、对事不对人。</p>`},
+ detail:`<p><strong>三种辅导层次：</strong>纠错式→方法式→教练式。</p><p><strong>GROW模型四步：</strong>G目标→R现状→O方案→W行动。80%时间提问，20%时间建议。</p><p><strong>新人带教四阶段+反馈黄金比例3:1。</strong></p>`},
 {id:5,title:"管理执行力",icon:"⚡",
- detail:`<p><strong>为什么目标定了却完不成？</strong>五个常见根因：目标模糊、目标脱离实际、只定目标不给路径、缺乏过程追踪、目标与执行脱节。</p>
-<p><strong>目标解码三步法：</strong>①理解公司目标背后的"为什么"——自己先测算目标是否成立 → ②翻译成团队语言——翻译标准：组员听完能说出"明天要做什么不一样的事" → ③分解为个人行动——结果目标→过程目标→行动目标，必须分解到"明天早上9点具体做什么"的层级。</p>
-<p><strong>执行力管控四个关键：</strong></p><ul>
-<li>建立可见的执行节奏——日清日结+周里程碑+月复盘</li>
-<li>关键节点检查——识别承上启下/易出错/能预测结果的关键动作</li>
-<li>数据驱动过程监控——看趋势变化而非绝对值，看指标组合而非单一指标</li>
-<li>可视化进度管理——公开数据比私下提醒更有驱动力</li></ul>
-<p><strong>纠偏三层次：</strong>轻度（日常私下提醒）→ 中度（连续3天偏离，结构化一对一谈话，用BIC/GROW）→ 重度（正式干预，书面记录+改善计划+不达标后果）。</p>
-<p><strong>纠偏黄金法则：</strong>越快越好→先问后说→聚焦未来→对事不对人→纠偏之后必有追踪（设定下一次检查节点，形成闭环）。</p>`},
+ detail:`<p><strong>目标解码三步法：</strong>理解目标→翻译成团队语言→分解为个人行动。</p><p><strong>执行力管控四个关键：</strong>建立可见的执行节奏、关键节点检查、数据驱动过程监控、可视化进度管理。</p><p><strong>纠偏三层次+纠偏黄金法则。</strong></p>`},
 {id:6,title:"团队问题分析与解决",icon:"🔍",
- detail:`<p><strong>问题识别的三个层次：</strong>表面现象（能直接看到的异常结果）→ 趋势信号（数据走势中隐藏的预警）→ 潜在风险（尚未爆发但可能恶化的问题）。不要等数据大幅下滑才行动，关注"异常波动"而非绝对值。</p>
-<p><strong>问题识别四个维度：</strong>数据维度（业绩+过程+合规指标的异常波动）→ 行为维度（工作习惯的突然变化）→ 情绪维度（团队氛围的微妙转变）→ 流程维度（工作流程中的卡点和重复性错误）。</p>
-<p><strong>5Why分析法：</strong>从问题表象开始，连续追问"为什么"，每层答案作为下一层问题，层层深入直到找到可控且可改变的根本原因。不是追问"谁干的"（追责），而是追问"为什么系统允许这个事发生"（追因）。配合鱼骨图（人机料法环测六维）进行系统梳理。</p>
-<p><strong>PDCA循环：</strong>P明确问题→设定SMART目标→头脑风暴方案→制定行动计划 → D执行并记录关键节点 → C对比前后数据→确认达成度→收集反馈 → A有效做法标准化→经验分享化→源头预防化→设定防复发机制。</p>
-<p><strong>管理价值在A阶段：</strong>标准化（写入流程文档）、分享化（经验传递）、预防化（建立预警）——让一次改善变成永久能力。一次聚焦解决一个问题，让执行者参与方案制定。</p>`}
+ detail:`<p><strong>问题识别三个层次：</strong>表面现象→趋势信号→潜在风险。</p><p><strong>5Why分析法+鱼骨图+PDCA循环。</strong></p><p><strong>管理价值在A阶段：</strong>标准化、分享化、预防化——让一次改善变成永久能力。</p>`}
 ];
 
 // ====== 考题库 ======
 const questionBank=[
-// 角色认知与目标规划 (1-6)
 {id:1,stem:"催收组长李明刚晋升为主任后，每天仍花大量时间亲自打电话催收，组员业绩反而持续下滑。他最需要完成的核心转变是什么？",options:["从关注个人业绩产出转向关注团队整体目标的达成","从现在开始完全停止打电话，只做行政管理工作","从关注催收技巧转向关注Excel报表制作","从对组员严格要求转向对组员无底线包容"],answer:0,explanation:"核心转变是从'个人业绩=个人价值'转向'团队业绩=管理价值'。李明仍用骨干思维做主任工作，没有完成角色转型。"},
-{id:2,stem:"成熟主任三大核心价值中，'目标转化器'指的是什么？",options:["把公司目标分解为个人绩效考核指标","把公司目标转化为团队可执行的行动","把团队目标整理成PPT向上级汇报","把个人目标与公司目标进行对齐"],answer:1,explanation:"目标转化器意味着主任将公司战略目标转化为每个成员能够理解和执行的具体行动方案，而不仅仅是分解指标。"},
+{id:2,stem:"成熟主任三大核心价值中，'目标转化器'指的是什么？",options:["把公司目标分解为个人绩效考核指标","把公司目标转化为团队可执行的行动","把团队目标整理成PPT向上级汇报","把个人目标与公司目标进行对齐"],answer:1,explanation:"目标转化器意味着主任将公司战略目标转化为每个成员能够理解和执行的具体行动方案。"},
 {id:3,stem:"SMART原则中的S代表什么含义？",options:["Specific（具体的）——目标必须明确清晰","Simple（简单的）——目标不能太复杂","Standard（标准的）——目标要符合规范","Strategic（战略的）——目标要有战略高度"],answer:0,explanation:"S=Specific，目标必须具体明确。比如不是'多打电话'而是'每日手动拨打15次有效联系'。"},
 {id:4,stem:"以下哪个目标不符合SMART原则中的M（可衡量）？",options:["人均老案回收率提升3000元","每日完成至少15次有效联系尝试","大力提升催收效果","接通率达到85%以上"],answer:2,explanation:"'大力提升催收效果'无法量化。M=Measurable，必须有明确的数据指标追踪进度。"},
-{id:5,stem:"WBS（工作分解结构）最核心的价值是什么？",options:["帮主任记住所有业务流程","把复杂任务按逻辑层层分解成可分配、可追踪的小行动","替代每日晨夕会减少沟通成本","自动生成数据报表减少工作量"],answer:1,explanation:"WBS的核心是将复杂任务像拆乐高一样，按逻辑层层分解成可分配、可追踪的小行动。"},
-{id:6,stem:"PDCA执行闭环中，'C'（检查）环节在催收管理中的具体动作是什么？",options:["用WBS拆解任务，用SMART设定目标","按分解后的任务执行并记录催收台账","晨夕会复盘数据，主任抽查台账和录音","发现偏差立即纠正，更新下一轮执行计划"],answer:2,explanation:"C（Check）的核心是定期检查执行偏差：晨夕会复盘数据、抽查台账和录音，确保执行不走偏。"},
-// 绩效推进与沟通 (7-12)
-{id:7,stem:"根据沟通漏斗原理，主任心里想清楚的内容经逐级传递后，下属最终能准确执行的比例大约是多少？",options:["大约80%","大约60%","大约50%","大约40%"],answer:3,explanation:"沟通漏斗：心里想100%→嘴上说80%→下属听到60%→执行40%。必须用方法对抗漏斗效应。"},
-{id:8,stem:"组长说'这批案子你跟一下'。根据清晰派活四步法，这句话的主要问题是什么？",options:["没有明确时间节点","没有说明Why和What，下属缺少判断依据和执行标准","没有确认下属是否听懂","没有提供协催资源"],answer:1,explanation:"缺失了Why和What，下属遇到意外情况时不知道如何判断和处理，容易执行跑偏。"},
-{id:9,stem:"GROW教练式辅导模型的四个步骤，正确的顺序是什么？",options:["Goal→Options→Reality→Will","Goal→Reality→Options→Will","Reality→Goal→Options→Will","Goal→Reality→Will→Options"],answer:1,explanation:"GROW标准顺序：G目标→R现状→O方案→W行动。先明确目标，再基于现状找方案，最后落实到具体行动。"},
+{id:5,stem:"WBS（工作分解结构）最核心的价值是什么？",options:["帮主任记住所有业务流程","把复杂任务按逻辑层层分解成可分配、可追踪的小行动","替代每日晨夕会减少沟通成本","自动生成数据报表减少工作量"],answer:1,explanation:"WBS的核心是将复杂任务按逻辑层层分解成可分配、可追踪的小行动。"},
+{id:6,stem:"PDCA执行闭环中，'C'（检查）环节在催收管理中的具体动作是什么？",options:["用WBS拆解任务，用SMART设定目标","按分解后的任务执行并记录催收台账","晨夕会复盘数据，主任抽查台账和录音","发现偏差立即纠正，更新下一轮执行计划"],answer:2,explanation:"C（Check）的核心是定期检查执行偏差。"},
+{id:7,stem:"根据沟通漏斗原理，主任心里想清楚的内容经逐级传递后，下属最终能准确执行的比例大约是多少？",options:["大约80%","大约60%","大约50%","大约40%"],answer:3,explanation:"沟通漏斗：心里想100%→嘴上说80%→下属听到60%→执行40%。"},
+{id:8,stem:"组长说'这批案子你跟一下'。根据清晰派活四步法，这句话的主要问题是什么？",options:["没有明确时间节点","没有说明Why和What，下属缺少判断依据和执行标准","没有确认下属是否听懂","没有提供协催资源"],answer:1,explanation:"缺失了Why和What，下属遇到意外情况时不知道如何判断和处理。"},
+{id:9,stem:"GROW教练式辅导模型的四个步骤，正确的顺序是什么？",options:["Goal→Options→Reality→Will","Goal→Reality→Options→Will","Reality→Goal→Options→Will","Goal→Reality→Will→Options"],answer:1,explanation:"GROW标准顺序：G目标→R现状→O方案→W行动。"},
 {id:10,stem:"BIC有效反馈模型的三个构成要素包括哪些？",options:["Behavior行为、Belief信念、Consequence后果","Behavior行为、Impact影响、Consequence后果","Behavior行为、Impact影响、Change改变","Belief信念、Impact影响、Consequence后果"],answer:1,explanation:"BIC：B描述具体可观测行为→I说明直接后果→C关联长期影响并转向未来改进。"},
-{id:11,stem:"在布置任务的Check环节，以下哪种确认方式最有效？",options:["你听懂了吗？","都清楚了吗？还有没有问题？","你花30秒跟我复述一下：这个任务最关键的目标是什么？","我讲明白了吗？"],answer:2,explanation:"让下属主动复述关键信息是验证真实理解程度最有效的方式。永远不要假设下属理解了。"},
-{id:12,stem:"以下哪一项不属于绩效面谈后追踪六步机制？",options:["T日内整理面谈纪要发送给员工确认","用Excel建立台账记录每次面谈","将面谈结果在全团队范围内公示","制定IDP个人发展计划"],answer:2,explanation:"面谈内容应保护员工隐私，不应公开公示。六步：纪要确认、建立台账、制定IDP、定期检查、兑现支持、绩效关联。"},
-// 人才识别与授权 (13-18)
-{id:13,stem:"16字辅导法的正确执行顺序是什么？",options:["我说你听→我做你看→你做我看→你说我听","我做你看→我说你听→你做你看→你说我听","你说我听→我做你看→我说你听→你做我看","我做你看→你做我看→我说你听→你说我听"],answer:0,explanation:"16字法：我说你听（讲标准）→我做你看（示范）→你做我看（观察）→你说我听（反思），不能颠倒。"},
+{id:11,stem:"在布置任务的Check环节，以下哪种确认方式最有效？",options:["你听懂了吗？","都清楚了吗？还有没有问题？","你花30秒跟我复述一下：这个任务最关键的目标是什么？","我讲明白了吗？"],answer:2,explanation:"让下属主动复述关键信息是验证真实理解程度最有效的方式。"},
+{id:12,stem:"以下哪一项不属于绩效面谈后追踪六步机制？",options:["T日内整理面谈纪要发送给员工确认","用Excel建立台账记录每次面谈","将面谈结果在全团队范围内公示","制定IDP个人发展计划"],answer:2,explanation:"面谈内容应保护员工隐私，不应公开公示。"},
+{id:13,stem:"16字辅导法的正确执行顺序是什么？",options:["我说你听→我做你看→你做我看→你说我听","我做你看→我说你听→你做你看→你说我听","你说我听→我做你看→我说你听→你做我看","我做你看→你做我看→我说你听→你说我听"],answer:0,explanation:"16字法：我说你听→我做你看→你做我看→你说我听，不能颠倒。"},
 {id:14,stem:"授权和甩锅的本质区别是什么？",options:["授权给的任务更简单","授权有目标、过程支持和最终责任在管理者，甩锅是推卸责任","授权只给老员工，甩锅给新员工","授权不需要跟进，甩锅需要跟进"],answer:1,explanation:"有效授权：有目标、有过程支持、最终责任在管理者。甩锅：推卸责任。"},
-{id:15,stem:"80%原则指的是什么？",options:["只授权80%的工作保留20%","如果下属能把这件事做到你期望水平的80%，就值得授权","授权给80%的员工","每次授权80%的决策权"],answer:1,explanation:"80%原则：下属能做到期望水平的80%就值得授权，剩下20%是成长空间和辅导价值。"},
-{id:16,stem:"授权六步法第二步'明确边界与资源'包含哪三个要素？",options:["目标、时间、责任人","权力边界、资源支持、禁忌红线","任务描述、完成标准、检查节点","预算、人力、时间"],answer:1,explanation:"边界三要素：权力边界+资源支持+禁忌红线。例如：500元以内可自判，可协调其他团队，绝对禁止人身攻击。"},
+{id:15,stem:"80%原则指的是什么？",options:["只授权80%的工作保留20%","如果下属能把这件事做到你期望水平的80%，就值得授权","授权给80%的员工","每次授权80%的决策权"],answer:1,explanation:"80%原则：下属能做到期望水平的80%就值得授权，剩下20%是成长空间。"},
+{id:16,stem:"授权六步法第二步'明确边界与资源'包含哪三个要素？",options:["目标、时间、责任人","权力边界、资源支持、禁忌红线","任务描述、完成标准、检查节点","预算、人力、时间"],answer:1,explanation:"边界三要素：权力边界+资源支持+禁忌红线。"},
 {id:17,stem:"风险层员工的三次谈话原则中，第三次谈话的核心目标是什么？",options:["再次警告并记录","给出最终机会","明确去留决定并做好留痕","转给其他主任管理"],answer:2,explanation:"三次谈话：第一次了解原因支持→第二次明确预期底线→第三次明确去留决定，全程留痕。"},
-{id:18,stem:"「王磊困局」描述的是什么问题？",options:["王磊不会做数据分析","王磊每天花2小时审核录音，没时间做核心管理工作","王磊的团队业绩最差","王磊不愿意授权给下属"],answer:1,explanation:"王磊困局：每天花2小时审核录音导致无暇分析数据、优化策略。审核录音是可授权的重复性工作。"},
-// 员工辅导与发展 (19-24)
-{id:19,stem:"GROW模型的四个步骤按顺序分别是？",options:["Goal→Reality→Options→Will","Goal→Options→Reality→Will","Goal→Reality→Will→Options","Goal→Will→Reality→Options"],answer:0,explanation:"G目标→R现状→O方案→W行动。顺序不能打乱，每个阶段都是下一阶段的基础。"},
+{id:18,stem:"「王磊困局」描述的是什么问题？",options:["王磊不会做数据分析","王磊每天花2小时审核录音，没时间做核心管理工作","王磊的团队业绩最差","王磊不愿意授权给下属"],answer:1,explanation:"王磊困局：每天花2小时审核录音导致无暇分析数据、优化策略。"},
+{id:19,stem:"GROW模型的四个步骤按顺序分别是？",options:["Goal→Reality→Options→Will","Goal→Options→Reality→Will","Goal→Reality→Will→Options","Goal→Will→Reality→Options"],answer:0,explanation:"G目标→R现状→O方案→W行动。顺序不能打乱。"},
 {id:20,stem:"在GROW模型中，会话目标与行动目标的区别是什么？",options:["没有区别是同一个概念","会话目标是本次谈话要达成的共识，行动目标是下一周期要达成的具体结果","会话目标是长期目标，行动目标是短期目标","会话目标针对个人，行动目标针对团队"],answer:1,explanation:"会话目标='今天聊完要找什么方案'；行动目标='接下来一周要达到XX元回款承诺'。"},
-{id:21,stem:"新人上岗带教四个阶段的正确顺序是？",options:["准备期→基础带教期→独立实践期→稳定成长期","基础带教期→准备期→独立实践期→稳定成长期","准备期→独立实践期→基础带教期→稳定成长期","基础带教期→准备期→稳定成长期→独立实践期"],answer:0,explanation:"四阶段：①准备期(第1周)→②基础带教期(第2-4周)→③独立实践期(第2-3月)→④稳定成长期(第4-6月)。"},
-{id:22,stem:"新人带教中最容易出现落差感的是哪个阶段？",options:["准备期（第1周）","基础带教期（第2-4周）","独立实践期（第2-3月）","稳定成长期（第4-6月）"],answer:2,explanation:"独立实践期(第2-3月)是落差期高发阶段。新人开始独立面对困难，发现理想与现实差距。"},
-{id:23,stem:"在Will阶段用1-10分确认意愿时，员工说5分怎么办？",options:["接受5分按计划执行","降到他能接受的程度","追问：'为什么是5分而不是3分？从5分到7分需要什么条件？'","放弃辅导等他有更高意愿再说"],answer:2,explanation:"低于7分时，先正向肯定（为什么不是3分），再探讨提升条件（到7分需要什么）。"},
-{id:24,stem:"红黄牌机制中，黄牌代表什么？",options:["警告，两次黄牌会被辞退","可犯错教学的机会，做错了正是教学时刻","需要扣绩效分","需要上报上级处理"],answer:1,explanation:"黄牌=可犯错教学的机会。红牌=零容忍行为（合规红线、信息泄露等），一次即严处。"},
-// 管理执行力 (25-30)
-{id:25,stem:"目标解码三步法中，第二步'将公司语言翻译成团队语言'的翻译标准是什么？",options:["翻译成专业术语体现管理深度","翻译成PPT汇报语言方便向上呈现","组员听完后能立刻说出来'我明天要做什么和以前不一样'","翻译成英文缩写与国际接轨"],answer:2,explanation:"翻译标准：组员听完能立刻说出'明天要做和以前什么不一样'。例如'提升客户体验'→'减少投诉、提高首次沟通质量'。"},
-{id:26,stem:"为什么目标分解不能只到'结果目标'（如月度回款额）就停止？",options:["因为结果目标不够有挑战性","因为员工需要知道每天具体做什么——必须分解到行动目标层面","因为结果目标需要上级审批","因为结果目标无法用数字衡量"],answer:1,explanation:"必须分解到行动目标层面：结果目标→过程目标→行动目标，员工才能每天直接执行。"},
+{id:21,stem:"新人上岗带教四个阶段的正确顺序是？",options:["准备期→基础带教期→独立实践期→稳定成长期","基础带教期→准备期→独立实践期→稳定成长期","准备期→独立实践期→基础带教期→稳定成长期","基础带教期→准备期→稳定成长期→独立实践期"],answer:0,explanation:"四阶段：准备期(第1周)→基础带教期(第2-4周)→独立实践期(第2-3月)→稳定成长期(第4-6月)。"},
+{id:22,stem:"新人带教中最容易出现落差感的是哪个阶段？",options:["准备期（第1周）","基础带教期（第2-4周）","独立实践期（第2-3月）","稳定成长期（第4-6月）"],answer:2,explanation:"独立实践期(第2-3月)是落差期高发阶段。"},
+{id:23,stem:"在Will阶段用1-10分确认意愿时，员工说5分怎么办？",options:["接受5分按计划执行","降到他能接受的程度","追问：'为什么是5分而不是3分？从5分到7分需要什么条件？'","放弃辅导等他有更高意愿再说"],answer:2,explanation:"低于7分时，先正向肯定，再探讨提升条件。"},
+{id:24,stem:"红黄牌机制中，黄牌代表什么？",options:["警告，两次黄牌会被辞退","可犯错教学的机会，做错了正是教学时刻","需要扣绩效分","需要上报上级处理"],answer:1,explanation:"黄牌=可犯错教学的机会。红牌=零容忍行为，一次即严处。"},
+{id:25,stem:"目标解码三步法中，第二步'将公司语言翻译成团队语言'的翻译标准是什么？",options:["翻译成专业术语体现管理深度","翻译成PPT汇报语言方便向上呈现","组员听完后能立刻说出来'我明天要做什么和以前不一样'","翻译成英文缩写与国际接轨"],answer:2,explanation:"翻译标准：组员听完能立刻说出'明天要做和以前什么不一样'。"},
+{id:26,stem:"为什么目标分解不能只到'结果目标'就停止？",options:["因为结果目标不够有挑战性","因为员工需要知道每天具体做什么——必须分解到行动目标层面","因为结果目标需要上级审批","因为结果目标无法用数字衡量"],answer:1,explanation:"必须分解到行动目标层面：结果目标→过程目标→行动目标。"},
 {id:27,stem:"执行力的三个关键节点中，'启动期'（前3天）最容易出现什么问题？",options:["动力衰减、遇到障碍想放弃","冲刺心态崩盘、质量下降","理解偏差、方向跑偏","数据波动、外部因素干扰"],answer:2,explanation:"启动期最核心风险是理解偏差、方向跑偏。关键动作：复述确认和示范标准。"},
-{id:28,stem:"纠偏的黄金法则中，哪一条最容易忽略？",options:["越快越好——发现偏离第一天就介入","先问后说——先让员工自己说原因","纠偏之后必须有追踪——设定下一次检查节点","对事不对人——针对具体行为和结果"],answer:2,explanation:"纠偏后必须带一个'下次检查时间'形成闭环，否则等于没纠偏。这是最容易被忽略的一条。"},
-{id:29,stem:"以下哪项属于目标解码中的常见误区？",options:["将月度目标分解到每周、每日","公司说什么就直接转述给团队，不做任何加工和解读","用SMART原则检查目标是否具体可衡量","帮助员工把目标拆解为每日行动"],answer:1,explanation:"'目标传声筒'是常见误区——公司说什么就转述什么。正确做法是先自己消化，再用团队能懂的语言重新表达。"},
-{id:30,stem:"执行中期的'中度纠偏'适用于什么情况？",options:["偶尔的、轻微的偏离","连续3天以上偏离、偏离幅度较大","持续偏离且影响团队整体目标达成","员工第一次出现数据波动"],answer:1,explanation:"中度纠偏：连续3天以上偏离，正式一对一谈话，使用BIC或GROW模型，结构为事实→影响→原因→方案→检查时间。"},
-// 团队问题分析与解决 (31-36)
-{id:31,stem:"5Why分析法的核心要点是什么？",options:["必须严格问够5个为什么","每层答案作为下一层问题，直到找到可控且可改变的根本原因","每次问为什么时追问责任人","第一个答案就是根因后面只是验证"],answer:1,explanation:"5Why的核心不是数量，而是层层深入直到找到可控可改变的根因。追问要保持合作姿态而非审问。"},
-{id:32,stem:"在催收场景中运用5Why分析'员工回款额暴跌50%'，以下哪个最接近根因？",options:["员工不够努力","案件分配不均衡","新人带教体系缺失了案件筛选培训模块","员工心态有问题"],answer:2,explanation:"通过层层追问找到了系统层面的根因——带教体系缺失，而非简单的个人态度问题。"},
-{id:33,stem:"鱼骨图（因果图）的六大分析维度5M1E不包括以下哪一项？",options:["人（Man）","料（Material）","钱（Money）","测（Measurement）"],answer:2,explanation:"5M1E：人、机、料、法、环、测。'钱'不属于标准维度。"},
-{id:34,stem:"PDCA循环中，A（Action）阶段最重要的管理价值是什么？",options:["总结本次工作的经验教训","把有效做法标准化、分享化、预防化，让问题不再复发","评估团队成员的表现","向上级汇报改善成果"],answer:1,explanation:"A阶段：标准化（写入流程）、分享化（经验传递）、预防化（源头预防）。让一次改善变成永久能力。"},
-{id:35,stem:"问题识别中，以下哪个是管理者最容易犯的错误？",options:["关注数据的异常波动","同时关注数据、行为、情绪、流程四个维度","只看结果不看过程，等数据大幅下滑才行动","发现小异常就及时介入了解"],answer:2,explanation:"只看结果不看过程是最常见错误。关注'异常波动'而非'绝对值'，小异常是大问题的前兆。"},
-{id:36,stem:"针对多问题同时爆发，正确的处理原则是什么？",options:["所有问题同时解决齐头并进","一次聚焦解决一个问题，按'紧急度×影响度'排序","先解决最容易的建立信心","全部上报给上级寻求统一指导"],answer:1,explanation:"一次聚焦解决一个问题效果远好于同时解决多个。按紧急度×影响度排序，优先解决高紧急+高影响的问题。"}
+{id:28,stem:"纠偏的黄金法则中，哪一条最容易忽略？",options:["越快越好——发现偏离第一天就介入","先问后说——先让员工自己说原因","纠偏之后必须有追踪——设定下一次检查节点","对事不对人——针对具体行为和结果"],answer:2,explanation:"纠偏后必须带一个'下次检查时间'形成闭环。"},
+{id:29,stem:"以下哪项属于目标解码中的常见误区？",options:["将月度目标分解到每周、每日","公司说什么就直接转述给团队，不做任何加工和解读","用SMART原则检查目标是否具体可衡量","帮助员工把目标拆解为每日行动"],answer:1,explanation:"'目标传声筒'是常见误区——公司说什么就转述什么。"},
+{id:30,stem:"执行中期的'中度纠偏'适用于什么情况？",options:["偶尔的、轻微的偏离","连续3天以上偏离、偏离幅度较大","持续偏离且影响团队整体目标达成","员工第一次出现数据波动"],answer:1,explanation:"中度纠偏：连续3天以上偏离，正式一对一谈话。"},
+{id:31,stem:"5Why分析法的核心要点是什么？",options:["必须严格问够5个为什么","每层答案作为下一层问题，直到找到可控且可改变的根本原因","每次问为什么时追问责任人","第一个答案就是根因后面只是验证"],answer:1,explanation:"5Why的核心不是数量，而是层层深入直到找到可控可改变的根因。"},
+{id:32,stem:"在催收场景中运用5Why分析'员工回款额暴跌50%'，以下哪个最接近根因？",options:["员工不够努力","案件分配不均衡","新人带教体系缺失了案件筛选培训模块","员工心态有问题"],answer:2,explanation:"通过层层追问找到了系统层面的根因——带教体系缺失。"},
+{id:33,stem:"鱼骨图的六大分析维度5M1E不包括以下哪一项？",options:["人（Man）","料（Material）","钱（Money）","测（Measurement）"],answer:2,explanation:"5M1E：人、机、料、法、环、测。'钱'不属于标准维度。"},
+{id:34,stem:"PDCA循环中，A（Action）阶段最重要的管理价值是什么？",options:["总结本次工作的经验教训","把有效做法标准化、分享化、预防化，让问题不再复发","评估团队成员的表现","向上级汇报改善成果"],answer:1,explanation:"A阶段：标准化、分享化、预防化。让一次改善变成永久能力。"},
+{id:35,stem:"问题识别中，以下哪个是管理者最容易犯的错误？",options:["关注数据的异常波动","同时关注数据、行为、情绪、流程四个维度","只看结果不看过程，等数据大幅下滑才行动","发现小异常就及时介入了解"],answer:2,explanation:"只看结果不看过程是最常见错误。"},
+{id:36,stem:"针对多问题同时爆发，正确的处理原则是什么？",options:["所有问题同时解决齐头并进","一次聚焦解决一个问题，按'紧急度×影响度'排序","先解决最容易的建立信心","全部上报给上级寻求统一指导"],answer:1,explanation:"一次聚焦解决一个问题效果远好于同时解决多个。"}
 ];
 
 // ====== 进度管理 ======
@@ -709,12 +689,12 @@ const catIcons={'角色认知与目标规划':'💡','绩效推进与沟通':'�
 
 function buildTabs(){
   const tabsEl=document.getElementById('tabs');
-  tabsEl.innerHTML=`<div class="tab${activeCategory==='all'?' active':''}" onclick="setCategory('all')">全部案例</div>`+
+  tabsEl.innerHTML=`<div class="tab tab-all${activeCategory==='all'?' active':''}" onclick="setCategory('all')">全部案例</div>`+
     categories.map(c=>`<div class="tab${activeCategory===c?' active':''}" onclick="setCategory('${c}')">${catIcons[c]} ${c}</div>`).join('');
 }
 function setCategory(cat){activeCategory=cat;buildTabs();renderCaseCards()}
 
-// ====== 统计（含悬浮提示） ======
+// ====== 统计 ======
 function renderStats(){
   const saved=loadProgress();
   const detailRows=competencies.map(c=>{
@@ -726,7 +706,7 @@ function renderStats(){
 
   document.getElementById('stats').innerHTML=`
     <div class="stat-card"><div class="num">${caseLibrary.length}</div><div class="label">实战案例</div></div>
-    <div class="stat-card"><div class="num">${competencies.length}</div><div class="label">方法论体系</div></div>
+    <div class="stat-card"><div class="num">${competencies.length}</div><div class="label">能力板块</div></div>
     <div class="stat-card"><div class="num">${mastered}/${competencies.length}</div><div class="label">已掌握(≥80%)</div>
       <div class="stat-tip"><strong>掌握度明细</strong>${detailRows}</div></div>
     <div class="stat-card"><div class="num">${avg}%</div><div class="label">综合掌握度</div>
@@ -741,14 +721,15 @@ function renderCaseCards(){
   if(query)filtered=filtered.filter(c=>c.title.toLowerCase().includes(query)||c.sections.some(s=>s.body.toLowerCase().includes(query))||c.category.includes(query));
 
   const grid=document.getElementById('cardGrid');
-  if(!filtered.length){grid.innerHTML='<div class="empty-state"><div class="empty-icon">🔍</div><p>没有找到匹配的案例，试试换个关键词</p><p style="font-size:0.85em;margin-top:6px">可搜索：问题关键词 / 能力项名称 / 场景描述</p></div>';return;}
+  document.getElementById('caseCount').textContent=`共 ${filtered.length} 个案例`;
+  if(!filtered.length){grid.innerHTML='<div class="empty-state"><div class="empty-icon">🔍</div><p>没有找到匹配的案例，试试换个关键词</p><p style="font-size:0.85em;margin-top:6px">可搜索：问题关键词 / 能力项名称 / 场景描述</p></div>';renderStats();return;}
 
   grid.innerHTML=filtered.map((c,i)=>`
     <div class="case-card ${catClassMap[c.category]||''}" style="animation-delay:${i*0.04}s" onclick="openCase(${c.id})">
       <div class="card-head"><span class="badge">${catIcons[c.category]} ${c.category}</span></div>
       <h3>${c.title}</h3>
-      <div class="scenario">${c.sections[0].body.replace(/<[^>]*>/g,'').substring(0,100)}...</div>
-      <div class="card-foot"><span>📖 ${(c.sections.find(s=>s.type==='methodology')||{}).title.replace('背后方法论：','')||'相关能力项'}</span><span>📝 ${(c.questionIds||[]).length}题</span></div>
+      <div class="scenario">${(c.sections[0]?.body||'').replace(/<[^>]*>/g,'').substring(0,100)}...</div>
+      <div class="card-foot"><span>📖 ${((c.sections.find(s=>s.type==='methodology')||{}).title||'').replace('背后方法论：','')||'相关能力项'}</span><span>📝 ${(c.questionIds||[]).length}题</span></div>
     </div>`).join('');
 
   renderStats();
@@ -827,7 +808,7 @@ function showQuizResult(){
   if(!quizState)return;document.removeEventListener('keydown',quizKeyHandler);
   const total=quizState.questions.length,correct=quizState.correctCount,pct=Math.round(correct/total*100);
   updateProgress(quizState.compId,pct);
-  let ec='',et='';if(pct>=80){ec='great';et='🎉 已掌握！对这项能力理解扎实，继续保持并应用于实践。'}else if(pct>=50){ec='ok';et='📖 还需巩固！建议回顾案例中的处理流程和方法论，针对薄弱点加强学习。'}else{ec='poor';et='💪 建议重学！核心概念需要系统复习，建议仔细阅读案例拆解和方法论后再来挑战。'}
+  let ec='',et='';if(pct>=80){ec='great';et='🎉 已掌握！对这项能力理解扎实，继续保持并应用于实践。';}else if(pct>=50){ec='ok';et='📖 还需巩固！建议回顾案例中的处理流程和方法论，针对薄弱点加强学习。';}else{ec='poor';et='💪 建议重学！核心概念需要系统复习，建议仔细阅读案例拆解和方法论后再来挑战。';}
   const wrongList=quizState.questions.filter((q,i)=>quizState.answers[i]!==q.answer);
   let rv='';if(wrongList.length)rv=`<div style="text-align:left;margin-top:18px"><h4 style="margin-bottom:10px;color:#e74c3c">📌 错题回顾</h4>${wrongList.map((q,wi)=>{const ai=quizState.answers[quizState.questions.indexOf(q)];return`<div class="review-item"><div><strong>${wi+1}. ${q.stem}</strong></div><div>你的选择：<span class="wrong-ans">${q.options[ai]}</span></div><div>正确答案：<span class="right-ans">${q.options[q.answer]}</span></div><div class="explain">💡 ${q.explanation}</div></div>`}).join('')}</div>`;
   document.getElementById('modal').innerHTML=`<div class="modal-head"><button class="modal-close" onclick="closeModal()">✕</button><h2>📊 自测结果</h2></div><div class="modal-body"><div class="result-wrap"><div class="result-score">${correct}/${total}</div><div style="color:#888;margin:6px 0">正确率 ${pct}%</div><div class="result-eval ${ec}">${et}</div>${rv}<div class="btn-row" style="justify-content:center"><button class="btn btn-primary" onclick="startQuiz(${quizState.compId})">🔄 再来一次</button><button class="btn btn-secondary" onclick="closeModal()">返回案例库</button></div></div></div>`;quizState=null;renderCaseCards();
@@ -841,4 +822,3 @@ document.getElementById('searchInput').addEventListener('input',renderCaseCards)
 </script>
 </body>
 </html>
-
