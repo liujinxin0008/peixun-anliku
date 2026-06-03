@@ -133,6 +133,10 @@
             <div class="filter-chips" id="cityChips"></div>
         </div>
         <div class="filter-row">
+            <span class="filter-label">月份</span>
+            <div class="filter-chips" id="monthChips"></div>
+        </div>
+        <div class="filter-row">
             <span class="filter-label">主管</span>
             <div class="filter-chips" id="reporterChips"></div>
         </div>
@@ -153,7 +157,7 @@
                     <div class="axis-title">📊 横轴评分（业绩 + 合规）</div>
 
                     <div class="metric-row">
-                        <div class="metric-name">近6月平均<br>队列目标<br>达成率</div>
+                        <div class="metric-name">队列目标<br>达成率</div>
                         <div class="slider-wrap">
                             <div class="track-row" id="track-goal">
                                 <div class="seg seg-a" id="seg-goal-a" style="flex:63.3"><div class="seg-score">得分 <input type="number" id="score-goal-a" value="1" min="1" max="5"></div></div>
@@ -179,7 +183,7 @@
                     </div>
 
                     <div class="metric-row">
-                        <div class="metric-name">近6月重渠<br>投诉量</div>
+                        <div class="metric-name">重渠<br>投诉量</div>
                         <div class="slider-wrap">
                             <div class="track-row" id="track-comp">
                                 <div class="seg seg-c" id="seg-comp-a" style="flex:10"><div class="seg-score">得分 <input type="number" id="score-comp-a" value="5" min="1" max="5"></div></div>
@@ -205,7 +209,7 @@
                     </div>
 
                     <div class="metric-row">
-                        <div class="metric-name">近6月三级<br>以上违规量</div>
+                        <div class="metric-name">三级及以上<br>违规量</div>
                         <div class="slider-wrap">
                             <div class="track-row" id="track-viol">
                                 <div class="seg seg-c" id="seg-viol-a" style="flex:16.7"><div class="seg-score">得分 <input type="number" id="score-viol-a" value="5" min="1" max="5"></div></div>
@@ -313,9 +317,13 @@
 <script>
 // ─── 筛选状态 ───
 let selectedCities    = new Set();
+let selectedMonths    = new Set(); // 空 = 全选
 let selectedReporters = new Set();
 
 const allCities = [...new Set(EMPLOYEE_DATA.map(e => e.city).filter(Boolean))].sort();
+const allMonths = [...new Set(EMPLOYEE_DATA.flatMap(e =>
+    (e.business?.goal_achievement_rate?.trend || []).map(t => t.month)
+))].sort();
 
 function getReportersForCities(cities) {
     const pool = cities.size === 0 ? EMPLOYEE_DATA : EMPLOYEE_DATA.filter(e => cities.has(e.city));
@@ -369,13 +377,33 @@ function renderReporterChips() {
     });
 }
 
+function renderMonthChips() {
+    const container = document.getElementById('monthChips');
+    container.innerHTML = '';
+    container.appendChild(makeChip('全部', selectedMonths.size === 0, true, () => {
+        selectedMonths.clear(); renderMonthChips();
+    }));
+    allMonths.forEach(m => {
+        container.appendChild(makeChip(m, selectedMonths.has(m), false, () => {
+            if (selectedMonths.has(m)) selectedMonths.delete(m); else selectedMonths.add(m);
+            renderMonthChips();
+        }));
+    });
+}
+
 function updateFilterCount() {
     document.getElementById('filterCount').textContent = getFilteredData().length;
 }
 
-function getGoalAvg(emp)      { return emp.business?.goal_achievement_rate?.last_3_months_avg || 0; }
-function getComplaintSum(emp) { return emp.risk?.complaint?.last_6_months_sum || 0; }
-function getViolationSum(emp) { return emp.risk?.violation?.last_6_months_sum || 0; }
+function _filterTrend(trend, valueKey) {
+    if (!trend) return [];
+    return trend
+        .filter(t => selectedMonths.size === 0 || selectedMonths.has(t.month))
+        .map(t => (valueKey ? t[valueKey] : t.value) || 0);
+}
+function getGoalAvg(emp)      { const v = _filterTrend(emp.business?.goal_achievement_rate?.trend, 'value'); return v.length ? v.reduce((a,b)=>a+b,0)/v.length : 0; }
+function getComplaintSum(emp) { return _filterTrend(emp.risk?.complaint?.trend, 'value').reduce((a,b)=>a+b,0); }
+function getViolationSum(emp) { return _filterTrend(emp.risk?.violation?.trend, 'value').reduce((a,b)=>a+b,0); }
 function getAbilityAvg(emp) {
     const s = emp.ability?.self;
     const t = emp.ability?.team_avg;
@@ -384,7 +412,7 @@ function getAbilityAvg(emp) {
     const delta = keys.reduce((sum, k) => sum + ((s[k]||0) - (t[k]||0)), 0) / keys.length;
     return Math.min(10, Math.max(0, 5 + (delta / 3) * 5));
 }
-function getManageScore(emp) { return emp.management?.total_score?.latest || 0; }
+function getManageScore(emp) { const v = _filterTrend(emp.management?.total_score?.trend, 'score'); return v.length ? v.reduce((a,b)=>a+b,0)/v.length : 0; }
 
 // ─── 滑块配置 ───
 const SLIDER_CONFIGS = {
@@ -546,6 +574,7 @@ updateAutoWeights();
 
 // 初始化
 renderCityChips();
+renderMonthChips();
 renderReporterChips();
 updateFilterCount();
 renderGrid();

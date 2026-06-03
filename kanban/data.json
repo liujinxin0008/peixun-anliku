@@ -3170,14 +3170,6 @@
     },
     {
       "month": "2026-06",
-      "employee_id": "XX130025",
-      "name": "侯瑞鹏",
-      "change_type": "回流",
-      "remark": "",
-      "city": "新乡"
-    },
-    {
-      "month": "2026-06",
       "employee_id": "ZZ130390",
       "name": "马天龙",
       "change_type": "回流",
@@ -3186,11 +3178,19 @@
     },
     {
       "month": "2026-06",
-      "employee_id": "CQ120199",
-      "name": "周余0199",
+      "employee_id": "XX130025",
+      "name": "侯瑞鹏",
       "change_type": "回流",
       "remark": "",
-      "city": "重庆"
+      "city": "新乡"
+    },
+    {
+      "month": "2026-06",
+      "employee_id": "ZZ130205",
+      "name": "姚逸雯",
+      "change_type": "回流",
+      "remark": "",
+      "city": "郑州"
     },
     {
       "month": "2026-06",
@@ -3202,11 +3202,19 @@
     },
     {
       "month": "2026-06",
-      "employee_id": "ZZ130205",
-      "name": "姚逸雯",
+      "employee_id": "CQ120199",
+      "name": "周余0199",
       "change_type": "回流",
       "remark": "",
-      "city": "郑州"
+      "city": "重庆"
+    },
+    {
+      "month": "2026-06",
+      "employee_id": "XX130161",
+      "name": "李泽坤",
+      "change_type": "回流",
+      "remark": "",
+      "city": "新乡"
     }
   ]
 }

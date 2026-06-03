@@ -230,7 +230,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.328,
+        "avg": 0.2918,
         "trend": [
           {
             "month": "2026-01",
@@ -259,8 +259,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.111,
+            "rank_detail": "1/9"
           }
         ]
       },
@@ -615,7 +615,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.4104,
+        "avg": 0.4532,
         "trend": [
           {
             "month": "2026-01",
@@ -644,8 +644,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.667,
+            "rank_detail": "6/9"
           }
         ]
       },
@@ -739,7 +739,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 18,
+        "last_6_months_sum": 19,
         "trend": [
           {
             "month": "2026-01",
@@ -763,7 +763,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 1
           }
         ]
       }
@@ -1000,7 +1000,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.6666,
+        "avg": 0.6388,
         "trend": [
           {
             "month": "2026-01",
@@ -1029,8 +1029,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.5,
+            "rank_detail": "1/2"
           }
         ]
       },
@@ -1385,7 +1385,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.8338,
+        "avg": 0.8615,
         "trend": [
           {
             "month": "2026-01",
@@ -1414,8 +1414,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "9/9"
           }
         ]
       },
@@ -1509,7 +1509,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 21,
+        "last_6_months_sum": 22,
         "trend": [
           {
             "month": "2026-01",
@@ -1533,7 +1533,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 1
           }
         ]
       }
@@ -1770,7 +1770,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.6274,
+        "avg": 0.6155,
         "trend": [
           {
             "month": "2026-01",
@@ -1799,8 +1799,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.556,
+            "rank_detail": "5/9"
           }
         ]
       },
@@ -2540,7 +2540,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.7214,
+        "avg": 0.7678,
         "trend": [
           {
             "month": "2026-01",
@@ -2569,8 +2569,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "3/3"
           }
         ]
       },
@@ -2925,7 +2925,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.7652,
+        "avg": 0.8043,
         "trend": [
           {
             "month": "2026-01",
@@ -2954,8 +2954,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "4/4"
           }
         ]
       },
@@ -3310,7 +3310,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.6708,
+        "avg": 0.6702,
         "trend": [
           {
             "month": "2026-01",
@@ -3339,8 +3339,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.667,
+            "rank_detail": "2/3"
           }
         ]
       },
@@ -3434,7 +3434,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 11,
+        "last_6_months_sum": 13,
         "trend": [
           {
             "month": "2026-01",
@@ -3458,7 +3458,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 2
           }
         ]
       }
@@ -3724,8 +3724,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "1/1"
           }
         ]
       },
@@ -3819,7 +3819,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 7,
+        "last_6_months_sum": 8,
         "trend": [
           {
             "month": "2026-01",
@@ -3843,7 +3843,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 1
           }
         ]
       }
@@ -4080,7 +4080,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.5274,
+        "avg": 0.5728,
         "trend": [
           {
             "month": "2026-01",
@@ -4109,8 +4109,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.8,
+            "rank_detail": "4/5"
           }
         ]
       },
@@ -4465,7 +4465,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.1426,
+        "avg": 0.1855,
         "trend": [
           {
             "month": "2026-01",
@@ -4494,8 +4494,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.4,
+            "rank_detail": "2/5"
           }
         ]
       },
@@ -4850,7 +4850,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.6332,
+        "avg": 0.5693,
         "trend": [
           {
             "month": "2026-01",
@@ -4879,8 +4879,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.25,
+            "rank_detail": "1/4"
           }
         ]
       },
@@ -5235,7 +5235,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.3574,
+        "avg": 0.3812,
         "trend": [
           {
             "month": "2026-01",
@@ -5264,8 +5264,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.5,
+            "rank_detail": "2/4"
           }
         ]
       },
@@ -5620,7 +5620,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.3828,
+        "avg": 0.4487,
         "trend": [
           {
             "month": "2026-01",
@@ -5649,8 +5649,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.778,
+            "rank_detail": "7/9"
           }
         ]
       },
@@ -5744,7 +5744,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 12,
+        "last_6_months_sum": 14,
         "trend": [
           {
             "month": "2026-01",
@@ -5768,7 +5768,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 2
           }
         ]
       }
@@ -6005,7 +6005,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.762,
+        "avg": 0.8017,
         "trend": [
           {
             "month": "2026-01",
@@ -6034,8 +6034,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "2/2"
           }
         ]
       },
@@ -6390,7 +6390,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.2816,
+        "avg": 0.2763,
         "trend": [
           {
             "month": "2026-01",
@@ -6419,8 +6419,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.25,
+            "rank_detail": "1/4"
           }
         ]
       },
@@ -6514,7 +6514,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 9,
+        "last_6_months_sum": 11,
         "trend": [
           {
             "month": "2026-01",
@@ -6538,7 +6538,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 2
           }
         ]
       }
@@ -6775,7 +6775,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.323,
+        "avg": 0.3942,
         "trend": [
           {
             "month": "2026-01",
@@ -6804,8 +6804,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.75,
+            "rank_detail": "3/4"
           }
         ]
       },
@@ -6899,7 +6899,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 17,
+        "last_6_months_sum": 20,
         "trend": [
           {
             "month": "2026-01",
@@ -6923,7 +6923,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 3
           }
         ]
       }
@@ -7160,7 +7160,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.3122,
+        "avg": 0.3157,
         "trend": [
           {
             "month": "2026-01",
@@ -7189,8 +7189,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.333,
+            "rank_detail": "3/9"
           }
         ]
       },
@@ -7545,7 +7545,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.3594,
+        "avg": 0.3365,
         "trend": [
           {
             "month": "2026-01",
@@ -7574,8 +7574,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.222,
+            "rank_detail": "2/9"
           }
         ]
       },
@@ -7930,7 +7930,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.6202,
+        "avg": 0.6002,
         "trend": [
           {
             "month": "2026-01",
@@ -7959,8 +7959,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.5,
+            "rank_detail": "2/4"
           }
         ]
       },
@@ -8315,7 +8315,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.7002,
+        "avg": 0.7502,
         "trend": [
           {
             "month": "2026-01",
@@ -8344,8 +8344,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "4/4"
           }
         ]
       },
@@ -8700,7 +8700,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.4762,
+        "avg": 0.508,
         "trend": [
           {
             "month": "2026-01",
@@ -8729,8 +8729,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.667,
+            "rank_detail": "2/3"
           }
         ]
       },
@@ -9085,7 +9085,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.385,
+        "avg": 0.3763,
         "trend": [
           {
             "month": "2026-01",
@@ -9114,8 +9114,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.333,
+            "rank_detail": "1/3"
           }
         ]
       },
@@ -9209,7 +9209,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 16,
+        "last_6_months_sum": 17,
         "trend": [
           {
             "month": "2026-01",
@@ -9233,7 +9233,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 1
           }
         ]
       }
@@ -9499,8 +9499,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "1/1"
           }
         ]
       },
@@ -9855,7 +9855,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.5358,
+        "avg": 0.6132,
         "trend": [
           {
             "month": "2026-01",
@@ -9884,8 +9884,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "4/4"
           }
         ]
       },
@@ -10240,7 +10240,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.9,
+        "avg": 0.9167,
         "trend": [
           {
             "month": "2026-01",
@@ -10269,8 +10269,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "1/1"
           }
         ]
       },
@@ -10364,7 +10364,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 13,
+        "last_6_months_sum": 14,
         "trend": [
           {
             "month": "2026-01",
@@ -10388,7 +10388,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 1
           }
         ]
       }
@@ -10625,7 +10625,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.437,
+        "avg": 0.4197,
         "trend": [
           {
             "month": "2026-01",
@@ -10654,8 +10654,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.333,
+            "rank_detail": "1/3"
           }
         ]
       },
@@ -11010,7 +11010,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.685,
+        "avg": 0.7375,
         "trend": [
           {
             "month": "2026-01",
@@ -11039,8 +11039,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "1/1"
           }
         ]
       },
@@ -11134,7 +11134,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 19,
+        "last_6_months_sum": 20,
         "trend": [
           {
             "month": "2026-01",
@@ -11158,7 +11158,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 1
           }
         ]
       }
@@ -11367,7 +11367,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.9167,
+        "avg": 0.8834,
         "trend": [
           {
             "month": "2026-01",
@@ -11391,8 +11391,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.75,
+            "rank_detail": "3/4"
           }
         ]
       },
@@ -11474,7 +11474,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 10,
+        "last_6_months_sum": 11,
         "trend": [
           {
             "month": "2026-01",
@@ -11494,7 +11494,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 1
           }
         ]
       }
@@ -11731,7 +11731,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.3674,
+        "avg": 0.4728,
         "trend": [
           {
             "month": "2026-01",
@@ -11760,8 +11760,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "3/3"
           }
         ]
       },
@@ -12116,7 +12116,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.7438,
+        "avg": 0.6938,
         "trend": [
           {
             "month": "2026-01",
@@ -12145,8 +12145,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.444,
+            "rank_detail": "4/9"
           }
         ]
       },
@@ -12501,7 +12501,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.5984,
+        "avg": 0.6653,
         "trend": [
           {
             "month": "2026-01",
@@ -12530,8 +12530,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "5/5"
           }
         ]
       },
@@ -12886,7 +12886,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.9,
+        "avg": 0.9167,
         "trend": [
           {
             "month": "2026-01",
@@ -12915,8 +12915,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "1/1"
           }
         ]
       },
@@ -13243,7 +13243,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.5175,
+        "avg": 0.534,
         "trend": [
           {
             "month": "2026-01",
@@ -13267,8 +13267,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.6,
+            "rank_detail": "3/5"
           }
         ]
       },
@@ -13350,7 +13350,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 12,
+        "last_6_months_sum": 13,
         "trend": [
           {
             "month": "2026-01",
@@ -13370,7 +13370,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 1
           }
         ]
       }
@@ -13607,7 +13607,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.4378,
+        "avg": 0.3982,
         "trend": [
           {
             "month": "2026-01",
@@ -13636,8 +13636,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.2,
+            "rank_detail": "1/5"
           }
         ]
       },
@@ -13992,7 +13992,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.4,
+        "avg": 0.4167,
         "trend": [
           {
             "month": "2026-01",
@@ -14021,8 +14021,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.5,
+            "rank_detail": "2/4"
           }
         ]
       },
@@ -14713,7 +14713,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.5068,
+        "avg": 0.5705,
         "trend": [
           {
             "month": "2026-01",
@@ -14742,8 +14742,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.889,
+            "rank_detail": "8/9"
           }
         ]
       },
@@ -15098,7 +15098,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "rank_percentile": {
-        "avg": 0.5634,
+        "avg": 0.5112,
         "trend": [
           {
             "month": "2026-01",
@@ -15127,8 +15127,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.25,
+            "rank_detail": "1/4"
           }
         ]
       },
@@ -15222,7 +15222,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 6,
+        "last_6_months_sum": 7,
         "trend": [
           {
             "month": "2026-01",
@@ -15246,7 +15246,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 1
           }
         ]
       }
