@@ -7,7 +7,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S1AI实时转人工队列",
     "reporter": "时文娟",
     "hire_date": "2024-08-14",
-    "tenure_months": 19,
+    "tenure_months": NaN,
     "supervisor_comment": "日常工作中具备较强的管理能力，关心下属工作和成长，日常耐心带教新人，及时梳理工作难点，工作效率高",
     "ability": {
       "self": {
@@ -201,7 +201,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6853,
+        "last_3_months_avg": 1.0433,
         "trend": [
           {
             "month": "2026-01",
@@ -225,12 +225,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.074
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.2918,
+        "avg": 0.3103,
         "trend": [
           {
             "month": "2026-01",
@@ -259,8 +259,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.111,
-            "rank_detail": "1/9"
+            "value": 0.222,
+            "rank_detail": "2/9"
           }
         ]
       },
@@ -392,7 +392,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S1AI实时转人工队列",
     "reporter": "时文娟",
     "hire_date": "2024-08-20",
-    "tenure_months": 9,
+    "tenure_months": NaN,
     "supervisor_comment": "自身业务扎实，带教有心得，日常勤于学习提升，主动学习新业务，新方法，极少出现差错。",
     "ability": {
       "self": {
@@ -586,7 +586,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6777,
+        "last_3_months_avg": 1.0213,
         "trend": [
           {
             "month": "2026-01",
@@ -610,12 +610,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.031
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.4532,
+        "avg": 0.4902,
         "trend": [
           {
             "month": "2026-01",
@@ -644,8 +644,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.667,
-            "rank_detail": "6/9"
+            "value": 0.889,
+            "rank_detail": "8/9"
           }
         ]
       },
@@ -710,7 +710,7 @@ var EMPLOYEE_DATA = [
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 5,
+        "last_6_months_sum": 6,
         "trend": [
           {
             "month": "2026-01",
@@ -734,7 +734,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 1
           }
         ]
       },
@@ -777,7 +777,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1易投诉队列",
     "reporter": "时文娟",
     "hire_date": "2024-09-02",
-    "tenure_months": 11,
+    "tenure_months": NaN,
     "supervisor_comment": "日常以身作则，严格遵守公司规章制度，带头做好示范，遇到突发情况，主动承接，有效处理，责任心和大局意识突出。",
     "ability": {
       "self": {
@@ -971,7 +971,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.698,
+        "last_3_months_avg": 1.1267,
         "trend": [
           {
             "month": "2026-01",
@@ -995,12 +995,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.286
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.6388,
+        "avg": 0.7222,
         "trend": [
           {
             "month": "2026-01",
@@ -1029,8 +1029,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.5,
-            "rank_detail": "1/2"
+            "value": 1.0,
+            "rank_detail": "2/2"
           }
         ]
       },
@@ -1162,7 +1162,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S1AI实时转人工队列",
     "reporter": "时文娟",
     "hire_date": "2024-09-12",
-    "tenure_months": 12,
+    "tenure_months": NaN,
     "supervisor_comment": "",
     "ability": {
       "self": {
@@ -1356,7 +1356,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6773,
+        "last_3_months_avg": 1.027,
         "trend": [
           {
             "month": "2026-01",
@@ -1380,12 +1380,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.049
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.8615,
+        "avg": 0.806,
         "trend": [
           {
             "month": "2026-01",
@@ -1414,8 +1414,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 1.0,
-            "rank_detail": "9/9"
+            "value": 0.667,
+            "rank_detail": "6/9"
           }
         ]
       },
@@ -1547,7 +1547,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S1AI实时转人工队列",
     "reporter": "时文娟",
     "hire_date": "2025-03-24",
-    "tenure_months": 10,
+    "tenure_months": NaN,
     "supervisor_comment": "善于创新工作方法，优化流程提高效率，乐于分享，工作思路灵活",
     "ability": {
       "self": {
@@ -1741,7 +1741,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6657,
+        "last_3_months_avg": 1.0117,
         "trend": [
           {
             "month": "2026-01",
@@ -1765,12 +1765,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.038
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.6155,
+        "avg": 0.6525,
         "trend": [
           {
             "month": "2026-01",
@@ -1799,8 +1799,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.556,
-            "rank_detail": "5/9"
+            "value": 0.778,
+            "rank_detail": "7/9"
           }
         ]
       },
@@ -1928,11 +1928,11 @@ var EMPLOYEE_DATA = [
     "employee_id": "XX130149",
     "name": "穆泓宇",
     "city": "新乡",
-    "status": "见习主任",
+    "status": "协催主任",
     "queue": "未入组协催",
     "reporter": "时文娟",
     "hire_date": "2024-11-04",
-    "tenure_months": 5,
+    "tenure_months": NaN,
     "supervisor_comment": "沟通协调能力突出，跟同事相处融洽，配合协作主动。",
     "ability": {
       "self": {
@@ -2317,7 +2317,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S1手工队列",
     "reporter": "时文娟",
     "hire_date": "2025-06-09",
-    "tenure_months": 5,
+    "tenure_months": NaN,
     "supervisor_comment": "注重团队建设，关心下属成长，管理亲和，善于凝聚团队向心力",
     "ability": {
       "self": {
@@ -2511,7 +2511,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6707,
+        "last_3_months_avg": 1.0203,
         "trend": [
           {
             "month": "2026-01",
@@ -2535,7 +2535,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.049
           }
         ]
       },
@@ -2635,7 +2635,7 @@ var EMPLOYEE_DATA = [
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 4,
+        "last_6_months_sum": 5,
         "trend": [
           {
             "month": "2026-01",
@@ -2659,7 +2659,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 1
           }
         ]
       },
@@ -2702,7 +2702,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S2中小额队列",
     "reporter": "梁峰",
     "hire_date": "2024-08-14",
-    "tenure_months": 10,
+    "tenure_months": NaN,
     "supervisor_comment": "非常勤奋，每天都能看到在查案，协助经办跟进客户",
     "ability": {
       "self": {
@@ -2896,7 +2896,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.606,
+        "last_3_months_avg": 0.8487,
         "trend": [
           {
             "month": "2026-01",
@@ -2920,7 +2920,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 0.728
           }
         ]
       },
@@ -3087,7 +3087,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S3常规队列",
     "reporter": "梁峰",
     "hire_date": "2024-09-02",
-    "tenure_months": 15,
+    "tenure_months": NaN,
     "supervisor_comment": "",
     "ability": {
       "self": {
@@ -3281,7 +3281,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.662,
+        "last_3_months_avg": 1.0197,
         "trend": [
           {
             "month": "2026-01",
@@ -3305,7 +3305,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.073
           }
         ]
       },
@@ -3472,7 +3472,7 @@ var EMPLOYEE_DATA = [
     "queue": "M2中小额队列",
     "reporter": "梁峰",
     "hire_date": "2025-03-03",
-    "tenure_months": 9,
+    "tenure_months": NaN,
     "supervisor_comment": "女孩子心细，小组每个意向客户都有自己进行登记追踪。",
     "ability": {
       "self": {
@@ -3666,7 +3666,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6753,
+        "last_3_months_avg": 1.0233,
         "trend": [
           {
             "month": "2026-01",
@@ -3690,7 +3690,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.044
           }
         ]
       },
@@ -3857,7 +3857,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S3大额队列",
     "reporter": "胡盼1041",
     "hire_date": "2024-01-15",
-    "tenure_months": 20,
+    "tenure_months": NaN,
     "supervisor_comment": "1、职业价值观：Q1季度整体表现良好，1月业绩低迷，能迅速调整状态，2月冲进前30%，3月持续维稳在全国前三甲！遇到困境不退缩，积极主动寻找破局之法扭转局势！\n                        \n事迹： 1）面对公司策略上的调整，第一时间带着经办积极响应，并适应规则，在规则之内找可行性方案\n          \n\n2、积极主动：当团队业绩落后，气势低迷会第一时间通过数据做分析带领经办开复盘会，定位问题，并改善现状\n 事迹： 1）针对PIP人员及当月后20%人员主动发起面谈，调整经办情绪，分析问题，并制定提升计划\n            2）职场内活动，积极配合并协助活动流程，积极担任活动负责人调动现场气氛，确保活动顺利完成\n            3）每周会开周度复盘会，针对追踪事项会通晒完成进度，不执行不配合人员完成单独谈话，确保小组“健康”运营",
     "ability": {
       "self": {
@@ -4051,7 +4051,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6917,
+        "last_3_months_avg": 1.1047,
         "trend": [
           {
             "month": "2026-01",
@@ -4075,12 +4075,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.239
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.5728,
+        "avg": 0.5062,
         "trend": [
           {
             "month": "2026-01",
@@ -4109,8 +4109,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.8,
-            "rank_detail": "4/5"
+            "value": 0.4,
+            "rank_detail": "2/5"
           }
         ]
       },
@@ -4242,7 +4242,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S3大额队列",
     "reporter": "胡盼1041",
     "hire_date": "2024-11-11",
-    "tenure_months": 9,
+    "tenure_months": NaN,
     "supervisor_comment": "1、职业价值观：Q1季度整体表现良好，业绩优异，连续3个月均取得队列第一，序时完成率均值在114%以上！\n                          在合规投诉管控严格组内无4级及以上质检违规，并在1月荣获合规小组，日常工作积极主动承担责任服从管理安排\n事迹：1）面对较高管理负荷时，从未出现抱怨等负面情绪，积极承担更多，工作细致且专注；\n           2）团队培养出1名优秀禾苗组长，主动带教并且帮助他快速定位禾苗团队问题，推动做好人员管理；\n\n2、积极主动：出现问题主动思考解决方案，始终保持高强度的目标导向，主动制定并优化催收策略。\n 事迹：1）主动攻坚难点账户进行协催，双周开展头脑风暴针对疑难案件催收进行攻坚探讨；\n            2）对团队sop流程进行周期性迭代，建立标准化流程、话术；\n            3）积极配合团队，协助处理日常事宜，代职期间尽职尽责积极协助调整团队氛围以及目标追赶；\n\n3、计划执行：对于上级安排的任务能形成计划及时闭环完成，团队出现问题也能第一时间制定方案解决。\n事迹： 1）定期组织团队召开月度总结会，主任能提前复盘坑点，结合坑点进行策略优化，并主动找主管校对，准时召开；\n           2）目标意识强，有一定的前瞻性，能提前预估风险并以身作则，动员团队全员轮休出勤，保障回收最终达标；\n           3）当团队业绩落后时，第一时间会萃取其他队列优秀经验，调整更新队列SOP、减免话术及手机短信模板，且在调整阶段根据数据验证确保落地执行效果；",
     "ability": {
       "self": {
@@ -4436,7 +4436,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.7857,
+        "last_3_months_avg": 1.1943,
         "trend": [
           {
             "month": "2026-01",
@@ -4460,12 +4460,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.226
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.1855,
+        "avg": 0.2522,
         "trend": [
           {
             "month": "2026-01",
@@ -4494,8 +4494,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.4,
-            "rank_detail": "2/5"
+            "value": 0.8,
+            "rank_detail": "4/5"
           }
         ]
       },
@@ -4560,7 +4560,7 @@ var EMPLOYEE_DATA = [
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 4,
+        "last_6_months_sum": 5,
         "trend": [
           {
             "month": "2026-01",
@@ -4584,7 +4584,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 1
           }
         ]
       },
@@ -4627,7 +4627,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S2S3实验队列",
     "reporter": "舒洁",
     "hire_date": "2022-06-20",
-    "tenure_months": 51,
+    "tenure_months": NaN,
     "supervisor_comment": "对于难度系数较高的队列，主任不畏困难，对人员把控能力强，团队稳定性较好，凝聚力强",
     "ability": {
       "self": {
@@ -4821,7 +4821,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.7057,
+        "last_3_months_avg": 1.0583,
         "trend": [
           {
             "month": "2026-01",
@@ -4845,12 +4845,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.058
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.5693,
+        "avg": 0.6527,
         "trend": [
           {
             "month": "2026-01",
@@ -4879,8 +4879,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.25,
-            "rank_detail": "1/4"
+            "value": 0.75,
+            "rank_detail": "3/4"
           }
         ]
       },
@@ -5012,7 +5012,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S2中小额队列",
     "reporter": "舒洁",
     "hire_date": "2022-07-25",
-    "tenure_months": 34,
+    "tenure_months": NaN,
     "supervisor_comment": "队列节奏很快，注水式分案，非常考验主任对人员的管理能力，在人员培养方面投入很多精力，团队氛围，执行力非常强，业绩表现优异",
     "ability": {
       "self": {
@@ -5206,7 +5206,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6447,
+        "last_3_months_avg": 0.917,
         "trend": [
           {
             "month": "2026-01",
@@ -5230,12 +5230,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 0.817
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.3812,
+        "avg": 0.4228,
         "trend": [
           {
             "month": "2026-01",
@@ -5264,8 +5264,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.5,
-            "rank_detail": "2/4"
+            "value": 0.75,
+            "rank_detail": "3/4"
           }
         ]
       },
@@ -5330,7 +5330,7 @@ var EMPLOYEE_DATA = [
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 7,
+        "last_6_months_sum": 10,
         "trend": [
           {
             "month": "2026-01",
@@ -5354,7 +5354,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 3
           }
         ]
       },
@@ -5397,7 +5397,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S1AI实时转人工队列",
     "reporter": "舒洁",
     "hire_date": "2023-02-02",
-    "tenure_months": 9,
+    "tenure_months": NaN,
     "supervisor_comment": "S1排班轮休，节奏非常快，主任能有效管理团队，经办的抗压能力和执行力非常强，周末能配合加班到8点，团队氛围营造方面也做得很好，积极向上",
     "ability": {
       "self": {
@@ -5591,7 +5591,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6967,
+        "last_3_months_avg": 1.049,
         "trend": [
           {
             "month": "2026-01",
@@ -5615,12 +5615,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.057
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.4487,
+        "avg": 0.393,
         "trend": [
           {
             "month": "2026-01",
@@ -5649,8 +5649,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.778,
-            "rank_detail": "7/9"
+            "value": 0.444,
+            "rank_detail": "4/9"
           }
         ]
       },
@@ -5715,7 +5715,7 @@ var EMPLOYEE_DATA = [
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 5,
+        "last_6_months_sum": 7,
         "trend": [
           {
             "month": "2026-01",
@@ -5739,7 +5739,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 2
           }
         ]
       },
@@ -5782,7 +5782,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1易投诉队列",
     "reporter": "舒洁",
     "hire_date": "2023-03-27",
-    "tenure_months": 7,
+    "tenure_months": NaN,
     "supervisor_comment": "见习期经历队列调整，人员重组各类挑战，敢于迎难而上，积极思考，主动解决团队问题，成长很快，踏实上进",
     "ability": {
       "self": {
@@ -5976,7 +5976,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6983,
+        "last_3_months_avg": 1.1317,
         "trend": [
           {
             "month": "2026-01",
@@ -6000,12 +6000,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.3
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.8017,
+        "avg": 0.7183,
         "trend": [
           {
             "month": "2026-01",
@@ -6034,8 +6034,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 1.0,
-            "rank_detail": "2/2"
+            "value": 0.5,
+            "rank_detail": "1/2"
           }
         ]
       },
@@ -6167,7 +6167,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S2中小额队列",
     "reporter": "梁峰",
     "hire_date": "2024-04-11",
-    "tenure_months": 18,
+    "tenure_months": NaN,
     "supervisor_comment": "目标感强，当天业绩一旦不好就会及时拉着经办开会进行调整",
     "ability": {
       "self": {
@@ -6361,7 +6361,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.624,
+        "last_3_months_avg": 0.9317,
         "trend": [
           {
             "month": "2026-01",
@@ -6385,7 +6385,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 0.923
           }
         ]
       },
@@ -6552,7 +6552,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S2中小额队列",
     "reporter": "汪崇迟",
     "hire_date": "2022-02-28",
-    "tenure_months": 24,
+    "tenure_months": NaN,
     "supervisor_comment": "案件分层拆解：他先将团队 案件按 “客户还款意愿、可触达性、资产情况” 分为 A（有意愿可沟通）、B（有资产无意愿）、C（失联 / 恶意逃废债）三类，优先筛选出有攻坚价值的案件，避免组员在无效触达上浪费精力；",
     "ability": {
       "self": {
@@ -6746,7 +6746,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6077,
+        "last_3_months_avg": 0.881,
         "trend": [
           {
             "month": "2026-01",
@@ -6770,12 +6770,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 0.82
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.3942,
+        "avg": 0.3525,
         "trend": [
           {
             "month": "2026-01",
@@ -6804,8 +6804,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.75,
-            "rank_detail": "3/4"
+            "value": 0.5,
+            "rank_detail": "2/4"
           }
         ]
       },
@@ -6937,7 +6937,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S1AI实时转人工队列",
     "reporter": "汪崇迟",
     "hire_date": "2023-02-06",
-    "tenure_months": 32,
+    "tenure_months": NaN,
     "supervisor_comment": "陈轩博在目标规划中能做到提前预判与动态调整：在制定月度回款计划时，他结合历史数据预判到每月下旬会出现 业绩追赶的瓶颈期，于是提前调整了人力布局：上旬就组织组员提前制定分期方案和跟进节奏；下旬当瓶颈期来临时，他会根据组员的跟进进度，动态调整案件分配协催，给跟进效率低的组员打气鼓励加高频培训，给能力强的组员增加协催案件，让团队始终保持稳定的回款节奏，超额完成月度目标。",
     "ability": {
       "self": {
@@ -7131,7 +7131,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.694,
+        "last_3_months_avg": 1.0593,
         "trend": [
           {
             "month": "2026-01",
@@ -7155,12 +7155,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.096
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.3157,
+        "avg": 0.2787,
         "trend": [
           {
             "month": "2026-01",
@@ -7189,8 +7189,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.333,
-            "rank_detail": "3/9"
+            "value": 0.111,
+            "rank_detail": "1/9"
           }
         ]
       },
@@ -7255,7 +7255,7 @@ var EMPLOYEE_DATA = [
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 6,
+        "last_6_months_sum": 8,
         "trend": [
           {
             "month": "2026-01",
@@ -7279,7 +7279,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 2
           }
         ]
       },
@@ -7322,7 +7322,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S1AI实时转人工队列",
     "reporter": "汪崇迟",
     "hire_date": "2023-07-17",
-    "tenure_months": 11,
+    "tenure_months": NaN,
     "supervisor_comment": "李晨光制定了清晰的日计划：上午完成全量案件的首轮触达与分类标记，中午集中攻坚有还款意向的客户并锁定分期方案，下午针对失联案件开展外呼、短信协催攻坚，同时明确了每个时段的回款节点要求，他会在每日复盘会上同步各类型案件的跟进进度，及时调整策略，让组员清楚自己每天的主攻方向。",
     "ability": {
       "self": {
@@ -7516,7 +7516,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.684,
+        "last_3_months_avg": 1.038,
         "trend": [
           {
             "month": "2026-01",
@@ -7540,12 +7540,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.062
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.3365,
+        "avg": 0.355,
         "trend": [
           {
             "month": "2026-01",
@@ -7574,8 +7574,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.222,
-            "rank_detail": "2/9"
+            "value": 0.333,
+            "rank_detail": "3/9"
           }
         ]
       },
@@ -7707,7 +7707,7 @@ var EMPLOYEE_DATA = [
     "queue": "M3大额队列",
     "reporter": "高洋",
     "hire_date": "2022-06-22",
-    "tenure_months": 29,
+    "tenure_months": NaN,
     "supervisor_comment": "目标导向强，会根据业绩结果提前部署工作计划，确保最终业绩保持在前20%",
     "ability": {
       "self": {
@@ -7901,7 +7901,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6693,
+        "last_3_months_avg": 1.0623,
         "trend": [
           {
             "month": "2026-01",
@@ -7925,7 +7925,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.179
           }
         ]
       },
@@ -8025,7 +8025,7 @@ var EMPLOYEE_DATA = [
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 3,
+        "last_6_months_sum": 4,
         "trend": [
           {
             "month": "2026-01",
@@ -8049,7 +8049,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 1
           }
         ]
       },
@@ -8092,7 +8092,7 @@ var EMPLOYEE_DATA = [
     "queue": "M3大额队列",
     "reporter": "高洋",
     "hire_date": "2022-10-13",
-    "tenure_months": 17,
+    "tenure_months": NaN,
     "supervisor_comment": "杨雷0427，会根据组员的谈判风格分配案件，让擅长施压攻坚的组员（韩广路，张国东，赵艺增，高均杰）跟进有资产但无意愿的客户，让沟通耐心的组员（王继红，陈悦，赵鹏杰，刘译泽）跟进有意愿但资金困难的客户；",
     "ability": {
       "self": {
@@ -8286,7 +8286,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6337,
+        "last_3_months_avg": 0.9207,
         "trend": [
           {
             "month": "2026-01",
@@ -8310,7 +8310,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 0.861
           }
         ]
       },
@@ -8477,7 +8477,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S1手工队列",
     "reporter": "高洋",
     "hire_date": "2023-09-25",
-    "tenure_months": 21,
+    "tenure_months": NaN,
     "supervisor_comment": "日常管理工作细心，交付任务能超额完成，执行力与理解能力强。日常能协助主管完成额外工作。",
     "ability": {
       "self": {
@@ -8671,7 +8671,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6857,
+        "last_3_months_avg": 1.0387,
         "trend": [
           {
             "month": "2026-01",
@@ -8695,7 +8695,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.059
           }
         ]
       },
@@ -8862,7 +8862,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S3常规队列",
     "reporter": "高洋",
     "hire_date": "2025-06-04",
-    "tenure_months": 7,
+    "tenure_months": NaN,
     "supervisor_comment": "业务能力强， 在人员沟通与辅导具备成熟的管理技能，整体业绩稳定。",
     "ability": {
       "self": {
@@ -9056,7 +9056,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6527,
+        "last_3_months_avg": 1.021,
         "trend": [
           {
             "month": "2026-01",
@@ -9080,7 +9080,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.105
           }
         ]
       },
@@ -9247,7 +9247,7 @@ var EMPLOYEE_DATA = [
     "queue": "M2+清收队列",
     "reporter": "张尚情",
     "hire_date": "2022-02-28",
-    "tenure_months": 32,
+    "tenure_months": NaN,
     "supervisor_comment": "亮点：综合管理能力成熟，团队在目标达成率、竞品排名整体领先；人员稳定性高，全年累计离职人次极低；质检管理结果违规率呈下降趋势；\n有待提升：对于内部阶段性差异人员的辅导，常有滞后的情况发生，需要上级干预、督进；",
     "ability": {
       "self": {
@@ -9441,7 +9441,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.3503,
+        "last_3_months_avg": 1.0373,
         "trend": [
           {
             "month": "2026-01",
@@ -9465,7 +9465,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 2.061
           }
         ]
       },
@@ -9632,7 +9632,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S2S3实验队列",
     "reporter": "张尚情",
     "hire_date": "2022-02-28",
-    "tenure_months": 18,
+    "tenure_months": NaN,
     "supervisor_comment": "亮点：在团队业绩落后的情况下以创新方式进行团队建设，如之前组织《江边烧烤》，通过分工合作让成员领悟团队协助的核心力量；最终以\"实现反超\"\"逆流而上\"为导向，之后附近几个月能打出遥遥领先其他组的水平；也将“能打胜仗同时也能在逆风中翻盘”作为小组的精神文化；\n有待提升：汇报方面，阐述事项的逻辑、和表达能力还有待提升，需多听取这方面强的主任汇报结构，自己私下也需要多学习和练习；",
     "ability": {
       "self": {
@@ -9826,7 +9826,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.7273,
+        "last_3_months_avg": 1.093,
         "trend": [
           {
             "month": "2026-01",
@@ -9850,12 +9850,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.097
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.6132,
+        "avg": 0.5298,
         "trend": [
           {
             "month": "2026-01",
@@ -9884,8 +9884,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 1.0,
-            "rank_detail": "4/4"
+            "value": 0.5,
+            "rank_detail": "2/4"
           }
         ]
       },
@@ -10017,7 +10017,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1清收队列",
     "reporter": "张尚情",
     "hire_date": "2022-12-22",
-    "tenure_months": 8,
+    "tenure_months": NaN,
     "supervisor_comment": "亮点：\n①目标感清晰：业绩指标追赶积极，能拆解到人、关键案件突破缺口；\n②团队情况向上反馈及时性高；\n\n提升空间：对下沟通方式生硬、单一；",
     "ability": {
       "self": {
@@ -10211,7 +10211,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6733,
+        "last_3_months_avg": 1.135,
         "trend": [
           {
             "month": "2026-01",
@@ -10235,7 +10235,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.385
           }
         ]
       },
@@ -10335,7 +10335,7 @@ var EMPLOYEE_DATA = [
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 16,
+        "last_6_months_sum": 17,
         "trend": [
           {
             "month": "2026-01",
@@ -10359,7 +10359,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 1
           }
         ]
       },
@@ -10402,7 +10402,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S1手工队列",
     "reporter": "张尚情",
     "hire_date": "2023-11-13",
-    "tenure_months": 11,
+    "tenure_months": NaN,
     "supervisor_comment": "亮点:\n1）业务举措追踪方面非常落地，异常点的复盘和整改的及时性有保障；\n2）人员带教方面的规划、频次、力度相较不错；\n2）遇到挑战问题会及时升级，寻求配合；\n\n提升空间：\n1）对于问题根因的识别不够准确；",
     "ability": {
       "self": {
@@ -10596,7 +10596,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6837,
+        "last_3_months_avg": 1.04,
         "trend": [
           {
             "month": "2026-01",
@@ -10620,7 +10620,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.069
           }
         ]
       },
@@ -10720,7 +10720,7 @@ var EMPLOYEE_DATA = [
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 1,
+        "last_6_months_sum": 2,
         "trend": [
           {
             "month": "2026-01",
@@ -10744,7 +10744,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 1
           }
         ]
       },
@@ -10787,7 +10787,7 @@ var EMPLOYEE_DATA = [
     "queue": "M3易投诉队列",
     "reporter": "张尚情",
     "hire_date": "2024-01-08",
-    "tenure_months": 5,
+    "tenure_months": NaN,
     "supervisor_comment": "从会议主持及日常团队管理观察，带领团队绩效推进有一定技巧；但是才转组过来1个月，其余优势暂不突出；",
     "ability": {
       "self": {
@@ -10981,7 +10981,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6473,
+        "last_3_months_avg": 1.1843,
         "trend": [
           {
             "month": "2026-01",
@@ -11005,7 +11005,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.611
           }
         ]
       },
@@ -11172,7 +11172,7 @@ var EMPLOYEE_DATA = [
     "queue": "M3大额队列",
     "reporter": "胡小凤",
     "hire_date": "2021-11-29",
-    "tenure_months": 21,
+    "tenure_months": NaN,
     "supervisor_comment": "①季度升降级面谈时，根据员工的实际情况结合职级进行业绩按月拆分；\n②日常过程管理作为后端关注重心主要往实际员工的沟通作为重点追踪项，主任搭建团队意向看板进行追踪；",
     "ability": {
       "self": {
@@ -11342,7 +11342,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.5597,
+        "last_3_months_avg": 0.8903,
         "trend": [
           {
             "month": "2026-01",
@@ -11362,7 +11362,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 0.992
           }
         ]
       },
@@ -11508,7 +11508,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S3常规队列",
     "reporter": "胡小凤",
     "hire_date": "2022-01-05",
-    "tenure_months": 36,
+    "tenure_months": NaN,
     "supervisor_comment": "主动性较强，能举一反三，日常绩效面谈过程中能主动引导经办进行回顾，并指出优势和不足，员工接受度相对较高；",
     "ability": {
       "self": {
@@ -11702,7 +11702,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.665,
+        "last_3_months_avg": 1.0193,
         "trend": [
           {
             "month": "2026-01",
@@ -11726,7 +11726,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.063
           }
         ]
       },
@@ -11893,7 +11893,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S1AI实时转人工队列",
     "reporter": "胡小凤",
     "hire_date": "2023-02-13",
-    "tenure_months": 11,
+    "tenure_months": NaN,
     "supervisor_comment": "绩效面谈规划板块充足，帮员工做后续规划以及具体提升方向",
     "ability": {
       "self": {
@@ -12087,7 +12087,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6777,
+        "last_3_months_avg": 1.0203,
         "trend": [
           {
             "month": "2026-01",
@@ -12111,12 +12111,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.028
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.6938,
+        "avg": 0.7865,
         "trend": [
           {
             "month": "2026-01",
@@ -12145,8 +12145,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.444,
-            "rank_detail": "4/9"
+            "value": 1.0,
+            "rank_detail": "9/9"
           }
         ]
       },
@@ -12211,7 +12211,7 @@ var EMPLOYEE_DATA = [
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 4,
+        "last_6_months_sum": 5,
         "trend": [
           {
             "month": "2026-01",
@@ -12235,7 +12235,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0
+            "value": 1
           }
         ]
       },
@@ -12278,7 +12278,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S3大额队列",
     "reporter": "胡昕臾",
     "hire_date": "2023-02-09",
-    "tenure_months": 14,
+    "tenure_months": NaN,
     "supervisor_comment": "通过高频次，有效绩优案例对团队绩差人员做辅导，并且要求闭环检查，自发监督改善情况",
     "ability": {
       "self": {
@@ -12472,7 +12472,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6593,
+        "last_3_months_avg": 1.04,
         "trend": [
           {
             "month": "2026-01",
@@ -12496,7 +12496,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.142
           }
         ]
       },
@@ -12663,7 +12663,7 @@ var EMPLOYEE_DATA = [
     "queue": "M2大额队列",
     "reporter": "胡昕臾",
     "hire_date": "2023-02-16",
-    "tenure_months": 21,
+    "tenure_months": NaN,
     "supervisor_comment": "针对队列疑难案例或者薄弱点进行针对性辅导，提升经办策略和跟进执行情况并且每日不断检验形成闭环",
     "ability": {
       "self": {
@@ -12857,7 +12857,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.5603,
+        "last_3_months_avg": 0.9037,
         "trend": [
           {
             "month": "2026-01",
@@ -12881,7 +12881,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.03
           }
         ]
       },
@@ -13048,7 +13048,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S3大额队列",
     "reporter": "胡昕臾",
     "hire_date": "2023-04-10",
-    "tenure_months": 22,
+    "tenure_months": NaN,
     "supervisor_comment": "拿出案例，人员绩差原因找出问题，针对性做辅导提升，引导经办找出自身落后原因，辅导方向较有效",
     "ability": {
       "self": {
@@ -13218,7 +13218,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6697,
+        "last_3_months_avg": 1.08,
         "trend": [
           {
             "month": "2026-01",
@@ -13238,7 +13238,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.231
           }
         ]
       },
@@ -13384,7 +13384,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S3大额队列",
     "reporter": "胡昕臾",
     "hire_date": "2023-07-24",
-    "tenure_months": 11,
+    "tenure_months": NaN,
     "supervisor_comment": "人员辅导后现场作业中，日常管理上面维度深度比较高，善于发现经办适合催收风格并给予建议",
     "ability": {
       "self": {
@@ -13578,7 +13578,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.639,
+        "last_3_months_avg": 1.0717,
         "trend": [
           {
             "month": "2026-01",
@@ -13602,7 +13602,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.298
           }
         ]
       },
@@ -13769,7 +13769,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S2S3实验队列",
     "reporter": "张尚情",
     "hire_date": "2021-02-03",
-    "tenure_months": 23,
+    "tenure_months": NaN,
     "supervisor_comment": "亮点：\n每月底主管要求团队召开月度总结会，次月部署会，主任能提前规划，准备材料主动找主管校对，准时召开；\n提升空间：\n团队员工话术沟通思路、关键话术还比较零散，需萃取绩优经办，梳理成课件，复制、赋能给团队其余经办；",
     "ability": {
       "self": {
@@ -13963,7 +13963,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.705,
+        "last_3_months_avg": 1.0757,
         "trend": [
           {
             "month": "2026-01",
@@ -13987,12 +13987,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.112
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.4167,
+        "avg": 0.375,
         "trend": [
           {
             "month": "2026-01",
@@ -14021,8 +14021,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.5,
-            "rank_detail": "2/4"
+            "value": 0.25,
+            "rank_detail": "1/4"
           }
         ]
       },
@@ -14150,11 +14150,11 @@ var EMPLOYEE_DATA = [
     "employee_id": "CQ112274",
     "name": "向壕",
     "city": "重庆",
-    "status": "主任",
+    "status": "协催主任",
     "queue": "未入组协催",
     "reporter": "张尚情",
     "hire_date": "2019-11-04",
-    "tenure_months": 32,
+    "tenure_months": NaN,
     "supervisor_comment": "过程管控与复盘能力相较薄弱，卡点在面对异常指标，不清楚如何进行有效辅导和追踪；",
     "ability": {
       "self": {
@@ -14490,7 +14490,7 @@ var EMPLOYEE_DATA = [
     "queue": "M1_S1AI实时转人工队列",
     "reporter": "胡小凤",
     "hire_date": "2017-09-18",
-    "tenure_months": 22,
+    "tenure_months": NaN,
     "supervisor_comment": "有多年管理经验，团队多为老员工，日常管理过程中主要以引领员工自主思考从而达到举措共创的情况，员工执行板块盯得较为细致；",
     "ability": {
       "self": {
@@ -14684,7 +14684,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.6847,
+        "last_3_months_avg": 1.0367,
         "trend": [
           {
             "month": "2026-01",
@@ -14708,12 +14708,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.056
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.5705,
+        "avg": 0.515,
         "trend": [
           {
             "month": "2026-01",
@@ -14742,8 +14742,8 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.889,
-            "rank_detail": "8/9"
+            "value": 0.556,
+            "rank_detail": "5/9"
           }
         ]
       },
@@ -14875,7 +14875,7 @@ var EMPLOYEE_DATA = [
     "queue": "M3大额队列",
     "reporter": "胡昕臾",
     "hire_date": "2019-03-04",
-    "tenure_months": 16,
+    "tenure_months": NaN,
     "supervisor_comment": "有耐心，对于人员问题重复多次至要求经办无异议，给出经办有效建议，询问经办疑问并及时给出解答",
     "ability": {
       "self": {
@@ -15069,7 +15069,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_3_months_avg": 0.735,
+        "last_3_months_avg": 1.1413,
         "trend": [
           {
             "month": "2026-01",
@@ -15093,7 +15093,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-06",
-            "value": 0.0
+            "value": 1.219
           }
         ]
       },
