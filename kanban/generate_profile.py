@@ -52,7 +52,7 @@ for col in ["话术平均分", "早会/夕会得分", "PIP面谈得分", "离职
     df_main[col] = pd.to_numeric(df_main[col], errors="coerce")
 
 # 同一员工同月份去重（保留最后一条）
-df_main = df_main.drop_duplicates(subset=["工号", "数据月份"], keep="last")
+df_main = df_main.drop_duplicates(subset=["工号", "数据月份"], keep="first")
 
 # ==================== 最新月份 ====================
 latest_month_main = df_main["数据月份"].max()
@@ -142,9 +142,9 @@ result = []
 for _, latest in df_main_latest.iterrows():
     emp_id = latest["工号"]
     city = latest["城市"]
-    status = latest["本月标签"]
+    status = latest["本月标签"] if pd.notna(latest["本月标签"]) and latest["本月标签"] != '' else latest["人员状态"]
 
-    if status not in ["主任", "见习主任"]:
+    if status not in ["主任", "见习主任", "协催主任"]:
         continue
 
     # 该员工全部历史（用于趋势 & 累计）

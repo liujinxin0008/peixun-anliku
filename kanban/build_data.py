@@ -35,7 +35,7 @@ def load_snapshots():
         keep = [c for c in ["month", "city", "employee_id", "name", "status", "join_date", "promotion_date"] if c in df.columns]
         df = df[keep].copy()
         # 只保留主任和见习主任
-        df = df[df["status"].isin(["主任", "见习主任"])]
+        df = df[df["status"].isin(["主任", "见习主任", "协催主任"])]
         df["month"] = df["month"].astype(str).str[:7]
         df["join_date"] = pd.to_datetime(df["join_date"], errors="coerce").dt.strftime("%Y-%m-%d").fillna("")
         df["promotion_date"] = pd.to_datetime(df["promotion_date"], errors="coerce").dt.strftime("%Y-%m-%d").fillna("")
