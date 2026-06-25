@@ -126,15 +126,32 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Micr
 .bd-problem{border-left-color:#16a085} .bg-problem{background:#e8f8f5;color:#0d7d6b}
 .bd-motivate{border-left-color:#e74c3c} .bg-motivate{background:#fde8e8;color:#c0392b}
 
-/* ====== CASE DETAIL ====== */
-.case-detail{display:none;max-width:860px}
-.case-detail.active{display:block}
-.case-detail .back-btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border-radius:16px;border:1px solid var(--border);background:#fff;cursor:pointer;font-size:0.82em;color:var(--text2);margin-bottom:18px;transition:all .2s}
+/* ====== CASE DETAIL (two-column) ====== */
+.case-detail{display:none;gap:20px}
+.case-detail.active{display:flex}
+.detail-left{flex:1;min-width:0;overflow-y:auto;padding-right:4px}
+.detail-right{width:380px;min-width:380px;display:flex;flex-direction:column;gap:16px}
+.detail-right .quiz-panel{
+  background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:24px;position:sticky;top:16px
+}
+.detail-right .quiz-panel h3{font-size:1em;margin-bottom:6px}
+.detail-right .quiz-panel .qp-hint{font-size:0.82em;color:var(--text3);margin-bottom:16px}
+.detail-right .quiz-panel .qp-status{display:flex;align-items:center;gap:10px;padding:14px;border-radius:8px;margin-bottom:14px;font-size:0.85em}
+.detail-right .quiz-panel .qp-status.ready{background:#f0f4ff;color:var(--blue-dark)}
+.detail-right .quiz-panel .qp-status.doing{background:#fef9e7;color:#b3740e}
+.detail-right .quiz-panel .qp-status.done{background:#e8f8f0;color:#1a7a42}
+.detail-right .module-count{font-size:0.8em;color:var(--text3);margin-bottom:12px}
+.detail-right .module-checklist{list-style:none;font-size:0.82em}
+.detail-right .module-checklist li{padding:6px 0;display:flex;align-items:center;gap:8px;color:var(--text3)}
+.detail-right .module-checklist li.done{color:var(--green)}
+.detail-right .module-checklist li .check{font-size:0.9em}
+.case-detail .back-btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border-radius:16px;border:1px solid var(--border);background:#fff;cursor:pointer;font-size:0.82em;color:var(--text2);margin-bottom:12px;transition:all .2s;width:fit-content}
 .case-detail .back-btn:hover{color:var(--blue);border-color:var(--blue)}
-.case-detail .cd-header{margin-bottom:20px}
-.case-detail .cd-header .cd-badge{font-size:0.75em;padding:4px 12px;border-radius:12px;display:inline-block;margin-bottom:8px}
-.case-detail .cd-header h2{font-size:1.25em;font-weight:700}
-.case-detail .cd-mastery{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:0.82em;color:var(--text3)}
+.case-detail .cd-header{margin-bottom:16px}
+.case-detail .cd-header .cd-badge{font-size:0.75em;padding:4px 12px;border-radius:12px;display:inline-block;margin-bottom:6px}
+.case-detail .cd-header h2{font-size:1.2em;font-weight:700;line-height:1.4}
+.case-detail .cd-mastery{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:0.8em;color:var(--text3)}
 .case-detail .cd-mastery .mini-bar{width:80px;height:4px;background:#eee;border-radius:2px;overflow:hidden}
 .case-detail .cd-mastery .mini-fill{height:100%;background:var(--green);border-radius:2px}
 
@@ -432,7 +449,9 @@ function renderCaseDetail(caseId){
   const colors=CAT_COLORS[c.category]||{};
   const comp=competencies.find(co=>co.id===c.competencyId);
 
+  // Build left column: learning modules
   let modules='';
+  const moduleNames=[];
   for(const s of c.sections){
     let headCls='';
     if(s.type==='scene')headCls='mod-scene';
@@ -444,8 +463,9 @@ function renderCaseDetail(caseId){
 
     const title=s.type==='methodology'?s.title.replace('背后方法论：','📖 相关能力：'):s.title;
     const isOpen=s.type==='scene'?' open':'';
-    modules+=`<div class="module ${headCls}${isOpen}">
-      <div class="mod-head" onclick="this.parentElement.classList.toggle('open')">
+    moduleNames.push({type:s.type,title:title});
+    modules+=`<div class="module ${headCls}${isOpen}" data-modtype="${s.type}">
+      <div class="mod-head" onclick="toggleModule(this,${caseId})">
         <span>${title}</span><span class="mod-arrow">▼</span>
       </div>
       <div class="mod-body"><div class="mod-inner">${s.body||''}</div></div>
@@ -455,57 +475,115 @@ function renderCaseDetail(caseId){
   // Mark as studied
   if(mastery<10)updateProgress(c.competencyId,10);
 
+  // Build right column: quiz panel with module checklist
+  const checklist=moduleNames.map(m=>`<li data-mtype="${m.type}"><span class="check">⬜</span> ${m.title}</li>`).join('');
+
   document.getElementById('breadcrumb').innerHTML=`
     <span style="cursor:pointer;color:var(--blue)" onclick="selectCategory('${c.category}')">${CAT_ICONS[c.category]} ${c.category}</span>
     &nbsp;›&nbsp; <strong>${c.title}</strong>`;
 
   document.getElementById('mainContent').innerHTML=`
     <div class="case-detail active">
-      <button class="back-btn" onclick="goBack()">← 返回列表</button>
-      <div class="cd-header">
-        <span class="cd-badge ${colors.bg||''}">${CAT_ICONS[c.category]} ${c.category}</span>
-        <h2>${c.title}</h2>
-        <div class="cd-mastery">
-          板块掌握度 <div class="mini-bar"><div class="mini-fill" style="width:${mastery}%"></div></div> ${mastery}%
+      <!-- LEFT: Learning modules -->
+      <div class="detail-left">
+        <button class="back-btn" onclick="goBack()">← 返回列表</button>
+        <div class="cd-header">
+          <span class="cd-badge ${colors.bg||''}">${CAT_ICONS[c.category]} ${c.category}</span>
+          <h2>${c.title}</h2>
+          <div class="cd-mastery">
+            板块掌握度 <div class="mini-bar"><div class="mini-fill" style="width:${mastery}%"></div></div> ${mastery}%
+          </div>
+        </div>
+        ${modules}
+        <div style="height:40px"></div>
+      </div>
+      <!-- RIGHT: Quiz panel -->
+      <div class="detail-right">
+        <div class="quiz-panel" id="quizPanel">
+          <h3>📝 学后自测</h3>
+          <div id="quizPanelInner">
+            <p class="qp-hint">展开左侧各模块完成学习，然后开始自测检验掌握程度</p>
+            <div class="qp-status ready">
+              <span style="font-size:1.3em">📋</span>
+              <span>学完左侧 <b>${moduleNames.length}</b> 个模块后开始自测</span>
+            </div>
+            <div class="module-count">学习模块</div>
+            <ul class="module-checklist" id="moduleChecklist">${checklist}</ul>
+            <button class="btn btn-primary" style="width:100%;margin-top:14px" onclick="startQuiz(${c.competencyId})">🚀 开始自测（3题）</button>
+          </div>
+          <div id="quizArea"></div>
         </div>
       </div>
-      ${modules}
-      <div class="quiz-btn-row">
-        <button class="btn btn-primary" onclick="startQuiz(${c.competencyId})">📝 开始自测</button>
-        <button class="btn btn-secondary" onclick="goBack()">← 返回列表</button>
-      </div>
-      <div id="quizArea"></div>
     </div>`;
 
   renderSidebar();
+  // Init module tracking
+  updateChecklist();
+}
+
+function toggleModule(head,caseId){
+  head.parentElement.classList.toggle('open');
+  updateChecklist();
+}
+
+function updateChecklist(){
+  const modules=document.querySelectorAll('.detail-left .module');
+  const items=document.querySelectorAll('#moduleChecklist li');
+  if(!items.length)return;
+  let opened=0;
+  modules.forEach((m,i)=>{
+    const isOpen=m.classList.contains('open');
+    if(isOpen)opened++;
+    if(items[i]){
+      items[i].className=isOpen?'done':'';
+      items[i].querySelector('.check').textContent=isOpen?'✅':'⬜';
+    }
+  });
+  // Update status
+  const status=document.querySelector('.qp-status');
+  if(status){
+    const total=modules.length;
+    if(opened>=total){
+      status.className='qp-status done';
+      status.innerHTML=`<span style="font-size:1.3em">✅</span><span>全部 ${total} 个模块已展开，可以自测了！</span>`;
+    }else if(opened>1){
+      status.className='qp-status doing';
+      status.innerHTML=`<span style="font-size:1.3em">📖</span><span>学习中... ${opened}/${total} 模块已展开</span>`;
+    }
+  }
 }
 
 function goBack(){
   activeCaseId=null;
+  quizState=null;
   renderMain();
   renderSidebar();
 }
 
 // ====== QUIZ ======
 function startQuiz(compId){
-  const pool=questionBank.filter(q=>q.competencyId===compId);
-  const shuffled=[...pool].sort(()=>Math.random()-0.5);
+  const pool=questionBank.filter(function(q){return q.competencyId===compId;});
+  if(!pool.length){alert('该板块暂无考题（competencyId='+compId+'，题库共'+questionBank.length+'题）');return;}
+  const shuffled=[...pool].sort(function(){return Math.random()-0.5});
   const selected=shuffled.slice(0,Math.min(3,shuffled.length));
-  if(!selected.length){alert('该板块暂无考题');return;}
-  quizState={compId,questions:selected,currentIndex:0,answers:[],correctCount:0};
+  quizState={compId:compId,questions:selected,currentIndex:0,answers:[],correctCount:0,answered:false};
+  // Hide the intro panel, show quiz
+  document.getElementById('quizPanelInner').style.display='none';
+  document.getElementById('quizArea').style.display='block';
   renderQuizQuestion();
 }
 
 function renderQuizQuestion(){
   if(!quizState)return;
   const total=quizState.questions.length,idx=quizState.currentIndex,q=quizState.questions[idx];
-  let dots='';for(let i=0;i<total;i++){let cls='';if(i<idx)cls=quizState.answers[i]===quizState.questions[i].answer?'correct':'wrong';else if(i===idx)cls='current';dots+=`<div class="quiz-dot ${cls}"></div>`}
+  let dots='';for(let i=0;i<total;i++){let cls='';if(i<idx)cls=quizState.answers[i]===quizState.questions[i].answer?'correct':'wrong';else if(i===idx)cls='current';dots+='<div class="quiz-dot '+cls+'"></div>';}
 
   document.getElementById('quizArea').innerHTML=`
-    <div style="background:#fff;border-radius:10px;padding:20px;margin-top:16px;box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+    <div style="margin-top:8px">
       <div class="quiz-progress">${dots}</div>
-      <h3 style="font-size:0.95em;margin-bottom:14px">📝 ${q.stem}</h3>
-      <div id="quizOptions">${q.options.map((opt,oi)=>`<div class="quiz-opt" onclick="selectAnswer(${oi})">${String.fromCharCode(65+oi)}. ${opt}</div>`).join('')}</div>
+      <p style="font-size:0.8em;color:var(--text3);margin-bottom:10px">第 ${idx+1}/${total} 题</p>
+      <h4 style="font-size:0.92em;margin-bottom:14px;line-height:1.6">${q.stem}</h4>
+      <div id="quizOptions">${q.options.map(function(opt,oi){return '<div class="quiz-opt" onclick="selectAnswer('+oi+')">'+String.fromCharCode(65+oi)+'. '+opt+'</div>';}).join('')}</div>
       <div id="quizFeedback"></div>
       <button class="btn btn-primary" id="btnNext" style="display:none;margin-top:12px" onclick="nextQuestion()">下一题 ▶</button>
     </div>`;
@@ -515,9 +593,10 @@ function selectAnswer(idx){
   if(!quizState||quizState.answered)return;quizState.answered=true;
   const q=quizState.questions[quizState.currentIndex],isCorrect=idx===q.answer;
   if(isCorrect)quizState.correctCount++;quizState.answers.push(idx);
-  const opts=document.querySelectorAll('.quiz-opt');opts.forEach(o=>o.style.pointerEvents='none');
+  const opts=document.querySelectorAll('#quizOptions .quiz-opt');
+  for(let i=0;i<opts.length;i++){opts[i].style.pointerEvents='none';}
   opts[idx].classList.add(isCorrect?'correct':'wrong');if(!isCorrect)opts[q.answer].classList.add('correct');
-  document.getElementById('quizFeedback').innerHTML=`<div class="quiz-feedback ${isCorrect?'ok':'ng'}"><strong>${isCorrect?'✅ 正确！':'❌ 错误'}</strong> · ${q.explanation}</div>`;
+  document.getElementById('quizFeedback').innerHTML='<div class="quiz-feedback '+(isCorrect?'ok':'ng')+'"><strong>'+(isCorrect?'✅ 正确！':'❌ 错误')+'</strong> · '+q.explanation+'</div>';
   document.getElementById('btnNext').style.display='inline-block';
 }
 
@@ -530,28 +609,34 @@ function showQuizResult(){
   if(!quizState)return;
   const total=quizState.questions.length,correct=quizState.correctCount,pct=Math.round(correct/total*100);
   updateProgress(quizState.compId,pct);
-  let ec='',et='';if(pct>=80){ec='great';et='🎉 已掌握！理解扎实，继续保持。';}else if(pct>=50){ec='ok';et='📖 还需巩固，建议回顾案例中的处理流程。';}else{ec='again';et='💪 建议重学，仔细阅读案例后再来挑战。';}
+  let ec='',et='';if(pct>=80){ec='great';et='🎉 已掌握！理解扎实，继续保持。';}else if(pct>=50){ec='ok';et='📖 还需巩固，建议回顾左侧案例中的处理流程。';}else{ec='again';et='💪 建议重学，仔细阅读左侧案例后再来挑战。';}
   document.getElementById('quizArea').innerHTML=`
     <div class="quiz-result">
       <div class="score">${correct}/${total}</div>
       <div style="color:#888;margin:6px 0">正确率 ${pct}%</div>
       <div class="eval ${ec}">${et}</div>
-      <button class="btn btn-done" onclick="markDone(${quizState.compId})">✅ 标记完成，返回案例</button>
-      <button class="btn btn-secondary" style="margin-left:8px" onclick="startQuiz(${quizState.compId})">🔄 再来一次</button>
+      <button class="btn btn-done" onclick="finishQuiz(${quizState.compId})">✅ 完成学习，返回列表</button>
+      <button class="btn btn-secondary" style="margin-left:8px;margin-top:8px" onclick="retryQuiz(${quizState.compId})">🔄 再来一次</button>
     </div>`;
-  quizState=null;renderSidebar();
+  const compId=quizState.compId;
+  quizState=null;
+  renderSidebar();
 }
 
-function markDone(compId){
+function finishQuiz(compId){
   updateProgress(compId,100);
-  document.getElementById('quizArea').innerHTML='';
   goBack();
-  renderSidebar();
+}
+
+function retryQuiz(compId){
+  document.getElementById('quizArea').style.display='block';
+  document.getElementById('quizArea').innerHTML='';
+  startQuiz(compId);
 }
 
 // ====== NAVIGATION ======
 function selectCategory(cat){
-  activeCategory=cat;activeCaseId=null;
+  activeCategory=cat;activeCaseId=null;quizState=null;
   renderSidebar();renderMain();
 }
 document.getElementById('searchInput').addEventListener('input',function(){
