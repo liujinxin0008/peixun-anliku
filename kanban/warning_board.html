@@ -122,7 +122,7 @@
 </div>
 
 <script>
-function getGoalAvg(emp)      { return emp.business?.goal_achievement_rate?.last_3_months_avg || 0; }
+function getGoalAvg(emp)      { return emp.business?.goal_achievement_rate?.last_6_months_avg || 0; }
 function getComplaintSum(emp) { return emp.risk?.complaint?.last_6_months_sum || 0; }
 function getViolationSum(emp) { return emp.risk?.violation?.last_6_months_sum || 0; }
 

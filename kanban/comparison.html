@@ -472,7 +472,7 @@ function renderComparison(people) {
         data: {
             labels: people.map(p => p.name),
             datasets: [{
-                data: people.map(p => p.business.goal_achievement_rate.last_3_months_avg ?? 0),
+                data: people.map(p => p.business.goal_achievement_rate.last_6_months_avg ?? 0),
                 backgroundColor: people.map((_, i) => PALETTE[i].solid),
                 borderColor: people.map((_, i) => PALETTE[i].border),
                 borderWidth: 1, borderRadius: 6,

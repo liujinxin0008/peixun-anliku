@@ -239,7 +239,7 @@ for _, latest in df_main_latest.iterrows():
         },
         "business": {
             "goal_achievement_rate": {
-                "last_3_months_avg": round(avg_safe(group.tail(3)["小组目标达成率"]), 4),
+                "last_6_months_avg": round(avg_safe(recent["小组目标达成率"]), 4),
                 "trend": make_value_trend(recent, "小组目标达成率", 4),
             },
             "rank_percentile": {

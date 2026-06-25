@@ -3170,27 +3170,11 @@
     },
     {
       "month": "2026-06",
-      "employee_id": "XX130025",
-      "name": "侯瑞鹏",
-      "change_type": "回流",
-      "remark": "不再担任主任，当前: 正常",
-      "city": "新乡"
-    },
-    {
-      "month": "2026-06",
       "employee_id": "WH131908",
       "name": "胡继峰",
       "change_type": "回流",
       "remark": "不再担任主任，当前: 正常",
       "city": "武汉"
-    },
-    {
-      "month": "2026-06",
-      "employee_id": "XX130161",
-      "name": "李泽坤",
-      "change_type": "回流",
-      "remark": "不再担任主任，当前: 数源",
-      "city": "新乡"
     },
     {
       "month": "2026-06",
@@ -3218,10 +3202,10 @@
     },
     {
       "month": "2026-06",
-      "employee_id": "XX130149",
-      "name": "穆泓宇",
-      "change_type": "转岗",
-      "remark": "见习主任 -> 协催主任",
+      "employee_id": "XX130025",
+      "name": "侯瑞鹏",
+      "change_type": "回流",
+      "remark": "不再担任主任，当前: 正常",
       "city": "新乡"
     }
   ]
