@@ -297,420 +297,213 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Micr
 </main>
 
 <script>
-// ====== STATE ======
-const STORAGE_KEY='competency_progress';
-let activeCategory='all';
-let activeCaseId=null;
-let searchQuery='';
-let quizState=null;
+var STORAGE_KEY="competency_progress",activeCategory="all",activeCaseId=null,searchQuery="",quizState=null;
+var CAT_COLORS={"角色认知与目标规划":{cls:"bd-role",bg:"bg-role",bar:"#f39c12"},"绩效推进与沟通":{cls:"bd-perf",bg:"bg-perf",bar:"#4A90E2"},"人才识别与授权":{cls:"bd-talent",bg:"bg-talent",bar:"#8e44ad"},"员工辅导与发展":{cls:"bd-coach",bg:"bg-coach",bar:"#27ae60"},"管理执行力":{cls:"bd-exec",bg:"bg-exec",bar:"#e67e22"},"团队问题分析与解决":{cls:"bd-problem",bg:"bg-problem",bar:"#16a085"},"团队激励与士气提升":{cls:"bd-motivate",bg:"bg-motivate",bar:"#e74c3c"}};
+var CAT_ICONS={"角色认知与目标规划":"💡","绩效推进与沟通":"💬","人才识别与授权":"🔑","员工辅导与发展":"🌱","管理执行力":"⚡","团队问题分析与解决":"🔍","团队激励与士气提升":"❤️"};
+var categories=[];
+for(var k in CAT_COLORS){if(CAT_COLORS.hasOwnProperty(k))categories.push(k);}
 
-const CAT_COLORS={
-  '角色认知与目标规划':{cls:'bd-role',bg:'bg-role',bar:'#f39c12'},
-  '绩效推进与沟通':{cls:'bd-perf',bg:'bg-perf',bar:'#4A90E2'},
-  '人才识别与授权':{cls:'bd-talent',bg:'bg-talent',bar:'#8e44ad'},
-  '员工辅导与发展':{cls:'bd-coach',bg:'bg-coach',bar:'#27ae60'},
-  '管理执行力':{cls:'bd-exec',bg:'bg-exec',bar:'#e67e22'},
-  '团队问题分析与解决':{cls:'bd-problem',bg:'bg-problem',bar:'#16a085'},
-  '团队激励与士气提升':{cls:'bd-motivate',bg:'bg-motivate',bar:'#e74c3c'},
-};
-const CAT_ICONS={
-  '角色认知与目标规划':'💡','绩效推进与沟通':'💬','人才识别与授权':'🔑',
-  '员工辅导与发展':'🌱','管理执行力':'⚡','团队问题分析与解决':'🔍','团队激励与士气提升':'❤️'
-};
-const categories=Object.keys(CAT_COLORS);
-
-// ====== PROGRESS ======
-function loadProgress(){try{const r=localStorage.getItem(STORAGE_KEY);return r?JSON.parse(r):{}}catch(e){return{}}}
+function loadProgress(){try{var r=localStorage.getItem(STORAGE_KEY);return r?JSON.parse(r):{}}catch(e){return{}}}
 function saveProgress(d){localStorage.setItem(STORAGE_KEY,JSON.stringify(d))}
-function getCompPct(compId){return loadProgress()[compId]||0}
-function updateProgress(compId,pct){const s=loadProgress();if(pct>(s[compId]||0)){s[compId]=pct;saveProgress(s)}}
+function updateProgress(compId,pct){var s=loadProgress();if(pct>(s[compId]||0)){s[compId]=pct;saveProgress(s)}}
+function getCompIdByCat(name){for(var i=0;i<competencies.length;i++){if(competencies[i].title===name)return competencies[i].id}return 0}
+function casesByCat(cat){var r=[];for(var i=0;i<caseLibrary.length;i++){if(caseLibrary[i].category===cat)r.push(caseLibrary[i])}return r}
 
-// ====== RENDER SIDEBAR ======
 function renderSidebar(){
-  const saved=loadProgress();
-  const catNav=document.getElementById('catNav');
-
-  // All cases tab
-  const filtered=getFilteredCases();
-  let html=`<div class="cat-item${activeCategory==='all'?' active':''}" onclick="selectCategory('all')">
-    <span class="cat-icon">📋</span><span class="cat-name">全部案例</span><span class="cat-count">${filtered.length}</span>
-  </div>`;
-
-  for(const cat of categories){
-    const cases=caseLibrary.filter(c=>c.category===cat);
-    const pct=saved[competencies.find(co=>co.title===cat)?.id]||0;
-    const isActive=activeCategory===cat;
-    html+=`<div class="cat-item${isActive?' active':''}" onclick="selectCategory('${cat}')">
-      <span class="cat-icon">${CAT_ICONS[cat]}</span>
-      <span class="cat-name">${cat}</span>
-      <span class="cat-count">${cases.length}</span>
-      <div class="cat-bar"><div class="cat-bar-fill" style="width:${pct}%;background:${CAT_COLORS[cat].bar}"></div></div>
-    </div>`;
+  var s=loadProgress(),nav=document.getElementById("catNav"),html="",f=getFilteredCases();
+  html+='<div class="cat-item'+(activeCategory==="all"?" active":"")+'" onclick="selectCategory(\'all\')"><span class="cat-icon">📋</span><span class="cat-name">全部案例</span><span class="cat-count">'+f.length+'</span></div>';
+  for(var i=0;i<categories.length;i++){
+    var cat=categories[i],cc=casesByCat(cat),cid=getCompIdByCat(cat),pct=s[cid]||0;
+    html+='<div class="cat-item'+(activeCategory===cat?" active":"")+'" onclick="selectCategory(\''+cat+'\')"><span class="cat-icon">'+CAT_ICONS[cat]+'</span><span class="cat-name">'+cat+'</span><span class="cat-count">'+cc.length+'</span><div class="cat-bar"><div class="cat-bar-fill" style="width:'+pct+'%;background:'+CAT_COLORS[cat].bar+'"></div></div></div>';
   }
-  catNav.innerHTML=html;
-
-  // Footer stats
-  const comps=competencies;
-  const mastered=comps.filter(c=>(saved[c.id]||0)>=80).length;
-  const avg=comps.length>0?Math.round(comps.reduce((s,c)=>s+(saved[c.id]||0),0)/comps.length):0;
-  document.getElementById('masteredCount').textContent=mastered;
-  document.getElementById('avgPct').textContent=avg;
-  document.getElementById('overallPct').textContent=avg+'%';
-  document.getElementById('overallFill').style.width=avg+'%';
-
-  // Search count
-  const sc=document.getElementById('searchCount');
-  if(searchQuery){
-    sc.style.display='block';
-    sc.textContent=`找到 ${filtered.length} 个匹配案例`;
-  }else{
-    sc.style.display='none';
-  }
+  nav.innerHTML=html;
+  var mastered=0,sum=0;
+  for(var j=0;j<competencies.length;j++){var p=s[competencies[j].id]||0;sum+=p;if(p>=80)mastered++}
+  var avg=competencies.length>0?Math.round(sum/competencies.length):0;
+  document.getElementById("masteredCount").textContent=mastered;
+  document.getElementById("avgPct").textContent=avg;
+  document.getElementById("overallPct").textContent=avg+"%";
+  document.getElementById("overallFill").style.width=avg+"%";
+  var sc=document.getElementById("searchCount");
+  if(searchQuery){sc.style.display="block";sc.textContent="找到 "+f.length+" 个匹配案例"}else{sc.style.display="none"}
 }
 
 function getFilteredCases(){
-  let cases=activeCategory==='all'?caseLibrary:caseLibrary.filter(c=>c.category===activeCategory);
+  var cases=[];
+  if(activeCategory==="all"){for(var i=0;i<caseLibrary.length;i++)cases.push(caseLibrary[i])}
+  else{for(var i=0;i<caseLibrary.length;i++){if(caseLibrary[i].category===activeCategory)cases.push(caseLibrary[i])}}
   if(searchQuery){
-    const q=searchQuery.toLowerCase();
-    cases=cases.filter(c=>
-      c.title.toLowerCase().includes(q)||
-      c.sections.some(s=>s.body&&s.body.toLowerCase().includes(q))||
-      c.category.includes(q)
-    );
+    var q=searchQuery.toLowerCase();
+    cases=cases.filter(function(c){
+      if(c.title.toLowerCase().indexOf(q)>=0)return true;
+      if(c.category.indexOf(q)>=0)return true;
+      for(var i=0;i<c.sections.length;i++){if(c.sections[i].body&&c.sections[i].body.toLowerCase().indexOf(q)>=0)return true}
+      return false;
+    });
   }
   return cases;
 }
 
-// ====== RENDER MAIN ======
-function renderMain(){
-  if(activeCaseId){
-    renderCaseDetail(activeCaseId);
-  }else if(activeCategory==='all'&&!searchQuery){
-    renderDashboard();
-  }else{
-    renderCaseList();
-  }
-}
+function renderMain(){if(activeCaseId)renderCaseDetail(activeCaseId);else if(activeCategory==="all"&&!searchQuery)renderDashboard();else renderCaseList()}
 
-// ====== DASHBOARD ======
 function renderDashboard(){
-  const saved=loadProgress();
-  let cards='';
-  for(const comp of competencies){
-    const cat=comp.title;
-    const cases=caseLibrary.filter(c=>c.category===cat);
-    const pct=saved[comp.id]||0;
-    let statusCls='learn',statusText='开始学习';
-    if(pct>=80){statusCls='great';statusText='已掌握 ✓';}
-    else if(pct>=40){statusCls='good';statusText='学习中…';}
-    cards+=`<div class="progress-card" onclick="selectCategory('${cat}')" style="border-left-color:${CAT_COLORS[cat].bar}">
-      <div class="pc-head">
-        <span class="pc-icon">${comp.icon}</span>
-        <span class="pc-name">${cat}</span>
-        <span class="pc-count">${cases.length}案例</span>
-      </div>
-      <div class="pc-bar-bg"><div class="pc-bar-fill" style="width:${pct}%;background:${CAT_COLORS[cat].bar}"></div></div>
-      <div class="pc-pct">掌握度 ${pct}%</div>
-      <div class="pc-status ${statusCls}">${statusText}</div>
-    </div>`;
+  var s=loadProgress(),cards="";
+  for(var i=0;i<competencies.length;i++){
+    var c=competencies[i],cat=c.title,cc=casesByCat(cat),pct=s[c.id]||0,sc="learn",st="开始学习";
+    if(pct>=80){sc="great";st="已掌握 ✓"}else if(pct>=40){sc="good";st="学习中…"}
+    cards+='<div class="progress-card" onclick="selectCategory(\''+cat+'\')" style="border-left-color:'+CAT_COLORS[cat].bar+'"><div class="pc-head"><span class="pc-icon">'+c.icon+'</span><span class="pc-name">'+cat+'</span><span class="pc-count">'+cc.length+'案例</span></div><div class="pc-bar-bg"><div class="pc-bar-fill" style="width:'+pct+'%;background:'+CAT_COLORS[cat].bar+'"></div></div><div class="pc-pct">掌握度 '+pct+'%</div><div class="pc-status '+sc+'">'+st+'</div></div>';
   }
-
-  document.getElementById('breadcrumb').innerHTML='<strong>📋 学习仪表盘</strong>';
-  document.getElementById('mainContent').innerHTML=`
-    <div class="dashboard active">
-      <h2>👋 欢迎回来</h2>
-      <p class="welcome-msg">选择一个能力板块开始学习，或使用左侧搜索查找具体案例</p>
-      <div class="progress-cards">${cards}</div>
-    </div>`;
+  document.getElementById("breadcrumb").innerHTML="<strong>📋 学习仪表盘</strong>";
+  document.getElementById("mainContent").innerHTML='<div class="dashboard active"><h2>👋 欢迎回来</h2><p class="welcome-msg">选择一个能力板块开始学习，或使用左侧搜索查找具体案例</p><div class="progress-cards">'+cards+'</div></div>';
 }
 
-// ====== CASE LIST ======
 function renderCaseList(){
-  const cases=getFilteredCases();
-  const catLabel=activeCategory==='all'?'全部案例':activeCategory;
-  document.getElementById('breadcrumb').innerHTML=`<strong>${CAT_ICONS[activeCategory]||'📋'} ${catLabel}</strong> · ${cases.length}个案例`;
-
-  if(!cases.length){
-    document.getElementById('mainContent').innerHTML=`
-      <div class="empty-state"><div class="empty-icon">🔍</div><h3>没有找到匹配的案例</h3><p>试试换个关键词</p></div>`;
-    return;
+  var cases=getFilteredCases(),label=activeCategory==="all"?"全部案例":activeCategory,icon=CAT_ICONS[activeCategory]||"📋";
+  document.getElementById("breadcrumb").innerHTML="<strong>"+icon+" "+label+"</strong> · "+cases.length+"个案例";
+  if(!cases.length){document.getElementById("mainContent").innerHTML='<div class="empty-state"><div class="empty-icon">🔍</div><h3>没有找到匹配的案例</h3><p>试试换个关键词</p></div>';return}
+  var grid="";
+  for(var i=0;i<cases.length;i++){
+    var c=cases[i],co=CAT_COLORS[c.category]||{},preview="";
+    if(c.sections[0]&&c.sections[0].body)preview=c.sections[0].body.replace(/<[^>]*>/g,"").substring(0,80);
+    var mt="相关能力";
+    for(var j=0;j<c.sections.length;j++){if(c.sections[j].type==="methodology"){mt=c.sections[j].title.replace("背后方法论：","");break}}
+    grid+='<div class="case-card '+(co.cls||"")+'" onclick="openCase('+c.id+')"><span class="cc-badge '+(co.bg||"")+'">'+icon+' '+c.category+'</span><div class="cc-title">'+c.title+'</div><div class="cc-preview">'+preview+'...</div><div class="cc-meta"><span>📖 '+mt+'</span></div></div>';
   }
-
-  let grid='';
-  for(const c of cases){
-    const colors=CAT_COLORS[c.category]||{};
-    const preview=(c.sections[0]?.body||'').replace(/<[^>]*>/g,'').substring(0,80);
-    grid+=`<div class="case-card ${colors.cls||''}" onclick="openCase(${c.id})">
-      <span class="cc-badge ${colors.bg||''}">${CAT_ICONS[c.category]||''} ${c.category}</span>
-      <div class="cc-title">${c.title}</div>
-      <div class="cc-preview">${preview}...</div>
-      <div class="cc-meta"><span>📖 ${(c.sections.find(s=>s.type==='methodology')||{}).title?.replace('背后方法论：','')||'相关能力'}</span></div>
-    </div>`;
-  }
-
-  document.getElementById('mainContent').innerHTML=`<div class="case-list-panel active"><div class="case-grid">${grid}</div></div>`;
+  document.getElementById("mainContent").innerHTML='<div class="case-list-panel active"><div class="case-grid">'+grid+'</div></div>';
 }
 
-// ====== CASE DETAIL ======
-function openCase(caseId){
-  activeCaseId=caseId;
-  renderMain();
-  document.getElementById('mainContent').scrollTop=0;
-}
+function openCase(caseId){activeCaseId=caseId;renderMain();document.getElementById("mainContent").scrollTop=0}
 
 function renderCaseDetail(caseId){
-  var c=caseLibrary.find(function(x){return x.id===caseId;});
+  var c=null;for(var i=0;i<caseLibrary.length;i++){if(caseLibrary[i].id===caseId){c=caseLibrary[i];break}}
   if(!c)return;
-  var saved=loadProgress();
-  var mastery=saved[c.competencyId]||0;
-  var colors=CAT_COLORS[c.category]||{};
-  var barColor=colors.bar||'#4A90E2';
-
-  // Build left: learning modules
-  var modules='';
-  var sectionTypes=[];
+  var s=loadProgress(),mastery=s[c.competencyId]||0,co=CAT_COLORS[c.category]||{};
+  var icons={scene:"🔍",diagnosis:"💊",solution:"🔧",scripts:"💬",case:"📋",methodology:"📖"};
+  var mods="",steps="",stypes=[];
   for(var i=0;i<c.sections.length;i++){
-    var s=c.sections[i];
-    var headCls='';
-    if(s.type==='scene')headCls='mod-scene';
-    else if(s.type==='diagnosis')headCls='mod-diagnosis';
-    else if(s.type==='solution')headCls='mod-solution';
-    else if(s.type==='scripts')headCls='mod-scripts';
-    else if(s.type==='case')headCls='mod-case';
-    else if(s.type==='methodology')headCls='mod-methodology';
-    var title=s.type==='methodology'?s.title.replace('背后方法论：','相关能力：'):s.title;
-    var isOpen=s.type==='scene'?' open':'';
-    sectionTypes.push({type:s.type,title:title});
-    modules+='<div class=\"module '+headCls+isOpen+'\" data-modtype=\"'+s.type+'\">'+
-      '<div class=\"mod-head\" onclick=\"toggleModule(this,'+caseId+')\">'+
-      '<span>'+title+'</span><span class=\"mod-arrow\">▼</span></div>'+
-      '<div class=\"mod-body\"><div class=\"mod-inner\">'+(s.body||'')+'</div></div></div>';
+    var sec=c.sections[i],h="";
+    if(sec.type==="scene")h="mod-scene";
+    else if(sec.type==="diagnosis")h="mod-diagnosis";
+    else if(sec.type==="solution")h="mod-solution";
+    else if(sec.type==="scripts")h="mod-scripts";
+    else if(sec.type==="case")h="mod-case";
+    else if(sec.type==="methodology")h="mod-methodology";
+    var t=sec.type==="methodology"?sec.title.replace("背后方法论：","相关能力："):sec.title;
+    var o=sec.type==="scene"?" open":"";
+    stypes.push({type:sec.type,title:t});
+    mods+='<div class="module '+h+o+'" data-modtype="'+sec.type+'"><div class="mod-head" onclick="toggleModule(this)"><span>'+t+'</span><span class="mod-arrow">▼</span></div><div class="mod-body"><div class="mod-inner">'+(sec.body||"")+'</div></div></div>';
   }
-
+  for(var j=0;j<stypes.length;j++){var st=stypes[j];steps+='<div class="flow-step"><div class="flow-dot">'+(icons[st.type]||"●")+'</div><div class="flow-line"></div><div class="flow-label">'+st.title+'</div></div>'}
   if(mastery<10)updateProgress(c.competencyId,10);
+  var pool=[];for(var k=0;k<questionBank.length;k++){if(questionBank[k].competencyId===c.competencyId)pool.push(questionBank[k])}
+  var qc=pool.length;
 
-  // Build right: flow progress + quiz
-  var steps='';
-  var stepIcons={scene:'🔍',diagnosis:'💊',solution:'🔧',scripts:'💬',case:'📋',methodology:'📖'};
-  for(var j=0;j<sectionTypes.length;j++){
-    var st=sectionTypes[j];
-    steps+='<div class=\"flow-step\" data-step=\"'+j+'\">'+
-      '<div class=\"flow-dot\">'+(stepIcons[st.type]||'●')+'</div>'+
-      '<div class=\"flow-line\"></div>'+
-      '<div class=\"flow-label\">'+st.title+'</div></div>';
-  }
+  document.getElementById("breadcrumb").innerHTML='<span style="cursor:pointer;color:var(--blue)" onclick="selectCategory(\''+c.category+'\')">'+CAT_ICONS[c.category]+' '+c.category+'</span> &nbsp;›&nbsp; <strong>'+c.title+'</strong>';
 
-  // Quiz availability
-  var pool=questionBank.filter(function(q){return q.competencyId===c.competencyId;});
-  var qCount=pool.length;
+  var html='<div class="case-detail active">'+
+    '<div class="detail-left">'+
+    '<button class="back-btn" onclick="goBack()">← 返回列表</button>'+
+    '<div class="cd-header"><span class="cd-badge '+(co.bg||"")+'">'+CAT_ICONS[c.category]+' '+c.category+'</span><h2>'+c.title+'</h2>'+
+    '<div class="cd-mastery">板块掌握度 <div class="mini-bar"><div class="mini-fill" style="width:'+mastery+'%"></div></div> '+mastery+'%</div></div>'+
+    mods+'<div style="height:60px"></div></div>'+
+    '<div class="detail-right"><div class="quiz-panel" id="quizPanel">'+
+    '<h3>📝 学习进度</h3>'+
+    '<div class="flow-progress" id="flowProgress">'+steps+'</div>'+
+    '<div style="text-align:center;margin:8px 0;font-size:0.85em;color:var(--text2)" id="flowStatus">展开左侧模块开始学习</div>'+
+    '<hr style="border:none;border-top:1px solid var(--border);margin:14px 0">'+
+    '<p style="font-size:0.78em;color:var(--text3);margin-bottom:10px">📋 本板块共 <b>'+qc+'</b> 道考题 · 自测随机抽 3 题</p>'+
+    '<button class="btn btn-primary" style="width:100%" id="btnStartQuiz" onclick="startQuiz('+c.competencyId+')">🚀 开始自测</button>'+
+    '<div id="quizArea" style="margin-top:12px"></div>'+
+    '</div></div></div>';
 
-  document.getElementById('breadcrumb').innerHTML=
-    '<span style=\"cursor:pointer;color:var(--blue)\" onclick=\"selectCategory(&apos;'+c.category+'&apos;)\">'+CAT_ICONS[c.category]+' '+c.category+'</span>'+
-    '&nbsp;›&nbsp; <strong>'+c.title+'</strong>';
-
-  document.getElementById('mainContent').innerHTML=
-    '<div class=\"case-detail active\">'+
-    // LEFT COLUMN
-    '<div class=\"detail-left\">'+
-      '<button class=\"back-btn\" onclick=\"goBack()\">← 返回列表</button>'+
-      '<div class=\"cd-header\">'+
-        '<span class=\"cd-badge '+(colors.bg||'')+'\">'+CAT_ICONS[c.category]+' '+c.category+'</span>'+
-        '<h2>'+c.title+'</h2>'+
-        '<div class=\"cd-mastery\">板块掌握度 <div class=\"mini-bar\"><div class=\"mini-fill\" style=\"width:'+mastery+'%\"></div></div> '+mastery+'%</div>'+
-      '</div>'+modules+'<div style=\"height:60px\"></div>'+
-    '</div>'+
-    // RIGHT COLUMN
-    '<div class=\"detail-right\">'+
-      '<div class=\"quiz-panel\" id=\"quizPanel\">'+
-        '<h3>📝 学习进度</h3>'+
-        '<div class=\"flow-progress\" id=\"flowProgress\">'+steps+'</div>'+
-        '<div style=\"text-align:center;margin:8px 0;font-size:0.85em;color:var(--text2)\" id=\"flowStatus\">展开左侧模块开始学习</div>'+
-        '<hr style=\"border:none;border-top:1px solid var(--border);margin:14px 0\">'+
-        '<p style=\"font-size:0.78em;color:var(--text3);margin-bottom:8px\">📋 本板块共 <b>'+qCount+'</b> 道考题 · 自测随机抽 3 题</p>'+
-        '<button class=\"btn btn-primary\" style=\"width:100%\" id=\"btnStartQuiz\" onclick=\"startQuiz('+c.competencyId+')\">🚀 开始自测</button>'+
-        '<div id=\"quizArea\" style=\"margin-top:12px\"></div>'+
-      '</div>'+
-    '</div></div>';
-
+  document.getElementById("mainContent").innerHTML=html;
   renderSidebar();
-  setTimeout(updateFlowProgress,100);
+  setTimeout(updateFlowProgress,200);
 }
+
+function toggleModule(h){h.parentElement.classList.toggle("open");updateFlowProgress()}
 
 function updateFlowProgress(){
-  var modules=document.querySelectorAll('.detail-left .module');
-  var dots=document.querySelectorAll('.flow-dot');
-  var opened=0;
-  for(var i=0;i<modules.length;i++){
-    var isOpen=modules[i].classList.contains('open');
-    if(isOpen)opened++;
-    if(dots[i]){
-      dots[i].className='flow-dot'+(isOpen?' done':'');
-    }
+  var mods=document.querySelectorAll(".detail-left .module"),dots=document.querySelectorAll(".flow-dot"),opened=0;
+  if(!mods.length||!dots.length)return;
+  for(var i=0;i<mods.length;i++){
+    if(mods[i].classList.contains("open")){opened++;if(dots[i])dots[i].className="flow-dot done"}
+    else{if(dots[i])dots[i].className="flow-dot"}
   }
-  var status=document.getElementById('flowStatus');
-  if(status){
-    if(opened>=modules.length){status.innerHTML='✅ 全部完成，可以自测了！';}
-    else if(opened>1){status.innerHTML='📖 学习中... '+opened+'/'+modules.length+' 模块已展开';}
-    else{status.innerHTML='展开左侧模块开始学习';}
-  }
+  var st=document.getElementById("flowStatus");
+  if(st){if(opened>=mods.length)st.innerHTML="✅ 全部完成，可以自测了！";else if(opened>1)st.innerHTML="📖 学习中... "+opened+"/"+mods.length+" 模块已展开";else st.innerHTML="展开左侧模块开始学习"}
 }
 
-function toggleModule(head,caseId){
-  head.parentElement.classList.toggle('open');
-  updateFlowProgress();
-}
+function goBack(){activeCaseId=null;quizState=null;renderMain();renderSidebar()}
 
-function goBack(){
-  activeCaseId=null;
-  quizState=null;
-  renderMain();
-  renderSidebar();
-}
-
-// ====== QUIZ (rewritten) ======
+// ====== QUIZ ======
 function startQuiz(compId){
-  // Find questions for this competency
   var pool=[];
-  for(var i=0;i<questionBank.length;i++){
-    if(questionBank[i].competencyId===compId)pool.push(questionBank[i]);
-  }
-  if(!pool.length){
-    alert('该板块暂无考题！\ncompetencyId='+compId+'\n题库总数='+questionBank.length);
-    return;
-  }
-  // Shuffle and pick 3
-  pool.sort(function(){return Math.random()-0.5;});
-  var selected=pool.slice(0,Math.min(3,pool.length));
-
-  quizState={compId:compId,questions:selected,currentIndex:0,answers:[],correctCount:0};
-
-  // Hide button, show quiz
-  var btn=document.getElementById('btnStartQuiz');
-  if(btn)btn.style.display='none';
-  var area=document.getElementById('quizArea');
-  if(!area){alert('quizArea not found');return;}
-  area.style.display='block';
-  area.innerHTML='';
+  for(var i=0;i<questionBank.length;i++){if(questionBank[i].competencyId===compId)pool.push(questionBank[i])}
+  if(!pool.length){alert("该板块暂无考题！");return}
+  pool.sort(function(){return Math.random()-0.5});
+  quizState={compId:compId,questions:pool.slice(0,Math.min(3,pool.length)),currentIndex:0,answers:[],correctCount:0};
+  var btn=document.getElementById("btnStartQuiz");if(btn)btn.style.display="none";
+  var area=document.getElementById("quizArea");if(!area)return;
+  area.style.display="block";area.innerHTML="";
   showQuestion();
 }
 
 function showQuestion(){
   if(!quizState)return;
-  var idx=quizState.currentIndex;
-  var q=quizState.questions[idx];
-  var total=quizState.questions.length;
-
-  // Build dots
-  var dots='';
-  for(var i=0;i<total;i++){
-    var cls='';
-    if(i<idx){cls=quizState.answers[i]===quizState.questions[i].answer?'correct':'wrong';}
-    else if(i===idx){cls='current';}
-    dots+='<div class=\"quiz-dot '+cls+'\"></div>';
-  }
-
-  // Build options
-  var optsHtml='';
-  var labels='ABCD';
-  for(var j=0;j<q.options.length;j++){
-    optsHtml+='<div class=\"quiz-opt\" onclick=\"selectAnswer('+j+')\">'+labels.charAt(j)+'. '+q.options[j]+'</div>';
-  }
-
-  document.getElementById('quizArea').innerHTML=
-    '<div class=\"quiz-progress\">'+dots+'</div>'+
-    '<p style=\"font-size:0.78em;color:var(--text3);margin-bottom:8px\">第 '+(idx+1)+'/'+total+' 题</p>'+
-    '<p style=\"font-size:0.9em;line-height:1.6;margin-bottom:12px;font-weight:600\">'+q.stem+'</p>'+
-    '<div id=\"quizOptions\">'+optsHtml+'</div>'+
-    '<div id=\"quizFeedback\"></div>'+
-    '<button class=\"btn btn-primary\" id=\"btnNext\" style=\"display:none;margin-top:10px\" onclick=\"nextQuestion()\">下一题 ▶</button>';
+  var idx=quizState.currentIndex,q=quizState.questions[idx],total=quizState.questions.length,dots="";
+  for(var i=0;i<total;i++){var c="";if(i<idx)c=quizState.answers[i]===quizState.questions[i].answer?"correct":"wrong";else if(i===idx)c="current";dots+='<div class="quiz-dot '+c+'"></div>'}
+  var opts="",L="ABCD";
+  for(var j=0;j<q.options.length;j++)opts+='<div class="quiz-opt" onclick="selectAnswer('+j+')">'+L.charAt(j)+'. '+q.options[j]+'</div>';
+  document.getElementById("quizArea").innerHTML='<div class="quiz-progress">'+dots+'</div><p style="font-size:0.78em;color:var(--text3);margin-bottom:8px">第 '+(idx+1)+'/'+total+' 题</p><p style="font-size:0.9em;line-height:1.6;margin-bottom:12px;font-weight:600">'+q.stem+'</p><div id="quizOptions">'+opts+'</div><div id="quizFeedback"></div><button class="btn btn-primary" id="btnNext" style="display:none;margin-top:10px" onclick="nextQuestion()">下一题 ▶</button>';
 }
 
 function selectAnswer(idx){
-  if(!quizState||quizState._answered)return;
-  quizState._answered=true;
-  var q=quizState.questions[quizState.currentIndex];
-  var isCorrect=idx===q.answer;
-  if(isCorrect)quizState.correctCount++;
+  if(!quizState||quizState._done)return;
+  quizState._done=true;
+  var q=quizState.questions[quizState.currentIndex],ok=idx===q.answer;
+  if(ok)quizState.correctCount++;
   quizState.answers.push(idx);
-
-  var opts=document.querySelectorAll('#quizOptions .quiz-opt');
-  for(var i=0;i<opts.length;i++){opts[i].style.pointerEvents='none';}
-  opts[idx].classList.add(isCorrect?'correct':'wrong');
-  if(!isCorrect)opts[q.answer].classList.add('correct');
-
-  document.getElementById('quizFeedback').innerHTML=
-    '<div class=\"quiz-feedback '+(isCorrect?'ok':'ng')+'\"><strong>'+(isCorrect?'✅ 正确！':'❌ 错误')+'</strong> · '+q.explanation+'</div>';
-  document.getElementById('btnNext').style.display='inline-block';
+  var opts=document.querySelectorAll("#quizOptions .quiz-opt");
+  for(var i=0;i<opts.length;i++)opts[i].style.pointerEvents="none";
+  opts[idx].classList.add(ok?"correct":"wrong");
+  if(!ok)opts[q.answer].classList.add("correct");
+  document.getElementById("quizFeedback").innerHTML='<div class="quiz-feedback '+(ok?"ok":"ng")+'"><strong>'+(ok?"✅ 正确！":"❌ 错误")+'</strong> · '+q.explanation+'</div>';
+  document.getElementById("btnNext").style.display="inline-block";
 }
 
 function nextQuestion(){
   if(!quizState)return;
-  quizState._answered=false;
-  quizState.currentIndex++;
-  if(quizState.currentIndex>=quizState.questions.length){showResult();}
-  else{showQuestion();}
+  quizState._done=false;quizState.currentIndex++;
+  if(quizState.currentIndex>=quizState.questions.length)showResult();else showQuestion();
 }
 
 function showResult(){
   if(!quizState)return;
-  var total=quizState.questions.length;
-  var correct=quizState.correctCount;
-  var pct=Math.round(correct/total*100);
-  updateProgress(quizState.compId,pct);
-
-  var ec='',et='';
-  if(pct>=80){ec='great';et='🎉 已掌握！理解扎实。';}
-  else if(pct>=50){ec='ok';et='📖 还需巩固，回顾左侧案例。';}
-  else{ec='again';et='💪 建议重新学习左侧内容后再来。';}
-
-  document.getElementById('quizArea').innerHTML=
-    '<div class=\"quiz-result\">'+
-    '<div class=\"score\">'+correct+'/'+total+'</div>'+
-    '<div style=\"color:#888;margin:6px 0\">正确率 '+pct+'%</div>'+
-    '<div class=\"eval '+ec+'\">'+et+'</div>'+
-    '<button class=\"btn btn-done\" onclick=\"finishQuiz('+quizState.compId+')\">✅ 完成学习</button>'+
-    '<button class=\"btn btn-secondary\" style=\"margin-left:8px;margin-top:8px\" onclick=\"retryQuiz('+quizState.compId+')\">🔄 再来一次</button>'+
-    '</div>';
-  var compId=quizState.compId;
-  quizState=null;
-  renderSidebar();
+  var t=quizState.questions.length,c=quizState.correctCount,p=Math.round(c/t*100);
+  updateProgress(quizState.compId,p);
+  var ec,ef;
+  if(p>=80){ec="great";ef="🎉 已掌握！理解扎实，继续保持。"}else if(p>=50){ec="ok";ef="📖 还需巩固，建议回顾左侧案例中的处理流程。"}else{ec="again";ef="💪 建议重学，仔细阅读左侧案例后再来挑战。"}
+  var cid=quizState.compId;
+  document.getElementById("quizArea").innerHTML='<div class="quiz-result"><div class="score">'+c+'/'+t+'</div><div style="color:#888;margin:6px 0">正确率 '+p+'%</div><div class="eval '+ec+'">'+ef+'</div><button class="btn btn-done" onclick="finishQuiz('+cid+')">✅ 完成学习</button><button class="btn btn-secondary" style="margin-left:8px;margin-top:8px" onclick="retryQuiz('+cid+')">🔄 再来一次</button></div>';
+  quizState=null;renderSidebar();
 }
 
-function finishQuiz(compId){
-  updateProgress(compId,100);
-  goBack();
-}
-
-function retryQuiz(compId){
-  var area=document.getElementById('quizArea');
-  if(area){area.innerHTML='';area.style.display='block';}
-  startQuiz(compId);
-}
+function finishQuiz(id){updateProgress(id,100);goBack()}
+function retryQuiz(id){var a=document.getElementById("quizArea");if(a){a.innerHTML="";a.style.display="block"}startQuiz(id)}
 
 // ====== NAVIGATION ======
-function selectCategory(cat){
-  activeCategory=cat;activeCaseId=null;quizState=null;
-  renderSidebar();renderMain();
-}
-document.getElementById('searchInput').addEventListener('input',function(){
-  searchQuery=this.value.trim();activeCaseId=null;
-  renderSidebar();renderMain();
-});
+function selectCategory(cat){activeCategory=cat;activeCaseId=null;quizState=null;renderSidebar();renderMain()}
+document.getElementById("searchInput").addEventListener("input",function(){searchQuery=this.value.trim();activeCaseId=null;renderSidebar();renderMain()});
 
 // ====== KEYBOARD ======
-document.addEventListener('keydown',function(e){
-  if(quizState&&!quizState.answered){
-    const k=e.key.toUpperCase(),m={A:0,B:1,C:2,D:3};
-    if(m[k]!==undefined&&m[k]<quizState.questions[quizState.currentIndex].options.length)selectAnswer(m[k]);
-  }
-  if(e.key==='Escape'){if(quizState){quizState=null;goBack()}else if(activeCaseId)goBack()}
+document.addEventListener("keydown",function(e){
+  if(quizState&&!quizState._done){var m={A:0,B:1,C:2,D:3};if(m[e.key.toUpperCase()]!==undefined&&m[e.key.toUpperCase()]<quizState.questions[quizState.currentIndex].options.length)selectAnswer(m[e.key.toUpperCase()])}
+  if(e.key==="Escape"){if(quizState){quizState=null;goBack()}else if(activeCaseId)goBack()}
 });
 
-function resetProgress(){
-  if(confirm('确定要重置所有学习进度吗？此操作不可恢复。')){localStorage.removeItem(STORAGE_KEY);renderSidebar();renderMain()}
-}
+function resetProgress(){if(confirm("确定要重置所有学习进度吗？")){localStorage.removeItem(STORAGE_KEY);renderSidebar();renderMain()}}
 
-// ====== INIT ======
 renderSidebar();renderMain();
 </script>
 </body>
