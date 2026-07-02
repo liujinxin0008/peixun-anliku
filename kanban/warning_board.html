@@ -60,7 +60,7 @@
         .empty-tip { text-align: center; padding: 16px; color: #94a3b8; font-size: 13px; }
 
         /* 城市筛选栏 */
-        .city-filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; align-items: center; }
+        .city-filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; align-items: center; }
         .city-filter-label { font-size: 13px; font-weight: 600; color: #475569; margin-right: 4px; }
         .city-btn {
             padding: 5px 16px; border-radius: 40px; border: 1.5px solid #e2e8f0;
@@ -69,6 +69,17 @@
         }
         .city-btn:hover { border-color: #93c5fd; color: #3b82f6; }
         .city-btn.active { background: #3b82f6; border-color: #3b82f6; color: white; font-weight: 600; box-shadow: 0 2px 6px rgba(59,130,246,0.3); }
+
+        /* 月份筛选栏 */
+        .month-filter-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; align-items: center; }
+        .month-filter-label { font-size: 13px; font-weight: 600; color: #475569; margin-right: 4px; }
+        .month-btn {
+            padding: 5px 14px; border-radius: 40px; border: 1.5px solid #e2e8f0;
+            background: white; font-size: 13px; font-weight: 500; color: #475569;
+            cursor: pointer; transition: all 0.15s;
+        }
+        .month-btn:hover { border-color: #f59e0b; color: #d97706; }
+        .month-btn.active { background: #f59e0b; border-color: #f59e0b; color: white; font-weight: 600; box-shadow: 0 2px 6px rgba(245,158,11,0.3); }
 
         @media (max-width: 900px) {
             .warning-row-cards { flex-direction: column; }
@@ -85,11 +96,14 @@
         <div class="city-filter-bar" id="cityFilterBar">
             <span class="city-filter-label"><i class="fas fa-map-marker-alt"></i> 城市：</span>
         </div>
+        <div class="month-filter-bar" id="monthFilterBar">
+            <span class="month-filter-label"><i class="fas fa-calendar-alt"></i> 月份：</span>
+        </div>
         <div class="warning-row-cards">
             <div class="warning-card">
                 <div class="warning-card-title"><i class="fas fa-chart-line" style="color:#3b82f6;"></i> 业绩预警</div>
                 <div class="warning-slider">
-                    <label>近6月平均队列目标达成率</label>
+                    <label>平均队列目标达成率</label>
                     <div class="dual-range-wrap">
                         <div class="dual-range-track"><div class="dual-range-fill" id="perfFill"></div></div>
                         <input type="range" id="perfMin" min="0" max="120" step="1" value="0">
@@ -100,18 +114,18 @@
                 <div id="perfWarningList" class="warning-list-simple"></div>
             </div>
             <div class="warning-card">
-                <div class="warning-card-title"><i class="fas fa-phone-slash" style="color:#ef4444;"></i> 重渠投诉预警</div>
+                <div class="warning-card-title"><i class="fas fa-phone-slash" style="color:#ef4444;"></i> 投诉预警</div>
                 <div class="warning-slider">
-                    <label>近6月重渠投诉 ≥</label>
+                    <label>重渠投诉 ≥</label>
                     <input type="range" id="complaintThreshold" min="0" max="100" step="1" value="1">
                     <span id="complaintVal">1</span>
                 </div>
                 <div id="complaintWarningList" class="warning-list-simple"></div>
             </div>
             <div class="warning-card">
-                <div class="warning-card-title"><i class="fas fa-gavel" style="color:#f97316;"></i> 三级及以上违规数量预警</div>
+                <div class="warning-card-title"><i class="fas fa-gavel" style="color:#f97316;"></i> 违规预警</div>
                 <div class="warning-slider">
-                    <label>近6月三级以上违规 ≥</label>
+                    <label>三级以上违规 ≥</label>
                     <input type="range" id="violationThreshold" min="0" max="100" step="1" value="1">
                     <span id="violationVal">1</span>
                 </div>
@@ -122,10 +136,69 @@
 </div>
 
 <script>
-function getGoalAvg(emp)      { return emp.business?.goal_achievement_rate?.last_6_months_avg || 0; }
-function getComplaintSum(emp) { return emp.risk?.complaint?.last_6_months_sum || 0; }
-function getViolationSum(emp) { return emp.risk?.violation?.last_6_months_sum || 0; }
+// ── 月份筛选状态 ──
+let selectedMonths = new Set();
 
+function getAvailableMonths() {
+    const months = new Set();
+    EMPLOYEE_DATA.forEach(emp => {
+        const trend = emp.business?.goal_achievement_rate?.trend || [];
+        trend.forEach(t => months.add(t.month));
+    });
+    return [...months].sort();
+}
+
+function formatMonth(monthStr) {
+    // "2026-01" → "1月"
+    const parts = monthStr.split('-');
+    return parseInt(parts[1]) + '月';
+}
+
+function buildMonthButtons() {
+    const months = getAvailableMonths();
+    const bar = document.getElementById('monthFilterBar');
+    const label = bar.querySelector('.month-filter-label');
+    bar.innerHTML = '';
+    bar.appendChild(label);
+    months.forEach(month => {
+        const btn = document.createElement('button');
+        btn.className = 'month-btn active';
+        btn.textContent = formatMonth(month);
+        btn.dataset.month = month;
+        selectedMonths.add(month);
+        btn.addEventListener('click', () => {
+            btn.classList.toggle('active');
+            if (btn.classList.contains('active')) {
+                selectedMonths.add(month);
+            } else {
+                selectedMonths.delete(month);
+            }
+            updateSliderMaxes();
+            renderAllWarnings();
+        });
+        bar.appendChild(btn);
+    });
+}
+
+// ── 基于选中月份动态计算 ──
+function getGoalAvg(emp) {
+    const trend = emp.business?.goal_achievement_rate?.trend || [];
+    const filtered = trend.filter(t => selectedMonths.has(t.month));
+    if (filtered.length === 0) return 0;
+    return filtered.reduce((sum, t) => sum + (t.value || 0), 0) / filtered.length;
+}
+
+function getComplaintSum(emp) {
+    const trend = emp.risk?.complaint?.trend || [];
+    return trend.filter(t => selectedMonths.has(t.month)).reduce((sum, t) => sum + (t.value || 0), 0);
+}
+
+function getViolationSum(emp) {
+    const trend = emp.risk?.violation?.trend || [];
+    return trend.filter(t => selectedMonths.has(t.month)).reduce((sum, t) => sum + (t.value || 0), 0);
+}
+
+// ── 城市筛选 ──
 let selectedCity = '全部';
 
 function buildCityButtons() {
@@ -161,6 +234,24 @@ function updateDualRange(minId, maxId, fillId, valId, unit, totalMax) {
     document.getElementById(valId).textContent = unit === '%' ? `${minV}% ~ ${maxV}%` : `${minV} ~ ${maxV}`;
 }
 
+function updateSliderMaxes() {
+    // 根据当前选中的城市+月份，动态更新滑块最大值
+    const baseData = selectedCity === '全部' ? EMPLOYEE_DATA : EMPLOYEE_DATA.filter(e => e.city === selectedCity);
+    const maxComp = Math.max(1, ...baseData.map(e => getComplaintSum(e)));
+    const maxViol = Math.max(1, ...baseData.map(e => getViolationSum(e)));
+    document.getElementById('complaintThreshold').max = maxComp;
+    document.getElementById('violationThreshold').max = maxViol;
+    // 如果当前滑块值超过最大值，重置
+    if (parseInt(document.getElementById('complaintThreshold').value) > maxComp) {
+        document.getElementById('complaintThreshold').value = Math.max(1, maxComp - 1);
+        document.getElementById('complaintVal').textContent = document.getElementById('complaintThreshold').value;
+    }
+    if (parseInt(document.getElementById('violationThreshold').value) > maxViol) {
+        document.getElementById('violationThreshold').value = Math.max(1, maxViol - 1);
+        document.getElementById('violationVal').textContent = document.getElementById('violationThreshold').value;
+    }
+}
+
 function renderAllWarnings() {
     const perfMinV = parseInt(document.getElementById('perfMin').value) / 100;
     const perfMaxV = parseInt(document.getElementById('perfMax').value) / 100;
@@ -178,14 +269,14 @@ function renderAllWarnings() {
     const compList = baseData.filter(e => getComplaintSum(e) >= compTh)
         .sort((a, b) => getComplaintSum(b) - getComplaintSum(a));
     document.getElementById('complaintWarningList').innerHTML = compList.length === 0
-        ? '<div class="empty-tip">✅ 无重渠投诉预警人员</div>'
-        : compList.map(e => `<div class="warning-item" onclick="toProfile('${e.employee_id}')" title="点击查看主任卡片"><span class="emp-name">${e.name}</span><span class="metric-value">重渠投诉 ${getComplaintSum(e)} 件</span></div>`).join('');
+        ? '<div class="empty-tip">✅ 无投诉预警人员</div>'
+        : compList.map(e => `<div class="warning-item" onclick="toProfile('${e.employee_id}')" title="点击查看主任卡片"><span class="emp-name">${e.name}</span><span class="metric-value">投诉 ${getComplaintSum(e)} 件</span></div>`).join('');
 
     const violList = baseData.filter(e => getViolationSum(e) >= violTh)
         .sort((a, b) => getViolationSum(b) - getViolationSum(a));
     document.getElementById('violationWarningList').innerHTML = violList.length === 0
         ? '<div class="empty-tip">✅ 无违规预警人员</div>'
-        : violList.map(e => `<div class="warning-item" onclick="toProfile('${e.employee_id}')" title="点击查看主任卡片"><span class="emp-name">${e.name}</span><span class="metric-value">三级以上违规 ${getViolationSum(e)} 次</span></div>`).join('');
+        : violList.map(e => `<div class="warning-item" onclick="toProfile('${e.employee_id}')" title="点击查看主任卡片"><span class="emp-name">${e.name}</span><span class="metric-value">违规 ${getViolationSum(e)} 次</span></div>`).join('');
 }
 
 function toProfile(id) {
@@ -204,11 +295,10 @@ document.getElementById('violationThreshold').addEventListener('input', function
     document.getElementById('violationVal').textContent = this.value; renderAllWarnings();
 });
 
+// ── 初始化 ──
+buildMonthButtons();
 buildCityButtons();
-const maxComp = Math.max(1, ...EMPLOYEE_DATA.map(e => getComplaintSum(e)));
-const maxViol = Math.max(1, ...EMPLOYEE_DATA.map(e => getViolationSum(e)));
-document.getElementById('complaintThreshold').max = maxComp;
-document.getElementById('violationThreshold').max = maxViol;
+updateSliderMaxes();
 updateDualRange('perfMin','perfMax','perfFill','perfVal','%',120);
 renderAllWarnings();
 </script>

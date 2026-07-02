@@ -2933,6 +2933,339 @@
       "status": "主任",
       "join_date": "2019-03-04",
       "promotion_date": "2025-02-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "新乡",
+      "employee_id": "XX130024",
+      "name": "原会岩",
+      "status": "主任",
+      "join_date": "2024-08-14",
+      "promotion_date": "2024-11-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "新乡",
+      "employee_id": "XX130054",
+      "name": "赵玉洁",
+      "status": "主任",
+      "join_date": "2024-08-20",
+      "promotion_date": "2025-09-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "新乡",
+      "employee_id": "XX130072",
+      "name": "曹阳2713",
+      "status": "主任",
+      "join_date": "2024-09-02",
+      "promotion_date": "2025-07-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "新乡",
+      "employee_id": "XX130269",
+      "name": "韩灿",
+      "status": "主任",
+      "join_date": "2025-03-24",
+      "promotion_date": "2025-08-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "新乡",
+      "employee_id": "XX130149",
+      "name": "穆泓宇",
+      "status": "见习主任",
+      "join_date": "2024-11-04",
+      "promotion_date": "2026-01-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "新乡",
+      "employee_id": "XX130465",
+      "name": "王梦豪",
+      "status": "见习主任",
+      "join_date": "2025-06-09",
+      "promotion_date": "2026-01-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "新乡",
+      "employee_id": "XX130009",
+      "name": "张恒",
+      "status": "主任",
+      "join_date": "2024-08-14",
+      "promotion_date": "2025-08-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "新乡",
+      "employee_id": "XX130073",
+      "name": "王艺8516",
+      "status": "主任",
+      "join_date": "2024-09-02",
+      "promotion_date": "2025-03-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "新乡",
+      "employee_id": "XX130088",
+      "name": "张子豪2498",
+      "status": "主任",
+      "join_date": "2024-09-12",
+      "promotion_date": "2025-06-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "新乡",
+      "employee_id": "XX130234",
+      "name": "李佳怡",
+      "status": "主任",
+      "join_date": "2025-03-03",
+      "promotion_date": "2025-09-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "武汉",
+      "employee_id": "WH130552",
+      "name": "王蒙9981",
+      "status": "主任",
+      "join_date": "2024-01-15",
+      "promotion_date": "2024-10-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "武汉",
+      "employee_id": "WH130686",
+      "name": "张飞",
+      "status": "主任",
+      "join_date": "2024-11-11",
+      "promotion_date": "2025-09-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "武汉",
+      "employee_id": "WH130212",
+      "name": "徐文靖0212",
+      "status": "主任",
+      "join_date": "2022-06-20",
+      "promotion_date": "2022-03-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "武汉",
+      "employee_id": "WH130243",
+      "name": "韩猛",
+      "status": "主任",
+      "join_date": "2022-07-25",
+      "promotion_date": "2023-08-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "武汉",
+      "employee_id": "WH130314",
+      "name": "柯右锐",
+      "status": "主任",
+      "join_date": "2023-02-02",
+      "promotion_date": "2025-09-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "新乡",
+      "employee_id": "ZZ130645",
+      "name": "张军鹏",
+      "status": "主任",
+      "join_date": "2024-04-11",
+      "promotion_date": "2024-12-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "郑州",
+      "employee_id": "ZZ130329",
+      "name": "邱子龙",
+      "status": "主任",
+      "join_date": "2022-02-28",
+      "promotion_date": "2024-06-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "郑州",
+      "employee_id": "ZZ130460",
+      "name": "陈轩博",
+      "status": "主任",
+      "join_date": "2023-02-06",
+      "promotion_date": "2023-10-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "郑州",
+      "employee_id": "ZZ130531",
+      "name": "李晨光",
+      "status": "主任",
+      "join_date": "2023-07-17",
+      "promotion_date": "2025-07-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "郑州",
+      "employee_id": "ZZ130366",
+      "name": "王溢轲",
+      "status": "主任",
+      "join_date": "2022-06-22",
+      "promotion_date": "2024-01-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "郑州",
+      "employee_id": "ZZ130549",
+      "name": "唐优雅",
+      "status": "主任",
+      "join_date": "2023-09-25",
+      "promotion_date": "2024-09-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "郑州",
+      "employee_id": "ZZ130864",
+      "name": "王浩森",
+      "status": "主任",
+      "join_date": "2025-06-04",
+      "promotion_date": "2025-11-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "重庆",
+      "employee_id": "CQ130732",
+      "name": "赵家豪",
+      "status": "主任",
+      "join_date": "2022-02-28",
+      "promotion_date": "2023-10-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "重庆",
+      "employee_id": "CQ120176",
+      "name": "桂涛0176",
+      "status": "主任",
+      "join_date": "2022-02-28",
+      "promotion_date": "2024-12-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "重庆",
+      "employee_id": "CQ131238",
+      "name": "杜涛",
+      "status": "主任",
+      "join_date": "2022-12-22",
+      "promotion_date": "2025-10-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "重庆",
+      "employee_id": "CQ131763",
+      "name": "王玲3780",
+      "status": "主任",
+      "join_date": "2023-11-13",
+      "promotion_date": "2025-07-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "重庆",
+      "employee_id": "CQ131837",
+      "name": "苟家富3496",
+      "status": "见习主任",
+      "join_date": "2024-01-08",
+      "promotion_date": "2026-01-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "重庆",
+      "employee_id": "CQ130513",
+      "name": "余东励",
+      "status": "主任",
+      "join_date": "2021-11-29",
+      "promotion_date": "2024-09-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "重庆",
+      "employee_id": "CQ130628",
+      "name": "邓春林",
+      "status": "主任",
+      "join_date": "2022-01-05",
+      "promotion_date": "2023-06-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "重庆",
+      "employee_id": "CQ131274",
+      "name": "哈倩",
+      "status": "主任",
+      "join_date": "2023-02-09",
+      "promotion_date": "2025-04-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "重庆",
+      "employee_id": "CQ131314",
+      "name": "周宇1314",
+      "status": "主任",
+      "join_date": "2023-02-16",
+      "promotion_date": "2024-09-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "重庆",
+      "employee_id": "CQ131396",
+      "name": "周燕1396",
+      "status": "主任",
+      "join_date": "2023-04-10",
+      "promotion_date": "2024-08-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "重庆",
+      "employee_id": "CQ131575",
+      "name": "张川1575",
+      "status": "主任",
+      "join_date": "2023-07-24",
+      "promotion_date": "2025-07-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "重庆",
+      "employee_id": "CQ130128",
+      "name": "郑达梅",
+      "status": "主任",
+      "join_date": "2021-02-03",
+      "promotion_date": "2024-07-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "重庆",
+      "employee_id": "CQ112274",
+      "name": "向壕",
+      "status": "主任",
+      "join_date": "2019-11-04",
+      "promotion_date": "2023-10-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "重庆",
+      "employee_id": "CQ111018",
+      "name": "邓磊",
+      "status": "主任",
+      "join_date": "2017-09-18",
+      "promotion_date": "2024-08-01"
+    },
+    {
+      "month": "2026-07",
+      "city": "重庆",
+      "employee_id": "CQ111689",
+      "name": "唐茜",
+      "status": "主任",
+      "join_date": "2019-03-04",
+      "promotion_date": "2025-02-01"
     }
   ],
   "changes": [
@@ -3170,11 +3503,35 @@
     },
     {
       "month": "2026-06",
+      "employee_id": "ZZ130205",
+      "name": "姚逸雯",
+      "change_type": "回流",
+      "remark": "不再担任主任，当前: 特殊考核",
+      "city": "郑州"
+    },
+    {
+      "month": "2026-06",
+      "employee_id": "XX130025",
+      "name": "侯瑞鹏",
+      "change_type": "回流",
+      "remark": "不再担任主任，当前: 正常",
+      "city": "新乡"
+    },
+    {
+      "month": "2026-06",
       "employee_id": "WH131908",
       "name": "胡继峰",
       "change_type": "回流",
       "remark": "不再担任主任，当前: 正常",
       "city": "武汉"
+    },
+    {
+      "month": "2026-06",
+      "employee_id": "XX130161",
+      "name": "李泽坤",
+      "change_type": "回流",
+      "remark": "不再担任主任，当前: 数源",
+      "city": "新乡"
     },
     {
       "month": "2026-06",
@@ -3194,19 +3551,27 @@
     },
     {
       "month": "2026-06",
-      "employee_id": "ZZ130205",
-      "name": "姚逸雯",
-      "change_type": "回流",
-      "remark": "不再担任主任，当前: 特殊考核",
-      "city": "郑州"
+      "employee_id": "XX130149",
+      "name": "穆泓宇",
+      "change_type": "转岗",
+      "remark": "见习主任 -> 协催主任",
+      "city": "新乡"
     },
     {
-      "month": "2026-06",
-      "employee_id": "XX130025",
-      "name": "侯瑞鹏",
+      "month": "2026-07",
+      "employee_id": "WH130368",
+      "name": "田东洋",
       "change_type": "回流",
-      "remark": "不再担任主任，当前: 正常",
-      "city": "新乡"
+      "remark": "",
+      "city": "武汉"
+    },
+    {
+      "month": "2026-07",
+      "employee_id": "CQ131304",
+      "name": "唐传繁",
+      "change_type": "回流",
+      "remark": "",
+      "city": "重庆"
     }
   ]
 }

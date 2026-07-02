@@ -269,7 +269,11 @@ for _, latest in df_main_latest.iterrows():
     result.append(emp_json)
 
 # ==================== 输出 ====================
+from datetime import datetime
+data_update_date = datetime.now().strftime("%Y-%m-%d")
+
 with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+    f.write("var DATA_UPDATE_DATE = \"{}\";\n".format(data_update_date))
     f.write("var EMPLOYEE_DATA = ")
     json.dump(result, f, ensure_ascii=False, indent=2)
     f.write(";")
