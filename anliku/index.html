@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>培训主任实战案例库</title>
+<script src="data/competencies.js"></script>
+<script src="data/questions.js"></script>
+<script src="data/cases.js"></script>
+<style>
+:root{
+  --blue:#4A90E2;--blue-dark:#357ABD;--blue-light:#e8f0fe;
+  --bg:#f0f2f5;--sidebar-bg:#1e2532;--sidebar-text:#b0b8c8;--sidebar-active:#fff;
+  --card:#fff;--text:#1a1a2e;--text2:#555;--text3:#999;
+  --border:#e8ecf1;--shadow:0 1px 3px rgba(0,0,0,0.06);--shadow-lg:0 8px 30px rgba(0,0,0,0.10);
+  --radius:10px;--radius-sm:6px;
+  --green:#27ae60;--orange:#f39c12;--purple:#8e44ad;--teal:#16a085;--coral:#e74c3c;--pink:#e91e63;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);display:flex;height:100vh;overflow:hidden}
+
+/* ====== SIDEBAR ====== */
+.sidebar{
+  width:300px;min-width:300px;background:var(--sidebar-bg);color:var(--sidebar-text);
+  display:flex;flex-direction:column;height:100vh;overflow:hidden;z-index:10;
+}
+.sidebar-header{padding:20px 20px 14px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.sidebar-header .logo{font-size:1.1em;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
+.sidebar-header .logo span{font-size:1.4em}
+.sidebar-header .subtitle{font-size:0.75em;color:var(--sidebar-text);margin-top:4px;padding-left:4px}
+
+/* Search */
+.search-wrap{padding:12px 16px;position:relative}
+.search-wrap input{
+  width:100%;padding:9px 14px 9px 34px;border-radius:8px;border:none;
+  background:rgba(255,255,255,0.08);color:#fff;font-size:0.85em;outline:none;
+  transition:background .2s
+}
+.search-wrap input::placeholder{color:rgba(255,255,255,0.3)}
+.search-wrap input:focus{background:rgba(255,255,255,0.14)}
+.search-wrap .s-icon{position:absolute;left:28px;top:50%;transform:translateY(-50%);font-size:0.85em;opacity:0.5}
+.search-result-count{font-size:0.72em;color:var(--sidebar-text);padding:0 18px 6px;display:none}
+
+/* Category nav */
+.cat-nav{flex:1;overflow-y:auto;padding:4px 12px}
+.cat-nav .cat-group{margin-bottom:2px}
+.cat-nav .cat-item{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;
+  cursor:pointer;transition:all .15s;font-size:0.86em;position:relative;
+  color:var(--sidebar-text)
+}
+.cat-nav .cat-item:hover{background:rgba(255,255,255,0.06);color:#ddd}
+.cat-nav .cat-item.active{background:rgba(74,144,226,0.2);color:#fff;font-weight:600}
+.cat-nav .cat-item .cat-icon{font-size:1.1em;width:24px;text-align:center;flex-shrink:0}
+.cat-nav .cat-item .cat-name{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cat-nav .cat-item .cat-count{font-size:0.75em;opacity:0.6;background:rgba(255,255,255,0.08);padding:2px 8px;border-radius:10px}
+.cat-nav .cat-item.active .cat-count{background:rgba(255,255,255,0.2);opacity:1}
+.cat-nav .cat-item .cat-bar{position:absolute;bottom:0;left:12px;right:12px;height:2px;background:rgba(255,255,255,0.08);border-radius:1px}
+.cat-nav .cat-item .cat-bar-fill{height:100%;border-radius:1px;transition:width .6s}
+
+/* Sidebar footer */
+.sidebar-footer{padding:14px 20px;border-top:1px solid rgba(255,255,255,0.06);font-size:0.75em}
+.sidebar-footer .overall-bar{margin-bottom:8px}
+.sidebar-footer .overall-label{display:flex;justify-content:space-between;margin-bottom:4px}
+.sidebar-footer .overall-bg{height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden}
+.sidebar-footer .overall-fill{height:100%;background:var(--green);border-radius:2px;transition:width .6s}
+.sidebar-footer .btn-reset{width:100%;padding:6px;border-radius:6px;border:1px solid rgba(255,255,255,0.12);background:none;color:var(--sidebar-text);cursor:pointer;font-size:0.82em;transition:all .2s}
+.sidebar-footer .btn-reset:hover{color:#e74c3c;border-color:rgba(231,76,60,0.3)}
+
+/* ====== MAIN PANEL ====== */
+.main{flex:1;display:flex;flex-direction:column;height:100vh;overflow:hidden;background:var(--bg)}
+.main-top{padding:16px 28px;background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.main-top .breadcrumb{font-size:0.85em;color:var(--text3)}
+.main-top .breadcrumb strong{color:var(--text)}
+.main-top .stats-mini{display:flex;gap:20px;font-size:0.82em;color:var(--text2)}
+.main-top .stats-mini b{color:var(--blue)}
+
+.main-content{flex:1;overflow-y:auto;padding:24px 28px}
+
+/* ====== DASHBOARD ====== */
+.dashboard{display:none}
+.dashboard.active{display:block}
+.dashboard h2{font-size:1.3em;margin-bottom:6px}
+.dashboard .welcome-msg{color:var(--text2);font-size:0.9em;margin-bottom:28px}
+.progress-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-bottom:28px}
+.progress-card{
+  background:#fff;border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);
+  cursor:pointer;transition:all .2s;border-left:3px solid transparent
+}
+.progress-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.progress-card .pc-head{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.progress-card .pc-icon{font-size:1.3em}
+.progress-card .pc-name{font-weight:600;font-size:0.9em}
+.progress-card .pc-count{font-size:0.75em;color:var(--text3);margin-left:auto}
+.progress-card .pc-bar-bg{height:5px;background:#f0f0f0;border-radius:3px;overflow:hidden;margin-bottom:6px}
+.progress-card .pc-bar-fill{height:100%;border-radius:3px;transition:width .6s}
+.progress-card .pc-pct{font-size:0.78em;color:var(--text3)}
+.progress-card .pc-status{font-size:0.75em;margin-top:4px}
+.progress-card .pc-status.great{color:var(--green)}
+.progress-card .pc-status.good{color:var(--blue)}
+.progress-card .pc-status.learn{color:var(--orange)}
+
+/* ====== CASE LIST (sidebar mode) ====== */
+.case-list-panel{display:none}
+.case-list-panel.active{display:block}
+.case-list-panel .list-header{font-size:0.9em;color:var(--text2);margin-bottom:16px}
+.case-list-panel .list-header b{color:var(--text)}
+.case-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.case-card{
+  background:#fff;border-radius:var(--radius);padding:16px 18px;
+  box-shadow:var(--shadow);cursor:pointer;transition:all .2s;
+  border-left:3px solid transparent;display:flex;flex-direction:column;gap:8px
+}
+.case-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.case-card .cc-badge{font-size:0.7em;padding:3px 10px;border-radius:10px;display:inline-block;width:fit-content}
+.case-card .cc-title{font-weight:600;font-size:0.92em;line-height:1.4}
+.case-card .cc-preview{font-size:0.78em;color:var(--text3);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.case-card .cc-meta{display:flex;gap:10px;font-size:0.72em;color:var(--text3);margin-top:auto}
+
+/* Category border colors */
+.bd-role{border-left-color:#f39c12} .bg-role{background:#fef9e7;color:#b3740e}
+.bd-perf{border-left-color:var(--blue)} .bg-perf{background:var(--blue-light);color:var(--blue-dark)}
+.bd-talent{border-left-color:#8e44ad} .bg-talent{background:#f5edfa;color:#6c2d82}
+.bd-coach{border-left-color:#27ae60} .bg-coach{background:#e8f8f0;color:#1a7a42}
+.bd-exec{border-left-color:#e67e22} .bg-exec{background:#fef5ec;color:#b8601a}
+.bd-problem{border-left-color:#16a085} .bg-problem{background:#e8f8f5;color:#0d7d6b}
+.bd-motivate{border-left-color:#e74c3c} .bg-motivate{background:#fde8e8;color:#c0392b}
+
+/* ====== CASE DETAIL (two-column) ====== */
+.case-detail{display:none;gap:20px}
+.case-detail.active{display:flex}
+.detail-left{flex:1;min-width:0;overflow-y:auto;padding-right:4px}
+.detail-right{width:380px;min-width:380px;display:flex;flex-direction:column;gap:16px}
+.detail-right .quiz-panel{
+  background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:24px;position:sticky;top:16px
+}
+.detail-right .quiz-panel h3{font-size:1em;margin-bottom:6px}
+.detail-right .quiz-panel .qp-hint{font-size:0.82em;color:var(--text3);margin-bottom:16px}
+.detail-right .quiz-panel .qp-status{display:flex;align-items:center;gap:10px;padding:14px;border-radius:8px;margin-bottom:14px;font-size:0.85em}
+.detail-right .quiz-panel .qp-status.ready{background:#f0f4ff;color:var(--blue-dark)}
+.detail-right .quiz-panel .qp-status.doing{background:#fef9e7;color:#b3740e}
+.detail-right .quiz-panel .qp-status.done{background:#e8f8f0;color:#1a7a42}
+.detail-right .module-count{font-size:0.8em;color:var(--text3);margin-bottom:12px}
+.detail-right .module-checklist{list-style:none;font-size:0.82em}
+.detail-right .module-checklist li{padding:6px 0;display:flex;align-items:center;gap:8px;color:var(--text3)}
+.detail-right .module-checklist li.done{color:var(--green)}
+.detail-right .module-checklist li .check{font-size:0.9em}
+.case-detail .back-btn{display:inline-flex;align-items:center;gap:4px;padding:6px 14px;border-radius:16px;border:1px solid var(--border);background:#fff;cursor:pointer;font-size:0.82em;color:var(--text2);margin-bottom:12px;transition:all .2s;width:fit-content}
+.case-detail .back-btn:hover{color:var(--blue);border-color:var(--blue)}
+.case-detail .cd-header{margin-bottom:16px}
+.case-detail .cd-header .cd-badge{font-size:0.75em;padding:4px 12px;border-radius:12px;display:inline-block;margin-bottom:6px}
+.case-detail .cd-header h2{font-size:1.2em;font-weight:700;line-height:1.4}
+.case-detail .cd-mastery{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:0.8em;color:var(--text3)}
+.case-detail .cd-mastery .mini-bar{width:80px;height:4px;background:#eee;border-radius:2px;overflow:hidden}
+.case-detail .cd-mastery .mini-fill{height:100%;background:var(--green);border-radius:2px}
+
+/* Flow progress (vertical stepper) */
+.flow-progress{display:flex;flex-direction:column;gap:0;padding:4px 0}
+.flow-step{display:flex;align-items:center;gap:10px;position:relative;padding:6px 0}
+.flow-dot{
+  width:30px;height:30px;min-width:30px;border-radius:50%;background:#eee;
+  display:flex;align-items:center;justify-content:center;font-size:0.8em;
+  transition:all .3s;position:relative;z-index:1;border:2px solid #e0e0e0
+}
+.flow-dot.done{background:var(--green);border-color:var(--green);color:#fff;box-shadow:0 2px 8px rgba(39,174,96,0.25)}
+.flow-line{
+  position:absolute;left:25px;top:42px;width:2px;height:calc(100% - 12px);
+  background:#e0e0e0;z-index:0
+}
+.flow-step:last-child .flow-line{display:none}
+.flow-label{font-size:0.8em;color:var(--text3);transition:color .3s}
+.flow-step:has(.flow-dot.done) .flow-label{color:var(--text);font-weight:500}
+
+/* Modules */
+.module{margin-bottom:8px;border-radius:var(--radius-sm);overflow:hidden;background:#fff;box-shadow:var(--shadow)}
+.module .mod-head{
+  padding:13px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;
+  font-weight:600;font-size:0.9em;user-select:none;transition:background .15s
+}
+.module .mod-head:hover{background:#fafbfc}
+.module .mod-head .mod-arrow{transition:transform .25s;font-size:0.7em;color:var(--text3)}
+.module.open .mod-head .mod-arrow{transform:rotate(180deg)}
+.module .mod-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.module.open .mod-body{max-height:3000px}
+.module .mod-inner{padding:0 18px 16px;font-size:0.88em;line-height:1.8;color:var(--text2)}
+.module .mod-inner p{margin-bottom:10px}
+.module .mod-inner ul,.module .mod-inner ol{padding-left:20px;margin-bottom:10px}
+.module .mod-inner li{margin-bottom:6px}
+.module .mod-inner table{width:100%;border-collapse:collapse;margin:12px 0;font-size:0.88em}
+.module .mod-inner td,.module .mod-inner th{border:1px solid var(--border);padding:8px 12px;text-align:left}
+.module .mod-inner th{background:#f8f9fb;font-weight:600}
+.module .mod-inner strong{color:var(--text)}
+.module .mod-inner blockquote{
+  background:#f8faff;border-left:3px solid var(--blue);margin:12px 0;padding:10px 14px;
+  border-radius:0 6px 6px 0;font-size:0.92em;color:#445
+}
+.module .mod-inner .script-card{
+  background:#fefdf5;border:1px solid #f0ebd0;border-radius:8px;padding:12px 16px;margin:10px 0
+}
+.module .mod-inner .script-card .scene-label{font-size:0.78em;color:var(--orange);font-weight:600;margin-bottom:6px}
+.module .mod-inner .script-card .line{color:var(--text);font-size:0.92em;line-height:1.7}
+.module .mod-inner .step-list{list-style:none;padding-left:0}
+.module .mod-inner .step-list li{padding:8px 0 8px 32px;position:relative;border-bottom:1px solid #f5f5f5}
+.module .mod-inner .step-list li::before{
+  content:attr(data-num);position:absolute;left:0;top:10px;
+  width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;
+  font-size:0.72em;font-weight:700;display:flex;align-items:center;justify-content:center
+}
+
+/* Module type colors */
+.mod-scene .mod-head{background:#fef9e7;color:#b3740e}
+.mod-diagnosis .mod-head{background:#fde8e8;color:#c0392b}
+.mod-solution .mod-head{background:#e8f0fe;color:var(--blue-dark)}
+.mod-scripts .mod-head{background:#fef5ec;color:#b8601a}
+.mod-case .mod-head{background:#e8f8f0;color:#1a7a42}
+.mod-methodology .mod-head{background:#f5edfa;color:#6c2d82}
+
+/* Quiz */
+.quiz-btn-row{display:flex;gap:10px;margin-top:20px}
+.btn{padding:10px 24px;border-radius:8px;border:none;cursor:pointer;font-size:0.88em;font-weight:600;transition:all .2s}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:var(--blue-dark);box-shadow:0 4px 14px rgba(74,144,226,0.35)}
+.btn-secondary{background:#fff;color:var(--text2);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--blue);color:var(--blue)}
+.btn-done{background:var(--green);color:#fff;margin-top:12px}
+.btn-done:hover{opacity:0.9}
+.quiz-result{background:#fff;border-radius:var(--radius);padding:24px;margin-top:16px;box-shadow:var(--shadow);text-align:center}
+.quiz-result .score{font-size:2.5em;font-weight:800;color:var(--blue)}
+.quiz-result .eval{padding:12px;border-radius:8px;margin:16px 0;font-size:0.9em}
+.quiz-result .eval.great{background:#e8f8f0;color:#1a7a42}
+.quiz-result .eval.ok{background:#fef9e7;color:#b3740e}
+.quiz-result .eval.again{background:#fde8e8;color:#c0392b}
+.quiz-opt{
+  padding:12px 16px;border:1.5px solid var(--border);border-radius:8px;
+  margin:8px 0;cursor:pointer;transition:all .15s;font-size:0.9em
+}
+.quiz-opt:hover{border-color:var(--blue);background:var(--blue-light)}
+.quiz-opt.correct{border-color:var(--green);background:#e8f8f0;color:#1a7a42}
+.quiz-opt.wrong{border-color:#e74c3c;background:#fde8e8;color:#c0392b}
+.quiz-feedback{padding:10px 14px;border-radius:6px;margin-top:8px;font-size:0.85em}
+.quiz-feedback.ok{background:#e8f8f0;color:#1a7a42}
+.quiz-feedback.ng{background:#fde8e8;color:#c0392b}
+.quiz-progress{display:flex;gap:6px;margin-bottom:16px}
+.quiz-dot{width:10px;height:10px;border-radius:50%;background:#ddd}
+.quiz-dot.current{background:var(--blue);box-shadow:0 0 0 3px rgba(74,144,226,0.2)}
+.quiz-dot.correct{background:var(--green)}
+.quiz-dot.wrong{background:#e74c3c}
+
+/* Empty state */
+.empty-state{text-align:center;padding:60px 20px;color:var(--text3)}
+.empty-state .empty-icon{font-size:3em;margin-bottom:12px}
+.empty-state h3{color:var(--text);margin-bottom:8px}
+
+/* Responsive */
+@media(max-width:768px){
+  .sidebar{width:260px;min-width:260px}
+  .main-content{padding:16px}
+  .progress-cards{grid-template-columns:1fr 1fr}
+  .case-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ====== SIDEBAR ====== -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo"><span>📚</span> 实战案例库</div>
+    <div class="subtitle">40个案例 · 7大板块 · 237道考题</div>
+  </div>
+  <div class="search-wrap">
+    <span class="s-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="搜索案例、场景、关键词..." autocomplete="off">
+  </div>
+  <div class="search-result-count" id="searchCount"></div>
+  <nav class="cat-nav" id="catNav"></nav>
+  <div class="sidebar-footer">
+    <div class="overall-bar">
+      <div class="overall-label"><span>综合掌握度</span><span id="overallPct">0%</span></div>
+      <div class="overall-bg"><div class="overall-fill" id="overallFill" style="width:0%"></div></div>
+    </div>
+    <button class="btn-reset" onclick="resetProgress()">🔄 重置学习进度</button>
+  </div>
+</aside>
+
+<!-- ====== MAIN ====== -->
+<main class="main">
+  <div class="main-top">
+    <div class="breadcrumb" id="breadcrumb"><strong>📋 能力板块</strong> · 点击进入学习</div>
+    <div class="stats-mini">
+      <span>已掌握 <b id="masteredCount">0</b>/7</span>
+      <span>综合 <b id="avgPct">0</b>%</span>
+    </div>
+  </div>
+  <div class="main-content" id="mainContent"></div>
+</main>
+
+<script>
+var STORAGE_KEY="competency_progress",activeCategory="all",activeCaseId=null,searchQuery="",quizState=null;
+var CAT_COLORS={"角色认知与目标规划":{cls:"bd-role",bg:"bg-role",bar:"#f39c12"},"绩效推进与沟通":{cls:"bd-perf",bg:"bg-perf",bar:"#4A90E2"},"人才识别与授权":{cls:"bd-talent",bg:"bg-talent",bar:"#8e44ad"},"员工辅导与发展":{cls:"bd-coach",bg:"bg-coach",bar:"#27ae60"},"管理执行力":{cls:"bd-exec",bg:"bg-exec",bar:"#e67e22"},"团队问题分析与解决":{cls:"bd-problem",bg:"bg-problem",bar:"#16a085"},"团队激励与士气提升":{cls:"bd-motivate",bg:"bg-motivate",bar:"#e74c3c"}};
+var CAT_ICONS={"角色认知与目标规划":"💡","绩效推进与沟通":"💬","人才识别与授权":"🔑","员工辅导与发展":"🌱","管理执行力":"⚡","团队问题分析与解决":"🔍","团队激励与士气提升":"❤️"};
+var categories=[];
+for(var k in CAT_COLORS){if(CAT_COLORS.hasOwnProperty(k))categories.push(k);}
+
+function loadProgress(){try{var r=localStorage.getItem(STORAGE_KEY);return r?JSON.parse(r):{}}catch(e){return{}}}
+function saveProgress(d){localStorage.setItem(STORAGE_KEY,JSON.stringify(d))}
+function updateProgress(compId,pct){var s=loadProgress();if(pct>(s[compId]||0)){s[compId]=pct;saveProgress(s)}}
+function getCompIdByCat(name){for(var i=0;i<competencies.length;i++){if(competencies[i].title===name)return competencies[i].id}return 0}
+function casesByCat(cat){var r=[];for(var i=0;i<caseLibrary.length;i++){if(caseLibrary[i].category===cat)r.push(caseLibrary[i])}return r}
+
+function renderSidebar(){
+  var s=loadProgress(),nav=document.getElementById("catNav"),html="",f=getFilteredCases();
+  html+='<div class="cat-item'+(activeCategory==="all"?" active":"")+'" onclick="selectCategory(\'all\')"><span class="cat-icon">📋</span><span class="cat-name">全部案例</span><span class="cat-count">'+f.length+'</span></div>';
+  for(var i=0;i<categories.length;i++){
+    var cat=categories[i],cc=casesByCat(cat),cid=getCompIdByCat(cat),pct=s[cid]||0;
+    html+='<div class="cat-item'+(activeCategory===cat?" active":"")+'" onclick="selectCategory(\''+cat+'\')"><span class="cat-icon">'+CAT_ICONS[cat]+'</span><span class="cat-name">'+cat+'</span><span class="cat-count">'+cc.length+'</span><div class="cat-bar"><div class="cat-bar-fill" style="width:'+pct+'%;background:'+CAT_COLORS[cat].bar+'"></div></div></div>';
+  }
+  nav.innerHTML=html;
+  var mastered=0,sum=0;
+  for(var j=0;j<competencies.length;j++){var p=s[competencies[j].id]||0;sum+=p;if(p>=80)mastered++}
+  var avg=competencies.length>0?Math.round(sum/competencies.length):0;
+  document.getElementById("masteredCount").textContent=mastered;
+  document.getElementById("avgPct").textContent=avg;
+  document.getElementById("overallPct").textContent=avg+"%";
+  document.getElementById("overallFill").style.width=avg+"%";
+  var sc=document.getElementById("searchCount");
+  if(searchQuery){sc.style.display="block";sc.textContent="找到 "+f.length+" 个匹配案例"}else{sc.style.display="none"}
+}
+
+function getFilteredCases(){
+  var cases=[];
+  if(activeCategory==="all"){for(var i=0;i<caseLibrary.length;i++)cases.push(caseLibrary[i])}
+  else{for(var i=0;i<caseLibrary.length;i++){if(caseLibrary[i].category===activeCategory)cases.push(caseLibrary[i])}}
+  if(searchQuery){
+    var q=searchQuery.toLowerCase();
+    cases=cases.filter(function(c){
+      if(c.title.toLowerCase().indexOf(q)>=0)return true;
+      if(c.category.indexOf(q)>=0)return true;
+      for(var i=0;i<c.sections.length;i++){if(c.sections[i].body&&c.sections[i].body.toLowerCase().indexOf(q)>=0)return true}
+      return false;
+    });
+  }
+  return cases;
+}
+
+function renderMain(){if(activeCaseId)renderCaseDetail(activeCaseId);else if(activeCategory==="all"&&!searchQuery)renderDashboard();else renderCaseList()}
+
+function renderDashboard(){
+  var s=loadProgress(),cards="";
+  for(var i=0;i<competencies.length;i++){
+    var c=competencies[i],cat=c.title,cc=casesByCat(cat),pct=s[c.id]||0,sc="learn",st="开始学习";
+    if(pct>=80){sc="great";st="已掌握 ✓"}else if(pct>=40){sc="good";st="学习中…"}
+    cards+='<div class="progress-card" onclick="selectCategory(\''+cat+'\')" style="border-left-color:'+CAT_COLORS[cat].bar+'"><div class="pc-head"><span class="pc-icon">'+c.icon+'</span><span class="pc-name">'+cat+'</span><span class="pc-count">'+cc.length+'案例</span></div><div class="pc-bar-bg"><div class="pc-bar-fill" style="width:'+pct+'%;background:'+CAT_COLORS[cat].bar+'"></div></div><div class="pc-pct">掌握度 '+pct+'%</div><div class="pc-status '+sc+'">'+st+'</div></div>';
+  }
+  document.getElementById("breadcrumb").innerHTML="<strong>📋 学习仪表盘</strong>";
+  document.getElementById("mainContent").innerHTML='<div class="dashboard active"><h2>👋 欢迎回来</h2><p class="welcome-msg">选择一个能力板块开始学习，或使用左侧搜索查找具体案例</p><div class="progress-cards">'+cards+'</div></div>';
+}
+
+function renderCaseList(){
+  var cases=getFilteredCases(),label=activeCategory==="all"?"全部案例":activeCategory,icon=CAT_ICONS[activeCategory]||"📋";
+  document.getElementById("breadcrumb").innerHTML="<strong>"+icon+" "+label+"</strong> · "+cases.length+"个案例";
+  if(!cases.length){document.getElementById("mainContent").innerHTML='<div class="empty-state"><div class="empty-icon">🔍</div><h3>没有找到匹配的案例</h3><p>试试换个关键词</p></div>';return}
+  var grid="";
+  for(var i=0;i<cases.length;i++){
+    var c=cases[i],co=CAT_COLORS[c.category]||{},preview="";
+    if(c.sections[0]&&c.sections[0].body)preview=c.sections[0].body.replace(/<[^>]*>/g,"").substring(0,80);
+    var mt="相关能力";
+    for(var j=0;j<c.sections.length;j++){if(c.sections[j].type==="methodology"){mt=c.sections[j].title.replace("背后方法论：","");break}}
+    grid+='<div class="case-card '+(co.cls||"")+'" onclick="openCase('+c.id+')"><span class="cc-badge '+(co.bg||"")+'">'+icon+' '+c.category+'</span><div class="cc-title">'+c.title+'</div><div class="cc-preview">'+preview+'...</div><div class="cc-meta"><span>📖 '+mt+'</span></div></div>';
+  }
+  document.getElementById("mainContent").innerHTML='<div class="case-list-panel active"><div class="case-grid">'+grid+'</div></div>';
+}
+
+function openCase(caseId){activeCaseId=caseId;renderMain();document.getElementById("mainContent").scrollTop=0}
+
+function renderCaseDetail(caseId){
+  var c=null;for(var i=0;i<caseLibrary.length;i++){if(caseLibrary[i].id===caseId){c=caseLibrary[i];break}}
+  if(!c)return;
+  var s=loadProgress(),mastery=s[c.competencyId]||0,co=CAT_COLORS[c.category]||{};
+  var icons={scene:"🔍",diagnosis:"💊",solution:"🔧",scripts:"💬",case:"📋",methodology:"📖"};
+  var mods="",steps="",stypes=[];
+  for(var i=0;i<c.sections.length;i++){
+    var sec=c.sections[i],h="";
+    if(sec.type==="scene")h="mod-scene";
+    else if(sec.type==="diagnosis")h="mod-diagnosis";
+    else if(sec.type==="solution")h="mod-solution";
+    else if(sec.type==="scripts")h="mod-scripts";
+    else if(sec.type==="case")h="mod-case";
+    else if(sec.type==="methodology")h="mod-methodology";
+    var t=sec.type==="methodology"?sec.title.replace("背后方法论：","相关能力："):sec.title;
+    var o=sec.type==="scene"?" open":"";
+    stypes.push({type:sec.type,title:t});
+    mods+='<div class="module '+h+o+'" data-modtype="'+sec.type+'"><div class="mod-head" onclick="toggleModule(this)"><span>'+t+'</span><span class="mod-arrow">▼</span></div><div class="mod-body"><div class="mod-inner">'+(sec.body||"")+'</div></div></div>';
+  }
+  for(var j=0;j<stypes.length;j++){var st=stypes[j];steps+='<div class="flow-step"><div class="flow-dot">'+(icons[st.type]||"●")+'</div><div class="flow-line"></div><div class="flow-label">'+st.title+'</div></div>'}
+  if(mastery<10)updateProgress(c.competencyId,10);
+  var pool=[];for(var k=0;k<questionBank.length;k++){if(questionBank[k].competencyId===c.competencyId)pool.push(questionBank[k])}
+  var qc=pool.length;
+
+  document.getElementById("breadcrumb").innerHTML='<span style="cursor:pointer;color:var(--blue)" onclick="selectCategory(\''+c.category+'\')">'+CAT_ICONS[c.category]+' '+c.category+'</span> &nbsp;›&nbsp; <strong>'+c.title+'</strong>';
+
+  var html='<div class="case-detail active">'+
+    '<div class="detail-left">'+
+    '<button class="back-btn" onclick="goBack()">← 返回列表</button>'+
+    '<div class="cd-header"><span class="cd-badge '+(co.bg||"")+'">'+CAT_ICONS[c.category]+' '+c.category+'</span><h2>'+c.title+'</h2>'+
+    '<div class="cd-mastery">板块掌握度 <div class="mini-bar"><div class="mini-fill" style="width:'+mastery+'%"></div></div> '+mastery+'%</div></div>'+
+    mods+'<div style="height:60px"></div></div>'+
+    '<div class="detail-right"><div class="quiz-panel" id="quizPanel">'+
+    '<h3>📝 学习进度</h3>'+
+    '<div class="flow-progress" id="flowProgress">'+steps+'</div>'+
+    '<div style="text-align:center;margin:8px 0;font-size:0.85em;color:var(--text2)" id="flowStatus">展开左侧模块开始学习</div>'+
+    '<hr style="border:none;border-top:1px solid var(--border);margin:14px 0">'+
+    '<p style="font-size:0.78em;color:var(--text3);margin-bottom:10px">📋 本板块共 <b>'+qc+'</b> 道考题 · 自测随机抽 3 题</p>'+
+    '<button class="btn btn-primary" style="width:100%" id="btnStartQuiz" onclick="startQuiz('+c.competencyId+')">🚀 开始自测</button>'+
+    '<div id="quizArea" style="margin-top:12px"></div>'+
+    '</div></div></div>';
+
+  document.getElementById("mainContent").innerHTML=html;
+  renderSidebar();
+  setTimeout(updateFlowProgress,200);
+}
+
+function toggleModule(h){h.parentElement.classList.toggle("open");updateFlowProgress()}
+
+function updateFlowProgress(){
+  var mods=document.querySelectorAll(".detail-left .module"),dots=document.querySelectorAll(".flow-dot"),opened=0;
+  if(!mods.length||!dots.length)return;
+  for(var i=0;i<mods.length;i++){
+    if(mods[i].classList.contains("open")){opened++;if(dots[i])dots[i].className="flow-dot done"}
+    else{if(dots[i])dots[i].className="flow-dot"}
+  }
+  var st=document.getElementById("flowStatus");
+  if(st){if(opened>=mods.length)st.innerHTML="✅ 全部完成，可以自测了！";else if(opened>1)st.innerHTML="📖 学习中... "+opened+"/"+mods.length+" 模块已展开";else st.innerHTML="展开左侧模块开始学习"}
+}
+
+function goBack(){activeCaseId=null;quizState=null;renderMain();renderSidebar()}
+
+// ====== QUIZ ======
+function startQuiz(compId){
+  var pool=[];
+  for(var i=0;i<questionBank.length;i++){if(questionBank[i].competencyId===compId)pool.push(questionBank[i])}
+  if(!pool.length){alert("该板块暂无考题！");return}
+  pool.sort(function(){return Math.random()-0.5});
+  quizState={compId:compId,questions:pool.slice(0,Math.min(3,pool.length)),currentIndex:0,answers:[],correctCount:0};
+  var btn=document.getElementById("btnStartQuiz");if(btn)btn.style.display="none";
+  var area=document.getElementById("quizArea");if(!area)return;
+  area.style.display="block";area.innerHTML="";
+  showQuestion();
+}
+
+function showQuestion(){
+  if(!quizState)return;
+  var idx=quizState.currentIndex,q=quizState.questions[idx],total=quizState.questions.length,dots="";
+  for(var i=0;i<total;i++){var c="";if(i<idx)c=quizState.answers[i]===quizState.questions[i].answer?"correct":"wrong";else if(i===idx)c="current";dots+='<div class="quiz-dot '+c+'"></div>'}
+  var opts="",L="ABCD";
+  for(var j=0;j<q.options.length;j++)opts+='<div class="quiz-opt" onclick="selectAnswer('+j+')">'+L.charAt(j)+'. '+q.options[j]+'</div>';
+  document.getElementById("quizArea").innerHTML='<div class="quiz-progress">'+dots+'</div><p style="font-size:0.78em;color:var(--text3);margin-bottom:8px">第 '+(idx+1)+'/'+total+' 题</p><p style="font-size:0.9em;line-height:1.6;margin-bottom:12px;font-weight:600">'+q.stem+'</p><div id="quizOptions">'+opts+'</div><div id="quizFeedback"></div><button class="btn btn-primary" id="btnNext" style="display:none;margin-top:10px" onclick="nextQuestion()">下一题 ▶</button>';
+}
+
+function selectAnswer(idx){
+  if(!quizState||quizState._done)return;
+  quizState._done=true;
+  var q=quizState.questions[quizState.currentIndex],ok=idx===q.answer;
+  if(ok)quizState.correctCount++;
+  quizState.answers.push(idx);
+  var opts=document.querySelectorAll("#quizOptions .quiz-opt");
+  for(var i=0;i<opts.length;i++)opts[i].style.pointerEvents="none";
+  opts[idx].classList.add(ok?"correct":"wrong");
+  if(!ok)opts[q.answer].classList.add("correct");
+  document.getElementById("quizFeedback").innerHTML='<div class="quiz-feedback '+(ok?"ok":"ng")+'"><strong>'+(ok?"✅ 正确！":"❌ 错误")+'</strong> · '+q.explanation+'</div>';
+  document.getElementById("btnNext").style.display="inline-block";
+}
+
+function nextQuestion(){
+  if(!quizState)return;
+  quizState._done=false;quizState.currentIndex++;
+  if(quizState.currentIndex>=quizState.questions.length)showResult();else showQuestion();
+}
+
+function showResult(){
+  if(!quizState)return;
+  var t=quizState.questions.length,c=quizState.correctCount,p=Math.round(c/t*100);
+  updateProgress(quizState.compId,p);
+  var ec,ef;
+  if(p>=80){ec="great";ef="🎉 已掌握！理解扎实，继续保持。"}else if(p>=50){ec="ok";ef="📖 还需巩固，建议回顾左侧案例中的处理流程。"}else{ec="again";ef="💪 建议重学，仔细阅读左侧案例后再来挑战。"}
+  var cid=quizState.compId;
+  document.getElementById("quizArea").innerHTML='<div class="quiz-result"><div class="score">'+c+'/'+t+'</div><div style="color:#888;margin:6px 0">正确率 '+p+'%</div><div class="eval '+ec+'">'+ef+'</div><button class="btn btn-done" onclick="finishQuiz('+cid+')">✅ 完成学习</button><button class="btn btn-secondary" style="margin-left:8px;margin-top:8px" onclick="retryQuiz('+cid+')">🔄 再来一次</button></div>';
+  quizState=null;renderSidebar();
+}
+
+function finishQuiz(id){updateProgress(id,100);goBack()}
+function retryQuiz(id){var a=document.getElementById("quizArea");if(a){a.innerHTML="";a.style.display="block"}startQuiz(id)}
+
+// ====== NAVIGATION ======
+function selectCategory(cat){activeCategory=cat;activeCaseId=null;quizState=null;renderSidebar();renderMain()}
+document.getElementById("searchInput").addEventListener("input",function(){searchQuery=this.value.trim();activeCaseId=null;renderSidebar();renderMain()});
+
+// ====== KEYBOARD ======
+document.addEventListener("keydown",function(e){
+  if(quizState&&!quizState._done){var m={A:0,B:1,C:2,D:3};if(m[e.key.toUpperCase()]!==undefined&&m[e.key.toUpperCase()]<quizState.questions[quizState.currentIndex].options.length)selectAnswer(m[e.key.toUpperCase()])}
+  if(e.key==="Escape"){if(quizState){quizState=null;goBack()}else if(activeCaseId)goBack()}
+});
+
+function resetProgress(){if(confirm("确定要重置所有学习进度吗？")){localStorage.removeItem(STORAGE_KEY);renderSidebar();renderMain()}}
+
+renderSidebar();renderMain();
+</script>
+</body>
+</html>
