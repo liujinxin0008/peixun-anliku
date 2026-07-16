@@ -1,4 +1,4 @@
-var DATA_UPDATE_DATE = "2026-07-02";
+var DATA_UPDATE_DATE = "2026-07-16";
 var EMPLOYEE_DATA = [
   {
     "employee_id": "XX130024",
@@ -202,7 +202,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8595,
+        "last_6_months_avg": 1.0225,
         "trend": [
           {
             "month": "2026-02",
@@ -226,12 +226,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.978
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.336,
+        "avg": 0.3407,
         "trend": [
           {
             "month": "2026-02",
@@ -260,13 +260,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.364,
+            "rank_detail": "4/11"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 6.65,
+        "avg": 7.72,
         "trend": [
           {
             "month": "2026-02",
@@ -290,12 +290,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 6.43
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.7676,
+        "avg": 0.9144,
         "trend": [
           {
             "month": "2026-02",
@@ -319,7 +319,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.881
           }
         ]
       }
@@ -355,7 +355,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 26,
+        "last_6_months_sum": 30,
         "trend": [
           {
             "month": "2026-02",
@@ -379,7 +379,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 4
           }
         ]
       }
@@ -587,7 +587,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8562,
+        "last_6_months_avg": 1.0215,
         "trend": [
           {
             "month": "2026-02",
@@ -611,12 +611,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.992
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.493,
+        "avg": 0.4412,
         "trend": [
           {
             "month": "2026-02",
@@ -645,13 +645,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.182,
+            "rank_detail": "2/11"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 6.43,
+        "avg": 7.5,
         "trend": [
           {
             "month": "2026-02",
@@ -675,12 +675,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 6.37
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.7424,
+        "avg": 0.8878,
         "trend": [
           {
             "month": "2026-02",
@@ -704,7 +704,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.8722
           }
         ]
       }
@@ -740,7 +740,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 24,
+        "last_6_months_sum": 28,
         "trend": [
           {
             "month": "2026-02",
@@ -764,7 +764,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 4
           }
         ]
       }
@@ -972,7 +972,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8932,
+        "last_6_months_avg": 1.0613,
         "trend": [
           {
             "month": "2026-02",
@@ -996,12 +996,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.009
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.6666,
+        "avg": 0.7222,
         "trend": [
           {
             "month": "2026-02",
@@ -1030,13 +1030,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "2/2"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.39,
+        "avg": 8.56,
         "trend": [
           {
             "month": "2026-02",
@@ -1060,12 +1060,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.02
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8469,
+        "avg": 1.0165,
         "trend": [
           {
             "month": "2026-02",
@@ -1089,7 +1089,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0177
           }
         ]
       }
@@ -1125,7 +1125,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 18,
+        "last_6_months_sum": 21,
         "trend": [
           {
             "month": "2026-02",
@@ -1149,7 +1149,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 3
           }
         ]
       }
@@ -1357,7 +1357,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.85,
+        "last_6_months_avg": 1.0128,
         "trend": [
           {
             "month": "2026-02",
@@ -1381,12 +1381,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.977
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.608,
+        "avg": 0.5975,
         "trend": [
           {
             "month": "2026-02",
@@ -1415,13 +1415,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.545,
+            "rank_detail": "6/11"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 6.63,
+        "avg": 7.73,
         "trend": [
           {
             "month": "2026-02",
@@ -1445,12 +1445,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 6.57
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.7652,
+        "avg": 0.9152,
         "trend": [
           {
             "month": "2026-02",
@@ -1474,7 +1474,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.8999
           }
         ]
       }
@@ -1510,7 +1510,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 22,
+        "last_6_months_sum": 25,
         "trend": [
           {
             "month": "2026-02",
@@ -1534,7 +1534,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 3
           }
         ]
       }
@@ -1806,7 +1806,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "talk_avg_score": {
-        "avg": 5.86,
+        "avg": 7.29,
         "trend": [
           {
             "month": "2026-02",
@@ -1830,12 +1830,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 8.6
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.6393,
+        "avg": 0.8356,
         "trend": [
           {
             "month": "2026-02",
@@ -1859,7 +1859,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.1781
           }
         ]
       }
@@ -1895,7 +1895,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 4,
+        "last_6_months_sum": 7,
         "trend": [
           {
             "month": "2026-02",
@@ -1919,7 +1919,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 3
           }
         ]
       }
@@ -2127,7 +2127,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8478,
+        "last_6_months_avg": 1.0065,
         "trend": [
           {
             "month": "2026-02",
@@ -2151,12 +2151,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.952
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.7714,
+        "avg": 0.8095,
         "trend": [
           {
             "month": "2026-02",
@@ -2185,13 +2185,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "11/11"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 6.92,
+        "avg": 8.02,
         "trend": [
           {
             "month": "2026-02",
@@ -2215,12 +2215,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 6.59
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.7919,
+        "avg": 0.9424,
         "trend": [
           {
             "month": "2026-02",
@@ -2244,14 +2244,14 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.9028
           }
         ]
       }
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 3,
+        "last_6_months_sum": 4,
         "trend": [
           {
             "month": "2026-02",
@@ -2275,12 +2275,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 1
           }
         ]
       },
       "violation": {
-        "last_6_months_sum": 10,
+        "last_6_months_sum": 13,
         "trend": [
           {
             "month": "2026-02",
@@ -2304,7 +2304,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 3
           }
         ]
       }
@@ -2512,7 +2512,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.7675,
+        "last_6_months_avg": 0.9022,
         "trend": [
           {
             "month": "2026-02",
@@ -2536,12 +2536,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.808
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.8742,
+        "avg": 0.8952,
         "trend": [
           {
             "month": "2026-02",
@@ -2570,13 +2570,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "4/4"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 6.68,
+        "avg": 7.77,
         "trend": [
           {
             "month": "2026-02",
@@ -2600,12 +2600,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 6.55
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.7652,
+        "avg": 0.9152,
         "trend": [
           {
             "month": "2026-02",
@@ -2629,7 +2629,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.8996
           }
         ]
       }
@@ -2665,7 +2665,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 6,
+        "last_6_months_sum": 7,
         "trend": [
           {
             "month": "2026-02",
@@ -2689,7 +2689,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 1
           }
         ]
       }
@@ -2897,7 +2897,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.835,
+        "last_6_months_avg": 0.9848,
         "trend": [
           {
             "month": "2026-02",
@@ -2921,12 +2921,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.899
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.7254,
+        "avg": 0.7712,
         "trend": [
           {
             "month": "2026-02",
@@ -2955,13 +2955,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "1/1"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.39,
+        "avg": 8.72,
         "trend": [
           {
             "month": "2026-02",
@@ -2985,12 +2985,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.94
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8436,
+        "avg": 1.0164,
         "trend": [
           {
             "month": "2026-02",
@@ -3014,7 +3014,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0365
           }
         ]
       }
@@ -3282,7 +3282,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8395,
+        "last_6_months_avg": 1.0053,
         "trend": [
           {
             "month": "2026-02",
@@ -3306,12 +3306,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.995
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.848,
+        "avg": 0.7218,
         "trend": [
           {
             "month": "2026-02",
@@ -3340,13 +3340,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.091,
+            "rank_detail": "1/11"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 6.51,
+        "avg": 7.57,
         "trend": [
           {
             "month": "2026-02",
@@ -3370,12 +3370,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 6.34
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.7502,
+        "avg": 0.895,
         "trend": [
           {
             "month": "2026-02",
@@ -3399,14 +3399,14 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.8688
           }
         ]
       }
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 1,
+        "last_6_months_sum": 3,
         "trend": [
           {
             "month": "2026-02",
@@ -3430,12 +3430,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 2
           }
         ]
       },
       "violation": {
-        "last_6_months_sum": 27,
+        "last_6_months_sum": 30,
         "trend": [
           {
             "month": "2026-02",
@@ -3459,7 +3459,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 3
           }
         ]
       }
@@ -3667,7 +3667,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.9083,
+        "last_6_months_avg": 1.0858,
         "trend": [
           {
             "month": "2026-02",
@@ -3691,7 +3691,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.065
           }
         ]
       },
@@ -3725,13 +3725,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "1/1"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 6.49,
+        "avg": 7.73,
         "trend": [
           {
             "month": "2026-02",
@@ -3755,12 +3755,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.46
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.817,
+        "avg": 0.9919,
         "trend": [
           {
             "month": "2026-02",
@@ -3784,7 +3784,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0491
           }
         ]
       }
@@ -3820,7 +3820,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 7,
+        "last_6_months_sum": 8,
         "trend": [
           {
             "month": "2026-02",
@@ -3844,7 +3844,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 1
           }
         ]
       }
@@ -4052,7 +4052,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8927,
+        "last_6_months_avg": 1.0307,
         "trend": [
           {
             "month": "2026-02",
@@ -4076,12 +4076,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.828
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.4874,
+        "avg": 0.5728,
         "trend": [
           {
             "month": "2026-02",
@@ -4110,13 +4110,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "5/5"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 6.42,
+        "avg": 7.62,
         "trend": [
           {
             "month": "2026-02",
@@ -4140,12 +4140,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.18
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.7329,
+        "avg": 0.888,
         "trend": [
           {
             "month": "2026-02",
@@ -4169,7 +4169,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.9308
           }
         ]
       }
@@ -4205,7 +4205,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 11,
+        "last_6_months_sum": 14,
         "trend": [
           {
             "month": "2026-02",
@@ -4229,7 +4229,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 3
           }
         ]
       }
@@ -4437,7 +4437,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.9782,
+        "last_6_months_avg": 1.1538,
         "trend": [
           {
             "month": "2026-02",
@@ -4461,12 +4461,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.054
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.1604,
+        "avg": 0.167,
         "trend": [
           {
             "month": "2026-02",
@@ -4495,13 +4495,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.2,
+            "rank_detail": "1/5"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.29,
+        "avg": 8.63,
         "trend": [
           {
             "month": "2026-02",
@@ -4525,12 +4525,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 8.01
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8334,
+        "avg": 1.0066,
         "trend": [
           {
             "month": "2026-02",
@@ -4554,7 +4554,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0389
           }
         ]
       }
@@ -4822,7 +4822,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8792,
+        "last_6_months_avg": 1.0262,
         "trend": [
           {
             "month": "2026-02",
@@ -4846,12 +4846,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.882
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.7666,
+        "avg": 0.8055,
         "trend": [
           {
             "month": "2026-02",
@@ -4880,13 +4880,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "5/5"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 6.8,
+        "avg": 7.92,
         "trend": [
           {
             "month": "2026-02",
@@ -4910,12 +4910,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 6.73
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.7814,
+        "avg": 0.9349,
         "trend": [
           {
             "month": "2026-02",
@@ -4939,7 +4939,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.9213
           }
         ]
       }
@@ -4975,7 +4975,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 16,
+        "last_6_months_sum": 18,
         "trend": [
           {
             "month": "2026-02",
@@ -4999,7 +4999,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 2
           }
         ]
       }
@@ -5207,7 +5207,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.7747,
+        "last_6_months_avg": 0.916,
         "trend": [
           {
             "month": "2026-02",
@@ -5231,12 +5231,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.848
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.3984,
+        "avg": 0.457,
         "trend": [
           {
             "month": "2026-02",
@@ -5265,13 +5265,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.75,
+            "rank_detail": "3/4"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.45,
+        "avg": 8.71,
         "trend": [
           {
             "month": "2026-02",
@@ -5295,12 +5295,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.62
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8639,
+        "avg": 1.0384,
         "trend": [
           {
             "month": "2026-02",
@@ -5324,7 +5324,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0471
           }
         ]
       }
@@ -5592,7 +5592,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8593,
+        "last_6_months_avg": 1.0222,
         "trend": [
           {
             "month": "2026-02",
@@ -5616,12 +5616,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.977
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.3858,
+        "avg": 0.3973,
         "trend": [
           {
             "month": "2026-02",
@@ -5650,13 +5650,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.455,
+            "rank_detail": "5/11"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.13,
+        "avg": 8.41,
         "trend": [
           {
             "month": "2026-02",
@@ -5680,12 +5680,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.67
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8231,
+        "avg": 0.9981,
         "trend": [
           {
             "month": "2026-02",
@@ -5709,14 +5709,14 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0502
           }
         ]
       }
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 8,
+        "last_6_months_sum": 9,
         "trend": [
           {
             "month": "2026-02",
@@ -5740,12 +5740,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 1
           }
         ]
       },
       "violation": {
-        "last_6_months_sum": 14,
+        "last_6_months_sum": 18,
         "trend": [
           {
             "month": "2026-02",
@@ -5769,7 +5769,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 4
           }
         ]
       }
@@ -5977,7 +5977,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.7852,
+        "last_6_months_avg": 0.9245,
         "trend": [
           {
             "month": "2026-02",
@@ -6001,12 +6001,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.836
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.3634,
+        "avg": 0.3862,
         "trend": [
           {
             "month": "2026-02",
@@ -6035,13 +6035,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.5,
+            "rank_detail": "2/4"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 6.83,
+        "avg": 8.11,
         "trend": [
           {
             "month": "2026-02",
@@ -6065,12 +6065,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.68
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.7918,
+        "avg": 0.9676,
         "trend": [
           {
             "month": "2026-02",
@@ -6094,7 +6094,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0546
           }
         ]
       }
@@ -6130,7 +6130,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 14,
+        "last_6_months_sum": 18,
         "trend": [
           {
             "month": "2026-02",
@@ -6154,7 +6154,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 4
           }
         ]
       }
@@ -6362,7 +6362,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.7732,
+        "last_6_months_avg": 0.9217,
         "trend": [
           {
             "month": "2026-02",
@@ -6386,12 +6386,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.891
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.3366,
+        "avg": 0.3222,
         "trend": [
           {
             "month": "2026-02",
@@ -6420,13 +6420,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.25,
+            "rank_detail": "1/4"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.29,
+        "avg": 8.5,
         "trend": [
           {
             "month": "2026-02",
@@ -6450,12 +6450,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.23
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8438,
+        "avg": 1.0093,
         "trend": [
           {
             "month": "2026-02",
@@ -6479,7 +6479,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.9927
           }
         ]
       }
@@ -6515,7 +6515,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 18,
+        "last_6_months_sum": 20,
         "trend": [
           {
             "month": "2026-02",
@@ -6539,7 +6539,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 2
           }
         ]
       }
@@ -6747,7 +6747,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8625,
+        "last_6_months_avg": 1.0247,
         "trend": [
           {
             "month": "2026-02",
@@ -6771,12 +6771,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.973
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.2852,
+        "avg": 0.3437,
         "trend": [
           {
             "month": "2026-02",
@@ -6805,13 +6805,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.636,
+            "rank_detail": "7/11"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.08,
+        "avg": 8.22,
         "trend": [
           {
             "month": "2026-02",
@@ -6835,12 +6835,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 6.83
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8167,
+        "avg": 0.9727,
         "trend": [
           {
             "month": "2026-02",
@@ -6864,7 +6864,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.9361
           }
         ]
       }
@@ -6900,7 +6900,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 33,
+        "last_6_months_sum": 35,
         "trend": [
           {
             "month": "2026-02",
@@ -6924,7 +6924,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 2
           }
         ]
       }
@@ -7132,7 +7132,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8615,
+        "last_6_months_avg": 1.0255,
         "trend": [
           {
             "month": "2026-02",
@@ -7156,12 +7156,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.984
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.3688,
+        "avg": 0.3528,
         "trend": [
           {
             "month": "2026-02",
@@ -7190,13 +7190,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.273,
+            "rank_detail": "3/11"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 6.84,
+        "avg": 8.46,
         "trend": [
           {
             "month": "2026-02",
@@ -7220,12 +7220,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 9.67
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.7892,
+        "avg": 1.0099,
         "trend": [
           {
             "month": "2026-02",
@@ -7249,14 +7249,14 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.3242
           }
         ]
       }
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 8,
+        "last_6_months_sum": 9,
         "trend": [
           {
             "month": "2026-02",
@@ -7280,12 +7280,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 1
           }
         ]
       },
       "violation": {
-        "last_6_months_sum": 26,
+        "last_6_months_sum": 31,
         "trend": [
           {
             "month": "2026-02",
@@ -7309,7 +7309,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 5
           }
         ]
       }
@@ -7517,7 +7517,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8517,
+        "last_6_months_avg": 0.9702,
         "trend": [
           {
             "month": "2026-02",
@@ -7541,12 +7541,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.711
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.5952,
+        "avg": 0.6627,
         "trend": [
           {
             "month": "2026-02",
@@ -7575,13 +7575,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "4/4"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 6.73,
+        "avg": 7.85,
         "trend": [
           {
             "month": "2026-02",
@@ -7605,12 +7605,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 6.71
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.775,
+        "avg": 0.9265,
         "trend": [
           {
             "month": "2026-02",
@@ -7634,7 +7634,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.9086
           }
         ]
       }
@@ -7902,7 +7902,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8583,
+        "last_6_months_avg": 1.0202,
         "trend": [
           {
             "month": "2026-02",
@@ -7926,12 +7926,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.971
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.5096,
+        "avg": 0.5458,
         "trend": [
           {
             "month": "2026-02",
@@ -7960,13 +7960,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.727,
+            "rank_detail": "8/11"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.32,
+        "avg": 8.48,
         "trend": [
           {
             "month": "2026-02",
@@ -7990,12 +7990,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 6.97
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.837,
+        "avg": 0.996,
         "trend": [
           {
             "month": "2026-02",
@@ -8019,14 +8019,14 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.9544
           }
         ]
       }
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 7,
+        "last_6_months_sum": 8,
         "trend": [
           {
             "month": "2026-02",
@@ -8050,12 +8050,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 1
           }
         ]
       },
       "violation": {
-        "last_6_months_sum": 11,
+        "last_6_months_sum": 12,
         "trend": [
           {
             "month": "2026-02",
@@ -8079,7 +8079,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 1
           }
         ]
       }
@@ -8287,7 +8287,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8578,
+        "last_6_months_avg": 1.0207,
         "trend": [
           {
             "month": "2026-02",
@@ -8311,12 +8311,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.977
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.3788,
+        "avg": 0.449,
         "trend": [
           {
             "month": "2026-02",
@@ -8345,13 +8345,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.8,
+            "rank_detail": "4/5"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.41,
+        "avg": 8.7,
         "trend": [
           {
             "month": "2026-02",
@@ -8375,12 +8375,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.74
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.848,
+        "avg": 1.0153,
         "trend": [
           {
             "month": "2026-02",
@@ -8404,7 +8404,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0039
           }
         ]
       }
@@ -8672,7 +8672,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.603,
+        "last_6_months_avg": 0.7633,
         "trend": [
           {
             "month": "2026-02",
@@ -8696,12 +8696,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.962
           }
         ]
       },
       "rank_percentile": {
-        "avg": 1.0,
+        "avg": 0.92,
         "trend": [
           {
             "month": "2026-02",
@@ -8730,13 +8730,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.6,
+            "rank_detail": "3/5"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 6.79,
+        "avg": 8.1,
         "trend": [
           {
             "month": "2026-02",
@@ -8760,12 +8760,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.9
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8344,
+        "avg": 1.0148,
         "trend": [
           {
             "month": "2026-02",
@@ -8789,7 +8789,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0822
           }
         ]
       }
@@ -8825,7 +8825,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 10,
+        "last_6_months_sum": 15,
         "trend": [
           {
             "month": "2026-02",
@@ -8849,7 +8849,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 5
           }
         ]
       }
@@ -9057,7 +9057,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8863,
+        "last_6_months_avg": 1.0378,
         "trend": [
           {
             "month": "2026-02",
@@ -9081,12 +9081,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.909
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.6358,
+        "avg": 0.6632,
         "trend": [
           {
             "month": "2026-02",
@@ -9115,13 +9115,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.8,
+            "rank_detail": "4/5"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.21,
+        "avg": 8.47,
         "trend": [
           {
             "month": "2026-02",
@@ -9145,12 +9145,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.55
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8298,
+        "avg": 1.0022,
         "trend": [
           {
             "month": "2026-02",
@@ -9174,14 +9174,14 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0347
           }
         ]
       }
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 4,
+        "last_6_months_sum": 5,
         "trend": [
           {
             "month": "2026-02",
@@ -9205,12 +9205,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 1
           }
         ]
       },
       "violation": {
-        "last_6_months_sum": 18,
+        "last_6_months_sum": 21,
         "trend": [
           {
             "month": "2026-02",
@@ -9234,7 +9234,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 3
           }
         ]
       }
@@ -9442,7 +9442,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.901,
+        "last_6_months_avg": 1.0635,
         "trend": [
           {
             "month": "2026-02",
@@ -9466,12 +9466,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.975
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.9,
+        "avg": 0.9167,
         "trend": [
           {
             "month": "2026-02",
@@ -9500,13 +9500,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "1/1"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.06,
+        "avg": 8.35,
         "trend": [
           {
             "month": "2026-02",
@@ -9530,12 +9530,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.78
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8126,
+        "avg": 0.9908,
         "trend": [
           {
             "month": "2026-02",
@@ -9559,7 +9559,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0695
           }
         ]
       }
@@ -9827,7 +9827,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8573,
+        "last_6_months_avg": 1.0165,
         "trend": [
           {
             "month": "2026-02",
@@ -9851,12 +9851,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.955
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.4286,
+        "avg": 0.5087,
         "trend": [
           {
             "month": "2026-02",
@@ -9885,13 +9885,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.909,
+            "rank_detail": "10/11"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.49,
+        "avg": 8.77,
         "trend": [
           {
             "month": "2026-02",
@@ -9915,12 +9915,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.68
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8583,
+        "avg": 1.0336,
         "trend": [
           {
             "month": "2026-02",
@@ -9944,7 +9944,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0518
           }
         ]
       }
@@ -10212,7 +10212,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.9187,
+        "last_6_months_avg": 1.081,
         "trend": [
           {
             "month": "2026-02",
@@ -10236,12 +10236,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.974
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.7072,
+        "avg": 0.6727,
         "trend": [
           {
             "month": "2026-02",
@@ -10270,13 +10270,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.5,
+            "rank_detail": "1/2"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.17,
+        "avg": 8.37,
         "trend": [
           {
             "month": "2026-02",
@@ -10300,12 +10300,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.16
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8711,
+        "avg": 1.0474,
         "trend": [
           {
             "month": "2026-02",
@@ -10329,14 +10329,14 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0576
           }
         ]
       }
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 4,
+        "last_6_months_sum": 6,
         "trend": [
           {
             "month": "2026-02",
@@ -10360,12 +10360,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 2
           }
         ]
       },
       "violation": {
-        "last_6_months_sum": 22,
+        "last_6_months_sum": 23,
         "trend": [
           {
             "month": "2026-02",
@@ -10389,7 +10389,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 1
           }
         ]
       }
@@ -10597,7 +10597,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8197,
+        "last_6_months_avg": 0.9847,
         "trend": [
           {
             "month": "2026-01",
@@ -10621,12 +10621,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.99
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.8834,
+        "avg": 0.8612,
         "trend": [
           {
             "month": "2026-01",
@@ -10655,13 +10655,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.75,
+            "rank_detail": "3/4"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 6.45,
+        "avg": 7.69,
         "trend": [
           {
             "month": "2026-01",
@@ -10685,12 +10685,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.41
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.7894,
+        "avg": 0.9564,
         "trend": [
           {
             "month": "2026-01",
@@ -10714,7 +10714,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0022
           }
         ]
       }
@@ -10750,7 +10750,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 15,
+        "last_6_months_sum": 18,
         "trend": [
           {
             "month": "2026-01",
@@ -10774,7 +10774,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 3
           }
         ]
       }
@@ -10982,7 +10982,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.861,
+        "last_6_months_avg": 0.9518,
         "trend": [
           {
             "month": "2026-02",
@@ -11006,12 +11006,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.545
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.4644,
+        "avg": 0.5537,
         "trend": [
           {
             "month": "2026-02",
@@ -11040,13 +11040,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "2/2"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.37,
+        "avg": 8.37,
         "trend": [
           {
             "month": "2026-02",
@@ -11070,12 +11070,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 6.0
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8448,
+        "avg": 0.9822,
         "trend": [
           {
             "month": "2026-02",
@@ -11099,14 +11099,14 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.8242
           }
         ]
       }
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 2,
+        "last_6_months_sum": 3,
         "trend": [
           {
             "month": "2026-02",
@@ -11130,12 +11130,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 1
           }
         ]
       },
       "violation": {
-        "last_6_months_sum": 10,
+        "last_6_months_sum": 16,
         "trend": [
           {
             "month": "2026-02",
@@ -11159,7 +11159,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 6
           }
         ]
       }
@@ -11367,7 +11367,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8572,
+        "last_6_months_avg": 1.0208,
         "trend": [
           {
             "month": "2026-02",
@@ -11391,12 +11391,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.982
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.7096,
+        "avg": 0.6913,
         "trend": [
           {
             "month": "2026-02",
@@ -11425,13 +11425,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.6,
+            "rank_detail": "3/5"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.53,
+        "avg": 8.8,
         "trend": [
           {
             "month": "2026-02",
@@ -11455,12 +11455,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.64
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8583,
+        "avg": 1.0234,
         "trend": [
           {
             "month": "2026-02",
@@ -11484,7 +11484,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.9907
           }
         ]
       }
@@ -11520,7 +11520,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 7,
+        "last_6_months_sum": 8,
         "trend": [
           {
             "month": "2026-02",
@@ -11544,7 +11544,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 1
           }
         ]
       }
@@ -11752,7 +11752,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.7522,
+        "last_6_months_avg": 0.8777,
         "trend": [
           {
             "month": "2026-02",
@@ -11776,12 +11776,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.753
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.9,
+        "avg": 0.9167,
         "trend": [
           {
             "month": "2026-02",
@@ -11810,13 +11810,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 1.0,
+            "rank_detail": "1/1"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.13,
+        "avg": 8.45,
         "trend": [
           {
             "month": "2026-02",
@@ -11840,12 +11840,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.95
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8607,
+        "avg": 1.0345,
         "trend": [
           {
             "month": "2026-02",
@@ -11869,7 +11869,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0427
           }
         ]
       }
@@ -11905,7 +11905,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 15,
+        "last_6_months_sum": 17,
         "trend": [
           {
             "month": "2026-02",
@@ -11929,7 +11929,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 2
           }
         ]
       }
@@ -12137,7 +12137,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8688,
+        "last_6_months_avg": 1.0358,
         "trend": [
           {
             "month": "2026-01",
@@ -12161,12 +12161,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.002
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.534,
+        "avg": 0.5283,
         "trend": [
           {
             "month": "2026-01",
@@ -12195,13 +12195,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.5,
+            "rank_detail": "2/4"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.37,
+        "avg": 8.55,
         "trend": [
           {
             "month": "2026-01",
@@ -12225,12 +12225,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.06
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8415,
+        "avg": 1.0007,
         "trend": [
           {
             "month": "2026-01",
@@ -12254,7 +12254,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.9552
           }
         ]
       }
@@ -12290,7 +12290,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 15,
+        "last_6_months_sum": 17,
         "trend": [
           {
             "month": "2026-01",
@@ -12314,7 +12314,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 2
           }
         ]
       }
@@ -12522,7 +12522,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8635,
+        "last_6_months_avg": 1.0282,
         "trend": [
           {
             "month": "2026-02",
@@ -12546,12 +12546,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.988
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.4632,
+        "avg": 0.4527,
         "trend": [
           {
             "month": "2026-02",
@@ -12580,13 +12580,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.4,
+            "rank_detail": "2/5"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.41,
+        "avg": 8.7,
         "trend": [
           {
             "month": "2026-02",
@@ -12610,12 +12610,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.75
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8457,
+        "avg": 1.0132,
         "trend": [
           {
             "month": "2026-02",
@@ -12639,14 +12639,14 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0048
           }
         ]
       }
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 5,
+        "last_6_months_sum": 6,
         "trend": [
           {
             "month": "2026-02",
@@ -12670,12 +12670,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 1
           }
         ]
       },
       "violation": {
-        "last_6_months_sum": 5,
+        "last_6_months_sum": 7,
         "trend": [
           {
             "month": "2026-02",
@@ -12699,7 +12699,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 2
           }
         ]
       }
@@ -12907,7 +12907,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8973,
+        "last_6_months_avg": 1.066,
         "trend": [
           {
             "month": "2026-02",
@@ -12931,12 +12931,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.012
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.4,
+        "avg": 0.3667,
         "trend": [
           {
             "month": "2026-02",
@@ -12965,13 +12965,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.2,
+            "rank_detail": "1/5"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.11,
+        "avg": 8.37,
         "trend": [
           {
             "month": "2026-02",
@@ -12995,12 +12995,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.55
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8167,
+        "avg": 0.9892,
         "trend": [
           {
             "month": "2026-02",
@@ -13024,14 +13024,14 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0345
           }
         ]
       }
     },
     "risk": {
       "complaint": {
-        "last_6_months_sum": 3,
+        "last_6_months_sum": 4,
         "trend": [
           {
             "month": "2026-02",
@@ -13055,12 +13055,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 1
           }
         ]
       },
       "violation": {
-        "last_6_months_sum": 30,
+        "last_6_months_sum": 31,
         "trend": [
           {
             "month": "2026-02",
@@ -13084,7 +13084,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 1
           }
         ]
       }
@@ -13356,7 +13356,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "talk_avg_score": {
-        "avg": 5.85,
+        "avg": 6.85,
         "trend": [
           {
             "month": "2026-01",
@@ -13380,12 +13380,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 6.0
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.6396,
+        "avg": 0.7702,
         "trend": [
           {
             "month": "2026-01",
@@ -13409,7 +13409,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.7833
           }
         ]
       }
@@ -13445,7 +13445,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 4,
+        "last_6_months_sum": 5,
         "trend": [
           {
             "month": "2026-01",
@@ -13469,7 +13469,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 1
           }
         ]
       }
@@ -13677,7 +13677,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 0.8517,
+        "last_6_months_avg": 1.0132,
         "trend": [
           {
             "month": "2026-02",
@@ -13701,12 +13701,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 0.969
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.5402,
+        "avg": 0.5865,
         "trend": [
           {
             "month": "2026-02",
@@ -13735,13 +13735,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.818,
+            "rank_detail": "9/11"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.57,
+        "avg": 8.89,
         "trend": [
           {
             "month": "2026-02",
@@ -13765,12 +13765,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 7.91
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.8767,
+        "avg": 1.0573,
         "trend": [
           {
             "month": "2026-02",
@@ -13794,7 +13794,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.0836
           }
         ]
       }
@@ -13830,7 +13830,7 @@ var EMPLOYEE_DATA = [
         ]
       },
       "violation": {
-        "last_6_months_sum": 25,
+        "last_6_months_sum": 28,
         "trend": [
           {
             "month": "2026-02",
@@ -13854,7 +13854,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0
+            "value": 3
           }
         ]
       }
@@ -14062,7 +14062,7 @@ var EMPLOYEE_DATA = [
     },
     "business": {
       "goal_achievement_rate": {
-        "last_6_months_avg": 1.0583,
+        "last_6_months_avg": 1.2465,
         "trend": [
           {
             "month": "2026-02",
@@ -14086,12 +14086,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.129
           }
         ]
       },
       "rank_percentile": {
-        "avg": 0.5998,
+        "avg": 0.5415,
         "trend": [
           {
             "month": "2026-02",
@@ -14120,13 +14120,13 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0,
-            "rank_detail": ""
+            "value": 0.25,
+            "rank_detail": "1/4"
           }
         ]
       },
       "talk_avg_score": {
-        "avg": 7.21,
+        "avg": 8.61,
         "trend": [
           {
             "month": "2026-02",
@@ -14150,12 +14150,12 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 8.41
           }
         ]
       },
       "talk_achievement_rate": {
-        "avg": 0.9011,
+        "avg": 1.0908,
         "trend": [
           {
             "month": "2026-02",
@@ -14179,7 +14179,7 @@ var EMPLOYEE_DATA = [
           },
           {
             "month": "2026-07",
-            "value": 0.0
+            "value": 1.1383
           }
         ]
       }

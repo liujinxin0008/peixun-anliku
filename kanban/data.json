@@ -3559,19 +3559,19 @@
     },
     {
       "month": "2026-07",
-      "employee_id": "WH130368",
-      "name": "田东洋",
-      "change_type": "回流",
-      "remark": "",
-      "city": "武汉"
-    },
-    {
-      "month": "2026-07",
       "employee_id": "CQ131304",
       "name": "唐传繁",
       "change_type": "回流",
       "remark": "",
       "city": "重庆"
+    },
+    {
+      "month": "2026-07",
+      "employee_id": "WH130368",
+      "name": "田东洋",
+      "change_type": "回流",
+      "remark": "",
+      "city": "武汉"
     }
   ]
 }
