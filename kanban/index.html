@@ -3,291 +3,440 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>人才评估核心看板</title>
+    <title>人力看板 | 团队规模·人力动态·结构分析</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { height: 100%; overflow: hidden; font-family: 'Inter', sans-serif; background: #f1f5f9; }
-
-        /* ── 顶部导航栏 ── */
-        .top-nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            height: 68px;
-            background: white;
-            border-bottom: 1px solid #e2e8f0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-            display: flex; align-items: center; padding: 0 20px; gap: 6px;
-        }
-
-        .nav-logo {
-            font-size: 17px; font-weight: 800; color: #0f172a;
-            display: flex; align-items: center; gap: 8px;
-            margin-right: 12px; white-space: nowrap;
-            border-right: 1px solid #e2e8f0; padding-right: 18px;
-        }
-        .nav-logo i { color: #3b82f6; font-size: 20px; }
-        .nav-logo-text { display: flex; flex-direction: column; gap: 1px; }
-        .nav-logo-title { font-size: 17px; font-weight: 800; color: #0f172a; line-height: 1.2; }
-        .nav-logo-version { font-size: 11px; font-weight: 600; color: #3b82f6; letter-spacing: 0.04em; line-height: 1.2; }
-        .nav-logo-desc { font-size: 10px; font-weight: 400; color: #94a3b8; white-space: normal; max-width: 520px; line-height: 1.4; margin-top: 1px; }
-
-        .nav-btn {
-            padding: 8px 18px; border: none; border-radius: 40px;
-            font-size: 14px; font-weight: 600; cursor: pointer;
-            transition: all 0.18s; background: transparent; color: #64748b;
-            display: flex; align-items: center; gap: 6px; white-space: nowrap;
+        body {
+            background: #f1f5f9;
             font-family: 'Inter', sans-serif;
+            padding: 28px 24px;
+            color: #0f172a;
         }
-        .nav-btn:hover { background: #f1f5f9; color: #1e293b; }
-        .nav-btn.active {
-            background: #3b82f6; color: white;
-            box-shadow: 0 3px 10px rgba(59,130,246,0.35);
+        .hr-container { max-width: 1400px; margin: 0 auto; }
+        .card {
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.02), 0 2px 4px rgba(0,0,0,0.03);
+            padding: 20px 24px;
+            border: 1px solid #eef2f6;
+            margin-bottom: 28px;
         }
-
-        /* ── 内容区 ── */
-        .content-area {
-            position: fixed; top: 68px; left: 0; right: 0; bottom: 0;
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+            gap: 12px;
         }
-
-        .tab-panel { display: none; width: 100%; height: 100%; }
-        .tab-panel.active { display: block; }
-        .tab-panel iframe { width: 100%; height: 100%; border: none; display: block; }
-
-        /* ── 加载占位 ── */
-        .loading-placeholder {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            height: 100%; color: #94a3b8; gap: 16px;
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            border-left: 5px solid #3b82f6;
+            padding-left: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .loading-placeholder i { font-size: 40px; color: #cbd5e1; }
-        .loading-placeholder span { font-size: 15px; font-weight: 500; }
-
-        /* ── 欢迎弹窗 ── */
-        .welcome-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(15, 23, 42, 0.55);
-            z-index: 9999;
-            display: flex; align-items: center; justify-content: center;
-            backdrop-filter: blur(4px);
-            animation: overlayIn 0.25s ease;
+        .filter-select {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 40px;
+            padding: 8px 18px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
         }
-        @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
-        .welcome-modal {
-            background: white; border-radius: 20px;
-            width: 500px; max-width: 92vw; max-height: 85vh; overflow-y: auto;
-            box-shadow: 0 24px 64px rgba(0,0,0,0.18);
-            animation: modalIn 0.3s ease;
+        .kpi-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
         }
-        @keyframes modalIn { from { opacity: 0; transform: translateY(24px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        .welcome-header {
-            padding: 28px 28px 0 28px;
-            display: flex; align-items: center; gap: 10px;
-            font-size: 20px; font-weight: 700; color: #0f172a;
+        .kpi-card {
+            flex: 1;
+            min-width: 160px;
+            background: #fefefe;
+            border-radius: 24px;
+            padding: 18px 20px;
+            border: 1px solid #ecf3fa;
         }
-        .welcome-header i { font-size: 24px; color: #3b82f6; }
-        .welcome-body { padding: 20px 28px; }
-        .welcome-section { margin-bottom: 18px; }
-        .welcome-section:last-child { margin-bottom: 0; }
-        .welcome-section-title {
-            font-size: 13px; font-weight: 600; color: #64748b; text-transform: uppercase;
-            letter-spacing: 0.04em; margin-bottom: 8px;
-            display: flex; align-items: center; gap: 6px;
+        .kpi-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #5b6e8c;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .welcome-data-date {
-            font-size: 22px; font-weight: 700; color: #3b82f6;
-            background: #eff6ff; display: inline-block; padding: 6px 18px; border-radius: 30px;
+        .kpi-number {
+            font-size: 36px;
+            font-weight: 800;
+            color: #0f172a;
         }
-        .welcome-updates {
-            list-style: none; padding: 0;
+        .kpi-delta { font-size: 14px; font-weight: 600; margin-left: 10px; vertical-align: middle; }
+        .kpi-delta-up { color: #15803d; }
+        .kpi-delta-down { color: #b91c1c; }
+        .kpi-delta-flat { color: #94a3b8; }
+        .split-row {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
         }
-        .welcome-updates li {
-            padding: 8px 12px; font-size: 14px; color: #334155;
-            border-left: 3px solid #e2e8f0; margin-bottom: 6px;
-            transition: border-color 0.15s;
+        .split-left { flex: 1.2; min-width: 280px; }
+        .split-right { flex: 1; min-width: 280px; }
+        .chart-container { height: 280px; width: 100%; position: relative; }
+        .event-list { max-height: 260px; overflow-y: auto; }
+        .event-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #edf2f7;
+            font-size: 14px;
         }
-        .welcome-updates li:hover { border-color: #3b82f6; }
-        .welcome-updates li::before { content: '• '; color: #3b82f6; font-weight: 700; }
-        .welcome-footer {
-            padding: 16px 28px 24px 28px;
-            display: flex; justify-content: space-between; align-items: center;
-            border-top: 1px solid #f1f5f9;
+        .event-type {
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 12px;
         }
-        .welcome-checkbox {
-            font-size: 13px; color: #64748b; display: flex; align-items: center; gap: 6px;
-            cursor: pointer; user-select: none;
-        }
-        .welcome-checkbox input { cursor: pointer; }
-        .welcome-close-btn {
-            padding: 10px 28px; border: none; border-radius: 40px;
-            background: #3b82f6; color: white; font-size: 14px; font-weight: 600;
-            cursor: pointer; transition: all 0.15s;
-            font-family: 'Inter', sans-serif;
-        }
-        .welcome-close-btn:hover { background: #2563eb; box-shadow: 0 4px 12px rgba(59,130,246,0.35); }
+        .event-type.离职 { background: #fee2e2; color: #b91c1c; }
+        .event-type.回流 { background: #dcfce7; color: #15803d; }
+        .event-type.转正 { background: #e0f2fe; color: #0369a1; }
+        .event-type.晋升 { background: #fef9c3; color: #854d0e; }
+        .badge-date { color: #5b6e8c; font-size: 12px; }
+        .loading { text-align: center; padding: 40px; font-size: 16px; color: #3b82f6; }
     </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="inline-data">const __DATA__ = {"snapshots": [{"month": "2026-01", "city": "新乡", "employee_id": "XX130024", "name": "原会岩", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2024-11-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130269", "name": "韩灿", "status": "主任", "join_date": "2025-03-24", "promotion_date": "2025-08-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130054", "name": "赵玉洁", "status": "见习主任", "join_date": "2024-08-20", "promotion_date": "2025-09-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130072", "name": "曹阳2713", "status": "见习主任", "join_date": "2024-09-02", "promotion_date": "2025-07-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130176", "name": "周家兴", "status": "见习主任", "join_date": "2024-12-02", "promotion_date": "2025-11-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130224", "name": "孔卫三", "status": "见习主任", "join_date": "2025-02-13", "promotion_date": "2025-11-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130465", "name": "王梦豪", "status": "见习主任", "join_date": "2025-06-09", "promotion_date": "2026-01-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130025", "name": "侯瑞鹏", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2024-11-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130028", "name": "崔宁", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2024-12-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130161", "name": "李泽坤", "status": "主任", "join_date": "2024-11-11", "promotion_date": "2025-08-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130009", "name": "张恒", "status": "见习主任", "join_date": "2024-08-14", "promotion_date": "2025-08-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130073", "name": "王艺8516", "status": "主任", "join_date": "2024-09-02", "promotion_date": "2025-03-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130088", "name": "张子豪2498", "status": "主任", "join_date": "2024-09-12", "promotion_date": "2025-06-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130149", "name": "穆泓宇", "status": "见习主任", "join_date": "2024-11-04", "promotion_date": "2026-01-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130021", "name": "孔令康", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2025-07-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130004", "name": "王宗燕", "status": "见习主任", "join_date": "2024-08-14", "promotion_date": "2025-10-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130007", "name": "张炎7970", "status": "见习主任", "join_date": "2024-08-14", "promotion_date": "2025-12-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130234", "name": "李佳怡", "status": "见习主任", "join_date": "2025-03-03", "promotion_date": "2025-09-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "XX130293", "name": "段少岚", "status": "见习主任", "join_date": "2025-04-07", "promotion_date": "2026-01-01"}, {"month": "2026-01", "city": "武汉", "employee_id": "WH131908", "name": "胡继峰", "status": "主任", "join_date": "2025-09-18", "promotion_date": "2025-10-01"}, {"month": "2026-01", "city": "武汉", "employee_id": "WH130552", "name": "王蒙9981", "status": "主任", "join_date": "2024-01-15", "promotion_date": "2024-10-01"}, {"month": "2026-01", "city": "武汉", "employee_id": "WH130612", "name": "陈纯翔", "status": "主任", "join_date": "2024-05-16", "promotion_date": "2025-06-01"}, {"month": "2026-01", "city": "武汉", "employee_id": "WH130686", "name": "张飞", "status": "主任", "join_date": "2024-11-11", "promotion_date": "2025-09-01"}, {"month": "2026-01", "city": "武汉", "employee_id": "WH130706", "name": "田森林", "status": "主任", "join_date": "2024-12-19", "promotion_date": "2025-08-01"}, {"month": "2026-01", "city": "武汉", "employee_id": "WH130212", "name": "徐文靖0212", "status": "主任", "join_date": "2022-06-20", "promotion_date": "2022-03-01"}, {"month": "2026-01", "city": "武汉", "employee_id": "WH130243", "name": "韩猛", "status": "主任", "join_date": "2022-07-25", "promotion_date": "2023-08-01"}, {"month": "2026-01", "city": "武汉", "employee_id": "WH130314", "name": "柯右锐", "status": "主任", "join_date": "2023-02-02", "promotion_date": "2025-09-01"}, {"month": "2026-01", "city": "武汉", "employee_id": "WH130380", "name": "田阳", "status": "主任", "join_date": "2023-04-20", "promotion_date": "2024-09-01"}, {"month": "2026-01", "city": "武汉", "employee_id": "WH130368", "name": "田东洋", "status": "见习主任", "join_date": "2023-03-27", "promotion_date": "2025-11-01"}, {"month": "2026-01", "city": "新乡", "employee_id": "ZZ130645", "name": "张军鹏", "status": "主任", "join_date": "2024-04-11", "promotion_date": "2024-12-01"}, {"month": "2026-01", "city": "郑州", "employee_id": "ZZ130205", "name": "姚逸雯", "status": "主任", "join_date": "2021-06-21", "promotion_date": "2022-04-01"}, {"month": "2026-01", "city": "郑州", "employee_id": "ZZ130329", "name": "邱子龙", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2024-06-01"}, {"month": "2026-01", "city": "郑州", "employee_id": "ZZ130390", "name": "马天龙", "status": "主任", "join_date": "2022-08-08", "promotion_date": "2024-09-01"}, {"month": "2026-01", "city": "郑州", "employee_id": "ZZ130427", "name": "杨雷0427", "status": "主任", "join_date": "2022-10-13", "promotion_date": "2025-01-01"}, {"month": "2026-01", "city": "郑州", "employee_id": "ZZ130460", "name": "陈轩博", "status": "主任", "join_date": "2023-02-06", "promotion_date": "2023-10-01"}, {"month": "2026-01", "city": "郑州", "employee_id": "ZZ130531", "name": "李晨光", "status": "主任", "join_date": "2023-07-17", "promotion_date": "2025-07-01"}, {"month": "2026-01", "city": "郑州", "employee_id": "ZZ130366", "name": "王溢轲", "status": "主任", "join_date": "2022-06-22", "promotion_date": "2024-01-01"}, {"month": "2026-01", "city": "郑州", "employee_id": "ZZ130549", "name": "唐优雅", "status": "主任", "join_date": "2023-09-25", "promotion_date": "2024-09-01"}, {"month": "2026-01", "city": "郑州", "employee_id": "ZZ130631", "name": "苗亚雷", "status": "见习主任", "join_date": "2024-03-14", "promotion_date": "2025-09-01"}, {"month": "2026-01", "city": "郑州", "employee_id": "ZZ130864", "name": "王浩森", "status": "见习主任", "join_date": "2025-06-04", "promotion_date": "2025-11-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ130732", "name": "赵家豪", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2023-10-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ120176", "name": "桂涛0176", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2024-12-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ131763", "name": "王玲3780", "status": "主任", "join_date": "2023-11-13", "promotion_date": "2025-07-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ131238", "name": "杜涛", "status": "见习主任", "join_date": "2022-12-22", "promotion_date": "2025-10-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ130628", "name": "邓春林", "status": "主任", "join_date": "2022-01-05", "promotion_date": "2023-06-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ131304", "name": "唐传繁", "status": "主任", "join_date": "2023-02-13", "promotion_date": "2025-07-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ133125", "name": "杨厚龙", "status": "主任", "join_date": "2025-11-06", "promotion_date": "2025-12-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ131274", "name": "哈倩", "status": "主任", "join_date": "2023-02-09", "promotion_date": "2025-04-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ131314", "name": "周宇1314", "status": "主任", "join_date": "2023-02-16", "promotion_date": "2024-09-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ131396", "name": "周燕1396", "status": "主任", "join_date": "2023-04-10", "promotion_date": "2024-08-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ131575", "name": "张川1575", "status": "主任", "join_date": "2023-07-24", "promotion_date": "2025-07-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ120199", "name": "周余0199", "status": "见习主任", "join_date": "2023-02-13", "promotion_date": "2025-10-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ131905", "name": "田梦林", "status": "见习主任", "join_date": "2024-02-29", "promotion_date": "2025-10-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ130513", "name": "余东励", "status": "主任", "join_date": "2021-11-29", "promotion_date": "2024-09-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ130662", "name": "任建兵", "status": "主任", "join_date": "2022-02-10", "promotion_date": "2025-01-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ131049", "name": "杨超", "status": "主任", "join_date": "2022-09-08", "promotion_date": "2025-03-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ131805", "name": "易欣2783", "status": "主任", "join_date": "2023-12-11", "promotion_date": "2025-05-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ131837", "name": "苟家富3496", "status": "见习主任", "join_date": "2024-01-08", "promotion_date": "2026-01-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ111880", "name": "唐浩1", "status": "主任", "join_date": "2019-05-27", "promotion_date": "2025-07-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ130128", "name": "郑达梅", "status": "主任", "join_date": "2021-02-03", "promotion_date": "2024-07-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ111018", "name": "邓磊", "status": "主任", "join_date": "2017-09-18", "promotion_date": "2024-08-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ112274", "name": "向壕", "status": "主任", "join_date": "2019-11-04", "promotion_date": "2023-10-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ130180", "name": "何方英", "status": "主任", "join_date": "2021-03-15", "promotion_date": "2025-07-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ130109", "name": "饶春燕", "status": "见习主任", "join_date": "2021-01-11", "promotion_date": "2025-10-01"}, {"month": "2026-01", "city": "重庆", "employee_id": "CQ111689", "name": "唐茜", "status": "主任", "join_date": "2019-03-04", "promotion_date": "2025-02-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130024", "name": "原会岩", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2024-11-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130054", "name": "赵玉洁", "status": "主任", "join_date": "2024-08-20", "promotion_date": "2025-09-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130269", "name": "韩灿", "status": "主任", "join_date": "2025-03-24", "promotion_date": "2025-08-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130072", "name": "曹阳2713", "status": "主任", "join_date": "2024-09-02", "promotion_date": "2025-07-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130176", "name": "周家兴", "status": "见习主任", "join_date": "2024-12-02", "promotion_date": "2025-11-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130465", "name": "王梦豪", "status": "见习主任", "join_date": "2025-06-09", "promotion_date": "2026-01-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130025", "name": "侯瑞鹏", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2024-11-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130028", "name": "崔宁", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2024-12-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130009", "name": "张恒", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2025-08-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130161", "name": "李泽坤", "status": "主任", "join_date": "2024-11-11", "promotion_date": "2025-08-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130073", "name": "王艺8516", "status": "主任", "join_date": "2024-09-02", "promotion_date": "2025-03-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130088", "name": "张子豪2498", "status": "主任", "join_date": "2024-09-12", "promotion_date": "2025-06-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130021", "name": "孔令康", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2025-07-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130234", "name": "李佳怡", "status": "主任", "join_date": "2025-03-03", "promotion_date": "2025-09-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130149", "name": "穆泓宇", "status": "见习主任", "join_date": "2024-11-04", "promotion_date": "2026-01-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130004", "name": "王宗燕", "status": "见习主任", "join_date": "2024-08-14", "promotion_date": "2025-10-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130007", "name": "张炎7970", "status": "见习主任", "join_date": "2024-08-14", "promotion_date": "2025-12-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "XX130293", "name": "段少岚", "status": "见习主任", "join_date": "2025-04-07", "promotion_date": "2026-01-01"}, {"month": "2026-02", "city": "武汉", "employee_id": "WH131908", "name": "胡继峰", "status": "主任", "join_date": "2025-09-18", "promotion_date": "2025-10-01"}, {"month": "2026-02", "city": "武汉", "employee_id": "WH130552", "name": "王蒙9981", "status": "主任", "join_date": "2024-01-15", "promotion_date": "2024-10-01"}, {"month": "2026-02", "city": "武汉", "employee_id": "WH130612", "name": "陈纯翔", "status": "主任", "join_date": "2024-05-16", "promotion_date": "2025-06-01"}, {"month": "2026-02", "city": "武汉", "employee_id": "WH130706", "name": "田森林", "status": "主任", "join_date": "2024-12-19", "promotion_date": "2025-08-01"}, {"month": "2026-02", "city": "武汉", "employee_id": "WH130686", "name": "张飞", "status": "主任", "join_date": "2024-11-11", "promotion_date": "2025-09-01"}, {"month": "2026-02", "city": "武汉", "employee_id": "WH130212", "name": "徐文靖0212", "status": "主任", "join_date": "2022-06-20", "promotion_date": "2022-03-01"}, {"month": "2026-02", "city": "武汉", "employee_id": "WH130243", "name": "韩猛", "status": "主任", "join_date": "2022-07-25", "promotion_date": "2023-08-01"}, {"month": "2026-02", "city": "武汉", "employee_id": "WH130314", "name": "柯右锐", "status": "主任", "join_date": "2023-02-02", "promotion_date": "2025-09-01"}, {"month": "2026-02", "city": "武汉", "employee_id": "WH130380", "name": "田阳", "status": "主任", "join_date": "2023-04-20", "promotion_date": "2024-09-01"}, {"month": "2026-02", "city": "武汉", "employee_id": "WH130368", "name": "田东洋", "status": "见习主任", "join_date": "2023-03-27", "promotion_date": "2025-11-01"}, {"month": "2026-02", "city": "新乡", "employee_id": "ZZ130645", "name": "张军鹏", "status": "主任", "join_date": "2024-04-11", "promotion_date": "2024-12-01"}, {"month": "2026-02", "city": "郑州", "employee_id": "ZZ130205", "name": "姚逸雯", "status": "主任", "join_date": "2021-06-21", "promotion_date": "2022-04-01"}, {"month": "2026-02", "city": "郑州", "employee_id": "ZZ130329", "name": "邱子龙", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2024-06-01"}, {"month": "2026-02", "city": "郑州", "employee_id": "ZZ130390", "name": "马天龙", "status": "主任", "join_date": "2022-08-08", "promotion_date": "2024-09-01"}, {"month": "2026-02", "city": "郑州", "employee_id": "ZZ130427", "name": "杨雷0427", "status": "主任", "join_date": "2022-10-13", "promotion_date": "2025-01-01"}, {"month": "2026-02", "city": "郑州", "employee_id": "ZZ130460", "name": "陈轩博", "status": "主任", "join_date": "2023-02-06", "promotion_date": "2023-10-01"}, {"month": "2026-02", "city": "郑州", "employee_id": "ZZ130531", "name": "李晨光", "status": "主任", "join_date": "2023-07-17", "promotion_date": "2025-07-01"}, {"month": "2026-02", "city": "郑州", "employee_id": "ZZ130823", "name": "韩佳琪", "status": "见习主任", "join_date": "2025-04-10", "promotion_date": "2025-11-01"}, {"month": "2026-02", "city": "郑州", "employee_id": "ZZ130366", "name": "王溢轲", "status": "主任", "join_date": "2022-06-22", "promotion_date": "2024-01-01"}, {"month": "2026-02", "city": "郑州", "employee_id": "ZZ130408", "name": "田金港", "status": "主任", "join_date": "2022-09-08", "promotion_date": "2023-06-01"}, {"month": "2026-02", "city": "郑州", "employee_id": "ZZ130549", "name": "唐优雅", "status": "主任", "join_date": "2023-09-25", "promotion_date": "2024-09-01"}, {"month": "2026-02", "city": "郑州", "employee_id": "ZZ130631", "name": "苗亚雷", "status": "主任", "join_date": "2024-03-14", "promotion_date": "2025-09-01"}, {"month": "2026-02", "city": "郑州", "employee_id": "ZZ130864", "name": "王浩森", "status": "主任", "join_date": "2025-06-04", "promotion_date": "2025-11-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ130732", "name": "赵家豪", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2023-10-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ120176", "name": "桂涛0176", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2024-12-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ131763", "name": "王玲3780", "status": "主任", "join_date": "2023-11-13", "promotion_date": "2025-07-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ131238", "name": "杜涛", "status": "主任", "join_date": "2022-12-22", "promotion_date": "2025-10-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ130628", "name": "邓春林", "status": "主任", "join_date": "2022-01-05", "promotion_date": "2023-06-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ131304", "name": "唐传繁", "status": "主任", "join_date": "2023-02-13", "promotion_date": "2025-07-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ133125", "name": "杨厚龙", "status": "主任", "join_date": "2025-11-06", "promotion_date": "2025-12-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ131274", "name": "哈倩", "status": "主任", "join_date": "2023-02-09", "promotion_date": "2025-04-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ131314", "name": "周宇1314", "status": "主任", "join_date": "2023-02-16", "promotion_date": "2024-09-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ131575", "name": "张川1575", "status": "主任", "join_date": "2023-07-24", "promotion_date": "2025-07-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ120199", "name": "周余0199", "status": "见习主任", "join_date": "2023-02-13", "promotion_date": "2025-10-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ131905", "name": "田梦林", "status": "见习主任", "join_date": "2024-02-29", "promotion_date": "2025-10-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ130662", "name": "任建兵", "status": "主任", "join_date": "2022-02-10", "promotion_date": "2025-01-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ131805", "name": "易欣2783", "status": "主任", "join_date": "2023-12-11", "promotion_date": "2025-05-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ131837", "name": "苟家富3496", "status": "见习主任", "join_date": "2024-01-08", "promotion_date": "2026-01-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ131928", "name": "李旭玲", "status": "见习主任", "join_date": "2024-03-04", "promotion_date": "2026-02-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ111880", "name": "唐浩1", "status": "主任", "join_date": "2019-05-27", "promotion_date": "2025-07-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ130128", "name": "郑达梅", "status": "主任", "join_date": "2021-02-03", "promotion_date": "2024-07-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ111018", "name": "邓磊", "status": "主任", "join_date": "2017-09-18", "promotion_date": "2024-08-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ130180", "name": "何方英", "status": "主任", "join_date": "2021-03-15", "promotion_date": "2025-07-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ130109", "name": "饶春燕", "status": "见习主任", "join_date": "2021-01-11", "promotion_date": "2025-10-01"}, {"month": "2026-02", "city": "重庆", "employee_id": "CQ111689", "name": "唐茜", "status": "主任", "join_date": "2019-03-04", "promotion_date": "2025-02-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130021", "name": "孔令康", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2025-07-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130024", "name": "原会岩", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2024-11-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130054", "name": "赵玉洁", "status": "主任", "join_date": "2024-08-20", "promotion_date": "2025-09-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130269", "name": "韩灿", "status": "主任", "join_date": "2025-03-24", "promotion_date": "2025-08-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130072", "name": "曹阳2713", "status": "主任", "join_date": "2024-09-02", "promotion_date": "2025-07-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130176", "name": "周家兴", "status": "见习主任", "join_date": "2024-12-02", "promotion_date": "2025-11-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130465", "name": "王梦豪", "status": "见习主任", "join_date": "2025-06-09", "promotion_date": "2026-01-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130025", "name": "侯瑞鹏", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2024-11-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130028", "name": "崔宁", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2024-12-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130161", "name": "李泽坤", "status": "主任", "join_date": "2024-11-11", "promotion_date": "2025-08-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130234", "name": "李佳怡", "status": "主任", "join_date": "2025-03-03", "promotion_date": "2025-09-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130009", "name": "张恒", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2025-08-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130073", "name": "王艺8516", "status": "主任", "join_date": "2024-09-02", "promotion_date": "2025-03-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130088", "name": "张子豪2498", "status": "主任", "join_date": "2024-09-12", "promotion_date": "2025-06-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130149", "name": "穆泓宇", "status": "见习主任", "join_date": "2024-11-04", "promotion_date": "2026-01-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130004", "name": "王宗燕", "status": "见习主任", "join_date": "2024-08-14", "promotion_date": "2025-10-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130007", "name": "张炎7970", "status": "见习主任", "join_date": "2024-08-14", "promotion_date": "2025-12-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "XX130293", "name": "段少岚", "status": "见习主任", "join_date": "2025-04-07", "promotion_date": "2026-01-01"}, {"month": "2026-03", "city": "武汉", "employee_id": "WH130552", "name": "王蒙9981", "status": "主任", "join_date": "2024-01-15", "promotion_date": "2024-10-01"}, {"month": "2026-03", "city": "武汉", "employee_id": "WH130612", "name": "陈纯翔", "status": "主任", "join_date": "2024-05-16", "promotion_date": "2025-06-01"}, {"month": "2026-03", "city": "武汉", "employee_id": "WH130686", "name": "张飞", "status": "主任", "join_date": "2024-11-11", "promotion_date": "2025-09-01"}, {"month": "2026-03", "city": "武汉", "employee_id": "WH131908", "name": "胡继峰", "status": "主任", "join_date": "2025-09-18", "promotion_date": "2025-10-01"}, {"month": "2026-03", "city": "武汉", "employee_id": "WH130212", "name": "徐文靖0212", "status": "主任", "join_date": "2022-06-20", "promotion_date": "2022-03-01"}, {"month": "2026-03", "city": "武汉", "employee_id": "WH130243", "name": "韩猛", "status": "主任", "join_date": "2022-07-25", "promotion_date": "2023-08-01"}, {"month": "2026-03", "city": "武汉", "employee_id": "WH130314", "name": "柯右锐", "status": "主任", "join_date": "2023-02-02", "promotion_date": "2025-09-01"}, {"month": "2026-03", "city": "武汉", "employee_id": "WH130368", "name": "田东洋", "status": "见习主任", "join_date": "2023-03-27", "promotion_date": "2025-11-01"}, {"month": "2026-03", "city": "新乡", "employee_id": "ZZ130645", "name": "张军鹏", "status": "主任", "join_date": "2024-04-11", "promotion_date": "2024-12-01"}, {"month": "2026-03", "city": "郑州", "employee_id": "ZZ130205", "name": "姚逸雯", "status": "主任", "join_date": "2021-06-21", "promotion_date": "2022-04-01"}, {"month": "2026-03", "city": "郑州", "employee_id": "ZZ130329", "name": "邱子龙", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2024-06-01"}, {"month": "2026-03", "city": "郑州", "employee_id": "ZZ130390", "name": "马天龙", "status": "主任", "join_date": "2022-08-08", "promotion_date": "2024-09-01"}, {"month": "2026-03", "city": "郑州", "employee_id": "ZZ130427", "name": "杨雷0427", "status": "主任", "join_date": "2022-10-13", "promotion_date": "2025-01-01"}, {"month": "2026-03", "city": "郑州", "employee_id": "ZZ130460", "name": "陈轩博", "status": "主任", "join_date": "2023-02-06", "promotion_date": "2023-10-01"}, {"month": "2026-03", "city": "郑州", "employee_id": "ZZ130531", "name": "李晨光", "status": "主任", "join_date": "2023-07-17", "promotion_date": "2025-07-01"}, {"month": "2026-03", "city": "郑州", "employee_id": "ZZ130366", "name": "王溢轲", "status": "主任", "join_date": "2022-06-22", "promotion_date": "2024-01-01"}, {"month": "2026-03", "city": "郑州", "employee_id": "ZZ130408", "name": "田金港", "status": "主任", "join_date": "2022-09-08", "promotion_date": "2023-06-01"}, {"month": "2026-03", "city": "郑州", "employee_id": "ZZ130549", "name": "唐优雅", "status": "主任", "join_date": "2023-09-25", "promotion_date": "2024-09-01"}, {"month": "2026-03", "city": "郑州", "employee_id": "ZZ130631", "name": "苗亚雷", "status": "主任", "join_date": "2024-03-14", "promotion_date": "2025-09-01"}, {"month": "2026-03", "city": "郑州", "employee_id": "ZZ130864", "name": "王浩森", "status": "主任", "join_date": "2025-06-04", "promotion_date": "2025-11-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ130732", "name": "赵家豪", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2023-10-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ120176", "name": "桂涛0176", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2024-12-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ131238", "name": "杜涛", "status": "主任", "join_date": "2022-12-22", "promotion_date": "2025-10-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ131763", "name": "王玲3780", "status": "主任", "join_date": "2023-11-13", "promotion_date": "2025-07-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ130513", "name": "余东励", "status": "主任", "join_date": "2021-11-29", "promotion_date": "2024-09-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ130628", "name": "邓春林", "status": "主任", "join_date": "2022-01-05", "promotion_date": "2023-06-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ131304", "name": "唐传繁", "status": "主任", "join_date": "2023-02-13", "promotion_date": "2025-07-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ133125", "name": "杨厚龙", "status": "主任", "join_date": "2025-11-06", "promotion_date": "2025-12-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ131928", "name": "李旭玲", "status": "见习主任", "join_date": "2024-03-04", "promotion_date": "2026-02-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ130662", "name": "任建兵", "status": "主任", "join_date": "2022-02-10", "promotion_date": "2025-01-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ131274", "name": "哈倩", "status": "主任", "join_date": "2023-02-09", "promotion_date": "2025-04-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ120199", "name": "周余0199", "status": "主任", "join_date": "2023-02-13", "promotion_date": "2025-10-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ131314", "name": "周宇1314", "status": "主任", "join_date": "2023-02-16", "promotion_date": "2024-09-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ131396", "name": "周燕1396", "status": "主任", "join_date": "2023-04-10", "promotion_date": "2024-08-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ131575", "name": "张川1575", "status": "主任", "join_date": "2023-07-24", "promotion_date": "2025-07-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ131837", "name": "苟家富3496", "status": "见习主任", "join_date": "2024-01-08", "promotion_date": "2026-01-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ111880", "name": "唐浩1", "status": "主任", "join_date": "2019-05-27", "promotion_date": "2025-07-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ112274", "name": "向壕", "status": "主任", "join_date": "2019-11-04", "promotion_date": "2023-10-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ130128", "name": "郑达梅", "status": "主任", "join_date": "2021-02-03", "promotion_date": "2024-07-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ111018", "name": "邓磊", "status": "主任", "join_date": "2017-09-18", "promotion_date": "2024-08-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ130109", "name": "饶春燕", "status": "见习主任", "join_date": "2021-01-11", "promotion_date": "2025-10-01"}, {"month": "2026-03", "city": "重庆", "employee_id": "CQ111689", "name": "唐茜", "status": "主任", "join_date": "2019-03-04", "promotion_date": "2025-02-01"}, {"month": "2026-04", "city": "新乡", "employee_id": "XX130024", "name": "原会岩", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2024-11-01"}, {"month": "2026-04", "city": "新乡", "employee_id": "XX130054", "name": "赵玉洁", "status": "主任", "join_date": "2024-08-20", "promotion_date": "2025-09-01"}, {"month": "2026-04", "city": "新乡", "employee_id": "XX130072", "name": "曹阳2713", "status": "主任", "join_date": "2024-09-02", "promotion_date": "2025-07-01"}, {"month": "2026-04", "city": "新乡", "employee_id": "XX130269", "name": "韩灿", "status": "主任", "join_date": "2025-03-24", "promotion_date": "2025-08-01"}, {"month": "2026-04", "city": "新乡", "employee_id": "XX130149", "name": "穆泓宇", "status": "见习主任", "join_date": "2024-11-04", "promotion_date": "2026-01-01"}, {"month": "2026-04", "city": "新乡", "employee_id": "XX130176", "name": "周家兴", "status": "见习主任", "join_date": "2024-12-02", "promotion_date": "2025-11-01"}, {"month": "2026-04", "city": "新乡", "employee_id": "XX130465", "name": "王梦豪", "status": "见习主任", "join_date": "2025-06-09", "promotion_date": "2026-01-01"}, {"month": "2026-04", "city": "新乡", "employee_id": "XX130009", "name": "张恒", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2025-08-01"}, {"month": "2026-04", "city": "新乡", "employee_id": "XX130025", "name": "侯瑞鹏", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2024-11-01"}, {"month": "2026-04", "city": "新乡", "employee_id": "XX130161", "name": "李泽坤", "status": "主任", "join_date": "2024-11-11", "promotion_date": "2025-08-01"}, {"month": "2026-04", "city": "新乡", "employee_id": "XX130234", "name": "李佳怡", "status": "主任", "join_date": "2025-03-03", "promotion_date": "2025-09-01"}, {"month": "2026-04", "city": "新乡", "employee_id": "XX130073", "name": "王艺8516", "status": "主任", "join_date": "2024-09-02", "promotion_date": "2025-03-01"}, {"month": "2026-04", "city": "新乡", "employee_id": "XX130088", "name": "张子豪2498", "status": "主任", "join_date": "2024-09-12", "promotion_date": "2025-06-01"}, {"month": "2026-04", "city": "武汉", "employee_id": "WH130552", "name": "王蒙9981", "status": "主任", "join_date": "2024-01-15", "promotion_date": "2024-10-01"}, {"month": "2026-04", "city": "武汉", "employee_id": "WH130686", "name": "张飞", "status": "主任", "join_date": "2024-11-11", "promotion_date": "2025-09-01"}, {"month": "2026-04", "city": "武汉", "employee_id": "WH131908", "name": "胡继峰", "status": "主任", "join_date": "2025-09-18", "promotion_date": "2025-10-01"}, {"month": "2026-04", "city": "武汉", "employee_id": "WH130212", "name": "徐文靖0212", "status": "主任", "join_date": "2022-06-20", "promotion_date": "2022-03-01"}, {"month": "2026-04", "city": "武汉", "employee_id": "WH130243", "name": "韩猛", "status": "主任", "join_date": "2022-07-25", "promotion_date": "2023-08-01"}, {"month": "2026-04", "city": "武汉", "employee_id": "WH130314", "name": "柯右锐", "status": "主任", "join_date": "2023-02-02", "promotion_date": "2025-09-01"}, {"month": "2026-04", "city": "武汉", "employee_id": "WH130368", "name": "田东洋", "status": "见习主任", "join_date": "2023-03-27", "promotion_date": "2025-11-01"}, {"month": "2026-04", "city": "新乡", "employee_id": "ZZ130645", "name": "张军鹏", "status": "主任", "join_date": "2024-04-11", "promotion_date": "2024-12-01"}, {"month": "2026-04", "city": "郑州", "employee_id": "ZZ130205", "name": "姚逸雯", "status": "主任", "join_date": "2021-06-21", "promotion_date": "2022-04-01"}, {"month": "2026-04", "city": "郑州", "employee_id": "ZZ130329", "name": "邱子龙", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2024-06-01"}, {"month": "2026-04", "city": "郑州", "employee_id": "ZZ130390", "name": "马天龙", "status": "主任", "join_date": "2022-08-08", "promotion_date": "2024-09-01"}, {"month": "2026-04", "city": "郑州", "employee_id": "ZZ130427", "name": "杨雷0427", "status": "主任", "join_date": "2022-10-13", "promotion_date": "2025-01-01"}, {"month": "2026-04", "city": "郑州", "employee_id": "ZZ130460", "name": "陈轩博", "status": "主任", "join_date": "2023-02-06", "promotion_date": "2023-10-01"}, {"month": "2026-04", "city": "郑州", "employee_id": "ZZ130531", "name": "李晨光", "status": "主任", "join_date": "2023-07-17", "promotion_date": "2025-07-01"}, {"month": "2026-04", "city": "郑州", "employee_id": "ZZ130366", "name": "王溢轲", "status": "主任", "join_date": "2022-06-22", "promotion_date": "2024-01-01"}, {"month": "2026-04", "city": "郑州", "employee_id": "ZZ130408", "name": "田金港", "status": "主任", "join_date": "2022-09-08", "promotion_date": "2023-06-01"}, {"month": "2026-04", "city": "郑州", "employee_id": "ZZ130549", "name": "唐优雅", "status": "主任", "join_date": "2023-09-25", "promotion_date": "2024-09-01"}, {"month": "2026-04", "city": "郑州", "employee_id": "ZZ130631", "name": "苗亚雷", "status": "主任", "join_date": "2024-03-14", "promotion_date": "2025-09-01"}, {"month": "2026-04", "city": "郑州", "employee_id": "ZZ130864", "name": "王浩森", "status": "主任", "join_date": "2025-06-04", "promotion_date": "2025-11-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ130732", "name": "赵家豪", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2023-10-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ120176", "name": "桂涛0176", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2024-12-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ131238", "name": "杜涛", "status": "主任", "join_date": "2022-12-22", "promotion_date": "2025-10-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ131763", "name": "王玲3780", "status": "主任", "join_date": "2023-11-13", "promotion_date": "2025-07-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ131837", "name": "苟家富3496", "status": "见习主任", "join_date": "2024-01-08", "promotion_date": "2026-01-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ130513", "name": "余东励", "status": "主任", "join_date": "2021-11-29", "promotion_date": "2024-09-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ130628", "name": "邓春林", "status": "主任", "join_date": "2022-01-05", "promotion_date": "2023-06-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ131304", "name": "唐传繁", "status": "主任", "join_date": "2023-02-13", "promotion_date": "2025-07-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ131928", "name": "李旭玲", "status": "见习主任", "join_date": "2024-03-04", "promotion_date": "2026-02-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ130662", "name": "任建兵", "status": "主任", "join_date": "2022-02-10", "promotion_date": "2025-01-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ131274", "name": "哈倩", "status": "主任", "join_date": "2023-02-09", "promotion_date": "2025-04-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ120199", "name": "周余0199", "status": "主任", "join_date": "2023-02-13", "promotion_date": "2025-10-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ131314", "name": "周宇1314", "status": "主任", "join_date": "2023-02-16", "promotion_date": "2024-09-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ131396", "name": "周燕1396", "status": "主任", "join_date": "2023-04-10", "promotion_date": "2024-08-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ131575", "name": "张川1575", "status": "主任", "join_date": "2023-07-24", "promotion_date": "2025-07-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ111880", "name": "唐浩1", "status": "主任", "join_date": "2019-05-27", "promotion_date": "2025-07-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ130128", "name": "郑达梅", "status": "主任", "join_date": "2021-02-03", "promotion_date": "2024-07-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ112274", "name": "向壕", "status": "主任", "join_date": "2019-11-04", "promotion_date": "2023-10-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ111018", "name": "邓磊", "status": "主任", "join_date": "2017-09-18", "promotion_date": "2024-08-01"}, {"month": "2026-04", "city": "重庆", "employee_id": "CQ111689", "name": "唐茜", "status": "主任", "join_date": "2019-03-04", "promotion_date": "2025-02-01"}, {"month": "2026-05", "city": "新乡", "employee_id": "XX130024", "name": "原会岩", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2024-11-01"}, {"month": "2026-05", "city": "新乡", "employee_id": "XX130054", "name": "赵玉洁", "status": "主任", "join_date": "2024-08-20", "promotion_date": "2025-09-01"}, {"month": "2026-05", "city": "新乡", "employee_id": "XX130072", "name": "曹阳2713", "status": "主任", "join_date": "2024-09-02", "promotion_date": "2025-07-01"}, {"month": "2026-05", "city": "新乡", "employee_id": "XX130161", "name": "李泽坤", "status": "主任", "join_date": "2024-11-11", "promotion_date": "2025-08-01"}, {"month": "2026-05", "city": "新乡", "employee_id": "XX130269", "name": "韩灿", "status": "主任", "join_date": "2025-03-24", "promotion_date": "2025-08-01"}, {"month": "2026-05", "city": "新乡", "employee_id": "XX130149", "name": "穆泓宇", "status": "见习主任", "join_date": "2024-11-04", "promotion_date": "2026-01-01"}, {"month": "2026-05", "city": "新乡", "employee_id": "XX130465", "name": "王梦豪", "status": "见习主任", "join_date": "2025-06-09", "promotion_date": "2026-01-01"}, {"month": "2026-05", "city": "新乡", "employee_id": "XX130009", "name": "张恒", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2025-08-01"}, {"month": "2026-05", "city": "新乡", "employee_id": "XX130025", "name": "侯瑞鹏", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2024-11-01"}, {"month": "2026-05", "city": "新乡", "employee_id": "XX130234", "name": "李佳怡", "status": "主任", "join_date": "2025-03-03", "promotion_date": "2025-09-01"}, {"month": "2026-05", "city": "新乡", "employee_id": "XX130073", "name": "王艺8516", "status": "主任", "join_date": "2024-09-02", "promotion_date": "2025-03-01"}, {"month": "2026-05", "city": "新乡", "employee_id": "XX130088", "name": "张子豪2498", "status": "主任", "join_date": "2024-09-12", "promotion_date": "2025-06-01"}, {"month": "2026-05", "city": "武汉", "employee_id": "WH130552", "name": "王蒙9981", "status": "主任", "join_date": "2024-01-15", "promotion_date": "2024-10-01"}, {"month": "2026-05", "city": "武汉", "employee_id": "WH130686", "name": "张飞", "status": "主任", "join_date": "2024-11-11", "promotion_date": "2025-09-01"}, {"month": "2026-05", "city": "武汉", "employee_id": "WH131908", "name": "胡继峰", "status": "主任", "join_date": "2025-09-18", "promotion_date": "2025-10-01"}, {"month": "2026-05", "city": "武汉", "employee_id": "WH130212", "name": "徐文靖0212", "status": "主任", "join_date": "2022-06-20", "promotion_date": "2022-03-01"}, {"month": "2026-05", "city": "武汉", "employee_id": "WH130243", "name": "韩猛", "status": "主任", "join_date": "2022-07-25", "promotion_date": "2023-08-01"}, {"month": "2026-05", "city": "武汉", "employee_id": "WH130314", "name": "柯右锐", "status": "主任", "join_date": "2023-02-02", "promotion_date": "2025-09-01"}, {"month": "2026-05", "city": "武汉", "employee_id": "WH130368", "name": "田东洋", "status": "见习主任", "join_date": "2023-03-27", "promotion_date": "2025-11-01"}, {"month": "2026-05", "city": "新乡", "employee_id": "ZZ130645", "name": "张军鹏", "status": "主任", "join_date": "2024-04-11", "promotion_date": "2024-12-01"}, {"month": "2026-05", "city": "郑州", "employee_id": "ZZ130205", "name": "姚逸雯", "status": "主任", "join_date": "2021-06-21", "promotion_date": "2022-04-01"}, {"month": "2026-05", "city": "郑州", "employee_id": "ZZ130329", "name": "邱子龙", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2024-06-01"}, {"month": "2026-05", "city": "郑州", "employee_id": "ZZ130390", "name": "马天龙", "status": "主任", "join_date": "2022-08-08", "promotion_date": "2024-09-01"}, {"month": "2026-05", "city": "郑州", "employee_id": "ZZ130460", "name": "陈轩博", "status": "主任", "join_date": "2023-02-06", "promotion_date": "2023-10-01"}, {"month": "2026-05", "city": "郑州", "employee_id": "ZZ130531", "name": "李晨光", "status": "主任", "join_date": "2023-07-17", "promotion_date": "2025-07-01"}, {"month": "2026-05", "city": "郑州", "employee_id": "ZZ130366", "name": "王溢轲", "status": "主任", "join_date": "2022-06-22", "promotion_date": "2024-01-01"}, {"month": "2026-05", "city": "郑州", "employee_id": "ZZ130427", "name": "杨雷0427", "status": "主任", "join_date": "2022-10-13", "promotion_date": "2025-01-01"}, {"month": "2026-05", "city": "郑州", "employee_id": "ZZ130549", "name": "唐优雅", "status": "主任", "join_date": "2023-09-25", "promotion_date": "2024-09-01"}, {"month": "2026-05", "city": "郑州", "employee_id": "ZZ130864", "name": "王浩森", "status": "主任", "join_date": "2025-06-04", "promotion_date": "2025-11-01"}, {"month": "2026-05", "city": "重庆", "employee_id": "CQ130732", "name": "赵家豪", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2023-10-01"}, {"month": "2026-05", "city": "重庆", "employee_id": "CQ120176", "name": "桂涛0176", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2024-12-01"}, {"month": "2026-05", "city": "重庆", "employee_id": "CQ131238", "name": "杜涛", "status": "主任", "join_date": "2022-12-22", "promotion_date": "2025-10-01"}, {"month": "2026-05", "city": "重庆", "employee_id": "CQ131763", "name": "王玲3780", "status": "主任", "join_date": "2023-11-13", "promotion_date": "2025-07-01"}, {"month": "2026-05", "city": "重庆", "employee_id": "CQ131837", "name": "苟家富3496", "status": "见习主任", "join_date": "2024-01-08", "promotion_date": "2026-01-01"}, {"month": "2026-05", "city": "重庆", "employee_id": "CQ130513", "name": "余东励", "status": "主任", "join_date": "2021-11-29", "promotion_date": "2024-09-01"}, {"month": "2026-05", "city": "重庆", "employee_id": "CQ130628", "name": "邓春林", "status": "主任", "join_date": "2022-01-05", "promotion_date": "2023-06-01"}, {"month": "2026-05", "city": "重庆", "employee_id": "CQ131304", "name": "唐传繁", "status": "主任", "join_date": "2023-02-13", "promotion_date": "2025-07-01"}, {"month": "2026-05", "city": "重庆", "employee_id": "CQ131274", "name": "哈倩", "status": "主任", "join_date": "2023-02-09", "promotion_date": "2025-04-01"}, {"month": "2026-05", "city": "重庆", "employee_id": "CQ120199", "name": "周余0199", "status": "主任", "join_date": "2023-02-13", "promotion_date": "2025-10-01"}, {"month": "2026-05", "city": "重庆", "employee_id": "CQ131314", "name": "周宇1314", "status": "主任", "join_date": "2023-02-16", "promotion_date": "2024-09-01"}, {"month": "2026-05", "city": "重庆", "employee_id": "CQ131396", "name": "周燕1396", "status": "主任", "join_date": "2023-04-10", "promotion_date": "2024-08-01"}, {"month": "2026-05", "city": "重庆", "employee_id": "CQ131575", "name": "张川1575", "status": "主任", "join_date": "2023-07-24", "promotion_date": "2025-07-01"}, {"month": "2026-05", "city": "重庆", "employee_id": "CQ130128", "name": "郑达梅", "status": "主任", "join_date": "2021-02-03", "promotion_date": "2024-07-01"}, {"month": "2026-05", "city": "重庆", "employee_id": "CQ112274", "name": "向壕", "status": "主任", "join_date": "2019-11-04", "promotion_date": "2023-10-01"}, {"month": "2026-05", "city": "重庆", "employee_id": "CQ111018", "name": "邓磊", "status": "主任", "join_date": "2017-09-18", "promotion_date": "2024-08-01"}, {"month": "2026-05", "city": "重庆", "employee_id": "CQ111689", "name": "唐茜", "status": "主任", "join_date": "2019-03-04", "promotion_date": "2025-02-01"}, {"month": "2026-06", "city": "新乡", "employee_id": "XX130024", "name": "原会岩", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2024-11-01"}, {"month": "2026-06", "city": "新乡", "employee_id": "XX130054", "name": "赵玉洁", "status": "主任", "join_date": "2024-08-20", "promotion_date": "2025-09-01"}, {"month": "2026-06", "city": "新乡", "employee_id": "XX130072", "name": "曹阳2713", "status": "主任", "join_date": "2024-09-02", "promotion_date": "2025-07-01"}, {"month": "2026-06", "city": "新乡", "employee_id": "XX130088", "name": "张子豪2498", "status": "主任", "join_date": "2024-09-12", "promotion_date": "2025-06-01"}, {"month": "2026-06", "city": "新乡", "employee_id": "XX130269", "name": "韩灿", "status": "主任", "join_date": "2025-03-24", "promotion_date": "2025-08-01"}, {"month": "2026-06", "city": "新乡", "employee_id": "XX130149", "name": "穆泓宇", "status": "见习主任", "join_date": "2024-11-04", "promotion_date": "2026-01-01"}, {"month": "2026-06", "city": "新乡", "employee_id": "XX130465", "name": "王梦豪", "status": "见习主任", "join_date": "2025-06-09", "promotion_date": "2026-01-01"}, {"month": "2026-06", "city": "新乡", "employee_id": "XX130009", "name": "张恒", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2025-08-01"}, {"month": "2026-06", "city": "新乡", "employee_id": "XX130073", "name": "王艺8516", "status": "主任", "join_date": "2024-09-02", "promotion_date": "2025-03-01"}, {"month": "2026-06", "city": "新乡", "employee_id": "XX130234", "name": "李佳怡", "status": "主任", "join_date": "2025-03-03", "promotion_date": "2025-09-01"}, {"month": "2026-06", "city": "武汉", "employee_id": "WH130552", "name": "王蒙9981", "status": "主任", "join_date": "2024-01-15", "promotion_date": "2024-10-01"}, {"month": "2026-06", "city": "武汉", "employee_id": "WH130686", "name": "张飞", "status": "主任", "join_date": "2024-11-11", "promotion_date": "2025-09-01"}, {"month": "2026-06", "city": "武汉", "employee_id": "WH130212", "name": "徐文靖0212", "status": "主任", "join_date": "2022-06-20", "promotion_date": "2022-03-01"}, {"month": "2026-06", "city": "武汉", "employee_id": "WH130243", "name": "韩猛", "status": "主任", "join_date": "2022-07-25", "promotion_date": "2023-08-01"}, {"month": "2026-06", "city": "武汉", "employee_id": "WH130314", "name": "柯右锐", "status": "主任", "join_date": "2023-02-02", "promotion_date": "2025-09-01"}, {"month": "2026-06", "city": "武汉", "employee_id": "WH130368", "name": "田东洋", "status": "见习主任", "join_date": "2023-03-27", "promotion_date": "2025-11-01"}, {"month": "2026-06", "city": "新乡", "employee_id": "ZZ130645", "name": "张军鹏", "status": "主任", "join_date": "2024-04-11", "promotion_date": "2024-12-01"}, {"month": "2026-06", "city": "郑州", "employee_id": "ZZ130329", "name": "邱子龙", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2024-06-01"}, {"month": "2026-06", "city": "郑州", "employee_id": "ZZ130460", "name": "陈轩博", "status": "主任", "join_date": "2023-02-06", "promotion_date": "2023-10-01"}, {"month": "2026-06", "city": "郑州", "employee_id": "ZZ130531", "name": "李晨光", "status": "主任", "join_date": "2023-07-17", "promotion_date": "2025-07-01"}, {"month": "2026-06", "city": "郑州", "employee_id": "ZZ130366", "name": "王溢轲", "status": "主任", "join_date": "2022-06-22", "promotion_date": "2024-01-01"}, {"month": "2026-06", "city": "郑州", "employee_id": "ZZ130427", "name": "杨雷0427", "status": "主任", "join_date": "2022-10-13", "promotion_date": "2025-01-01"}, {"month": "2026-06", "city": "郑州", "employee_id": "ZZ130549", "name": "唐优雅", "status": "主任", "join_date": "2023-09-25", "promotion_date": "2024-09-01"}, {"month": "2026-06", "city": "郑州", "employee_id": "ZZ130864", "name": "王浩森", "status": "主任", "join_date": "2025-06-04", "promotion_date": "2025-11-01"}, {"month": "2026-06", "city": "重庆", "employee_id": "CQ130732", "name": "赵家豪", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2023-10-01"}, {"month": "2026-06", "city": "重庆", "employee_id": "CQ120176", "name": "桂涛0176", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2024-12-01"}, {"month": "2026-06", "city": "重庆", "employee_id": "CQ131238", "name": "杜涛", "status": "主任", "join_date": "2022-12-22", "promotion_date": "2025-10-01"}, {"month": "2026-06", "city": "重庆", "employee_id": "CQ131763", "name": "王玲3780", "status": "主任", "join_date": "2023-11-13", "promotion_date": "2025-07-01"}, {"month": "2026-06", "city": "重庆", "employee_id": "CQ131837", "name": "苟家富3496", "status": "见习主任", "join_date": "2024-01-08", "promotion_date": "2026-01-01"}, {"month": "2026-06", "city": "重庆", "employee_id": "CQ130513", "name": "余东励", "status": "主任", "join_date": "2021-11-29", "promotion_date": "2024-09-01"}, {"month": "2026-06", "city": "重庆", "employee_id": "CQ130628", "name": "邓春林", "status": "主任", "join_date": "2022-01-05", "promotion_date": "2023-06-01"}, {"month": "2026-06", "city": "重庆", "employee_id": "CQ131304", "name": "唐传繁", "status": "主任", "join_date": "2023-02-13", "promotion_date": "2025-07-01"}, {"month": "2026-06", "city": "重庆", "employee_id": "CQ131274", "name": "哈倩", "status": "主任", "join_date": "2023-02-09", "promotion_date": "2025-04-01"}, {"month": "2026-06", "city": "重庆", "employee_id": "CQ131314", "name": "周宇1314", "status": "主任", "join_date": "2023-02-16", "promotion_date": "2024-09-01"}, {"month": "2026-06", "city": "重庆", "employee_id": "CQ131396", "name": "周燕1396", "status": "主任", "join_date": "2023-04-10", "promotion_date": "2024-08-01"}, {"month": "2026-06", "city": "重庆", "employee_id": "CQ131575", "name": "张川1575", "status": "主任", "join_date": "2023-07-24", "promotion_date": "2025-07-01"}, {"month": "2026-06", "city": "重庆", "employee_id": "CQ130128", "name": "郑达梅", "status": "主任", "join_date": "2021-02-03", "promotion_date": "2024-07-01"}, {"month": "2026-06", "city": "重庆", "employee_id": "CQ112274", "name": "向壕", "status": "主任", "join_date": "2019-11-04", "promotion_date": "2023-10-01"}, {"month": "2026-06", "city": "重庆", "employee_id": "CQ111018", "name": "邓磊", "status": "主任", "join_date": "2017-09-18", "promotion_date": "2024-08-01"}, {"month": "2026-06", "city": "重庆", "employee_id": "CQ111689", "name": "唐茜", "status": "主任", "join_date": "2019-03-04", "promotion_date": "2025-02-01"}, {"month": "2026-07", "city": "新乡", "employee_id": "XX130024", "name": "原会岩", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2024-11-01"}, {"month": "2026-07", "city": "新乡", "employee_id": "XX130054", "name": "赵玉洁", "status": "主任", "join_date": "2024-08-20", "promotion_date": "2025-09-01"}, {"month": "2026-07", "city": "新乡", "employee_id": "XX130072", "name": "曹阳2713", "status": "主任", "join_date": "2024-09-02", "promotion_date": "2025-07-01"}, {"month": "2026-07", "city": "新乡", "employee_id": "XX130269", "name": "韩灿", "status": "主任", "join_date": "2025-03-24", "promotion_date": "2025-08-01"}, {"month": "2026-07", "city": "新乡", "employee_id": "XX130149", "name": "穆泓宇", "status": "见习主任", "join_date": "2024-11-04", "promotion_date": "2026-01-01"}, {"month": "2026-07", "city": "新乡", "employee_id": "XX130465", "name": "王梦豪", "status": "见习主任", "join_date": "2025-06-09", "promotion_date": "2026-01-01"}, {"month": "2026-07", "city": "新乡", "employee_id": "XX130009", "name": "张恒", "status": "主任", "join_date": "2024-08-14", "promotion_date": "2025-08-01"}, {"month": "2026-07", "city": "新乡", "employee_id": "XX130073", "name": "王艺8516", "status": "主任", "join_date": "2024-09-02", "promotion_date": "2025-03-01"}, {"month": "2026-07", "city": "新乡", "employee_id": "XX130088", "name": "张子豪2498", "status": "主任", "join_date": "2024-09-12", "promotion_date": "2025-06-01"}, {"month": "2026-07", "city": "新乡", "employee_id": "XX130234", "name": "李佳怡", "status": "主任", "join_date": "2025-03-03", "promotion_date": "2025-09-01"}, {"month": "2026-07", "city": "武汉", "employee_id": "WH130552", "name": "王蒙9981", "status": "主任", "join_date": "2024-01-15", "promotion_date": "2024-10-01"}, {"month": "2026-07", "city": "武汉", "employee_id": "WH130686", "name": "张飞", "status": "主任", "join_date": "2024-11-11", "promotion_date": "2025-09-01"}, {"month": "2026-07", "city": "武汉", "employee_id": "WH130212", "name": "徐文靖0212", "status": "主任", "join_date": "2022-06-20", "promotion_date": "2022-03-01"}, {"month": "2026-07", "city": "武汉", "employee_id": "WH130243", "name": "韩猛", "status": "主任", "join_date": "2022-07-25", "promotion_date": "2023-08-01"}, {"month": "2026-07", "city": "武汉", "employee_id": "WH130314", "name": "柯右锐", "status": "主任", "join_date": "2023-02-02", "promotion_date": "2025-09-01"}, {"month": "2026-07", "city": "新乡", "employee_id": "ZZ130645", "name": "张军鹏", "status": "主任", "join_date": "2024-04-11", "promotion_date": "2024-12-01"}, {"month": "2026-07", "city": "郑州", "employee_id": "ZZ130329", "name": "邱子龙", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2024-06-01"}, {"month": "2026-07", "city": "郑州", "employee_id": "ZZ130460", "name": "陈轩博", "status": "主任", "join_date": "2023-02-06", "promotion_date": "2023-10-01"}, {"month": "2026-07", "city": "郑州", "employee_id": "ZZ130531", "name": "李晨光", "status": "主任", "join_date": "2023-07-17", "promotion_date": "2025-07-01"}, {"month": "2026-07", "city": "郑州", "employee_id": "ZZ130366", "name": "王溢轲", "status": "主任", "join_date": "2022-06-22", "promotion_date": "2024-01-01"}, {"month": "2026-07", "city": "郑州", "employee_id": "ZZ130549", "name": "唐优雅", "status": "主任", "join_date": "2023-09-25", "promotion_date": "2024-09-01"}, {"month": "2026-07", "city": "郑州", "employee_id": "ZZ130864", "name": "王浩森", "status": "主任", "join_date": "2025-06-04", "promotion_date": "2025-11-01"}, {"month": "2026-07", "city": "重庆", "employee_id": "CQ130732", "name": "赵家豪", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2023-10-01"}, {"month": "2026-07", "city": "重庆", "employee_id": "CQ120176", "name": "桂涛0176", "status": "主任", "join_date": "2022-02-28", "promotion_date": "2024-12-01"}, {"month": "2026-07", "city": "重庆", "employee_id": "CQ131238", "name": "杜涛", "status": "主任", "join_date": "2022-12-22", "promotion_date": "2025-10-01"}, {"month": "2026-07", "city": "重庆", "employee_id": "CQ131763", "name": "王玲3780", "status": "主任", "join_date": "2023-11-13", "promotion_date": "2025-07-01"}, {"month": "2026-07", "city": "重庆", "employee_id": "CQ131837", "name": "苟家富3496", "status": "见习主任", "join_date": "2024-01-08", "promotion_date": "2026-01-01"}, {"month": "2026-07", "city": "重庆", "employee_id": "CQ130513", "name": "余东励", "status": "主任", "join_date": "2021-11-29", "promotion_date": "2024-09-01"}, {"month": "2026-07", "city": "重庆", "employee_id": "CQ130628", "name": "邓春林", "status": "主任", "join_date": "2022-01-05", "promotion_date": "2023-06-01"}, {"month": "2026-07", "city": "重庆", "employee_id": "CQ131274", "name": "哈倩", "status": "主任", "join_date": "2023-02-09", "promotion_date": "2025-04-01"}, {"month": "2026-07", "city": "重庆", "employee_id": "CQ131314", "name": "周宇1314", "status": "主任", "join_date": "2023-02-16", "promotion_date": "2024-09-01"}, {"month": "2026-07", "city": "重庆", "employee_id": "CQ131396", "name": "周燕1396", "status": "主任", "join_date": "2023-04-10", "promotion_date": "2024-08-01"}, {"month": "2026-07", "city": "重庆", "employee_id": "CQ131575", "name": "张川1575", "status": "主任", "join_date": "2023-07-24", "promotion_date": "2025-07-01"}, {"month": "2026-07", "city": "重庆", "employee_id": "CQ130128", "name": "郑达梅", "status": "主任", "join_date": "2021-02-03", "promotion_date": "2024-07-01"}, {"month": "2026-07", "city": "重庆", "employee_id": "CQ112274", "name": "向壕", "status": "主任", "join_date": "2019-11-04", "promotion_date": "2023-10-01"}, {"month": "2026-07", "city": "重庆", "employee_id": "CQ111018", "name": "邓磊", "status": "主任", "join_date": "2017-09-18", "promotion_date": "2024-08-01"}, {"month": "2026-07", "city": "重庆", "employee_id": "CQ111689", "name": "唐茜", "status": "主任", "join_date": "2019-03-04", "promotion_date": "2025-02-01"}], "changes": [{"month": "2026-01", "employee_id": "XX130465", "name": "王梦豪", "change_type": "晋升", "remark": "", "city": "新乡"}, {"month": "2026-01", "employee_id": "XX130149", "name": "穆泓宇", "change_type": "晋升", "remark": "", "city": "新乡"}, {"month": "2026-01", "employee_id": "XX130293", "name": "段少岚", "change_type": "晋升", "remark": "", "city": "新乡"}, {"month": "2026-01", "employee_id": "CQ131837", "name": "苟家富3496", "change_type": "晋升", "remark": "", "city": "重庆"}, {"month": "2026-01", "employee_id": "XX130269", "name": "韩灿", "change_type": "转正", "remark": "", "city": "新乡"}, {"month": "2026-01", "employee_id": "XX130161", "name": "李泽坤", "change_type": "转正", "remark": "", "city": "新乡"}, {"month": "2026-01", "employee_id": "XX130088", "name": "张子豪2498", "change_type": "转正", "remark": "", "city": "新乡"}, {"month": "2026-02", "employee_id": "CQ131928", "name": "李旭玲", "change_type": "晋升", "remark": "", "city": "重庆"}, {"month": "2026-02", "employee_id": "XX130054", "name": "赵玉洁", "change_type": "转正", "remark": "", "city": "新乡"}, {"month": "2026-02", "employee_id": "XX130072", "name": "曹阳2713", "change_type": "转正", "remark": "", "city": "新乡"}, {"month": "2026-02", "employee_id": "XX130009", "name": "张恒", "change_type": "转正", "remark": "", "city": "新乡"}, {"month": "2026-02", "employee_id": "XX130234", "name": "李佳怡", "change_type": "转正", "remark": "", "city": "新乡"}, {"month": "2026-02", "employee_id": "ZZ130631", "name": "苗亚雷", "change_type": "转正", "remark": "", "city": "郑州"}, {"month": "2026-02", "employee_id": "ZZ130864", "name": "王浩森", "change_type": "转正", "remark": "", "city": "郑州"}, {"month": "2026-02", "employee_id": "CQ131238", "name": "杜涛", "change_type": "转正", "remark": "", "city": "重庆"}, {"month": "2026-02", "employee_id": "CQ131805", "name": "易欣2783", "change_type": "离职", "remark": "", "city": "重庆"}, {"month": "2026-03", "employee_id": "CQ120199", "name": "周余0199", "change_type": "转正", "remark": "", "city": "重庆"}, {"month": "2026-03", "employee_id": "CQ133125", "name": "杨厚龙", "change_type": "离职", "remark": "", "city": "重庆"}, {"month": "2026-04", "employee_id": "WH130612", "name": "陈纯翔", "change_type": "回流", "remark": "", "city": "武汉"}, {"month": "2026-04", "employee_id": "XX130021", "name": "孔令康", "change_type": "回流", "remark": "", "city": "新乡"}, {"month": "2026-04", "employee_id": "CQ130109", "name": "饶春燕", "change_type": "回流", "remark": "", "city": "重庆"}, {"month": "2026-04", "employee_id": "XX130293", "name": "段少岚", "change_type": "回流", "remark": "", "city": "新乡"}, {"month": "2026-04", "employee_id": "ZZ130823", "name": "韩佳琪", "change_type": "回流", "remark": "", "city": "郑州"}, {"month": "2026-05", "employee_id": "ZZ130631", "name": "苗亚雷", "change_type": "回流", "remark": "", "city": "郑州"}, {"month": "2026-05", "employee_id": "CQ130662", "name": "任建兵", "change_type": "回流", "remark": "", "city": "重庆"}, {"month": "2026-05", "employee_id": "CQ111880", "name": "唐浩1", "change_type": "回流", "remark": "", "city": "重庆"}, {"month": "2026-05", "employee_id": "CQ131928", "name": "李旭玲", "change_type": "回流", "remark": "", "city": "重庆"}, {"month": "2026-05", "employee_id": "ZZ130408", "name": "田金港", "change_type": "回流", "remark": "", "city": "郑州"}, {"month": "2026-05", "employee_id": "XX130176", "name": "周家兴", "change_type": "回流", "remark": "", "city": "新乡"}, {"month": "2026-06", "employee_id": "ZZ130205", "name": "姚逸雯", "change_type": "回流", "remark": "不再担任主任，当前: 特殊考核", "city": "郑州"}, {"month": "2026-06", "employee_id": "XX130025", "name": "侯瑞鹏", "change_type": "回流", "remark": "不再担任主任，当前: 正常", "city": "新乡"}, {"month": "2026-06", "employee_id": "WH131908", "name": "胡继峰", "change_type": "回流", "remark": "不再担任主任，当前: 正常", "city": "武汉"}, {"month": "2026-06", "employee_id": "XX130161", "name": "李泽坤", "change_type": "回流", "remark": "不再担任主任，当前: 数源", "city": "新乡"}, {"month": "2026-06", "employee_id": "CQ120199", "name": "周余0199", "change_type": "回流", "remark": "不再担任主任，当前: 正常", "city": "重庆"}, {"month": "2026-06", "employee_id": "ZZ130390", "name": "马天龙", "change_type": "回流", "remark": "不再担任主任，当前: 月中入组", "city": "郑州"}, {"month": "2026-06", "employee_id": "XX130149", "name": "穆泓宇", "change_type": "转岗", "remark": "见习主任 -> 协催主任", "city": "新乡"}, {"month": "2026-07", "employee_id": "CQ131304", "name": "唐传繁", "change_type": "回流", "remark": "", "city": "重庆"}, {"month": "2026-07", "employee_id": "WH130368", "name": "田东洋", "change_type": "回流", "remark": "", "city": "武汉"}]};</script>
 </head>
 <body>
-
-<!-- 顶部导航 -->
-<nav class="top-nav">
-    <div class="nav-logo">
-        <i class="fas fa-layer-group"></i>
-        <div class="nav-logo-text">
-            <div>
-                <span class="nav-logo-title">人才评估核心看板</span>
-                <span class="nav-logo-version">&nbsp;V2.0</span>
-            </div>
-            <div class="nav-logo-desc">更新说明：1. 预警看板月份多选筛选&nbsp;&nbsp;2. 预警看板双维度区间筛选&nbsp;&nbsp;3. 九宫格城市×主管筛选&nbsp;&nbsp;4. 主任画像管理动作均值基准线+主管评价气泡&nbsp;&nbsp;5. 对比页城市×队列筛选</div>
-        </div>
-    </div>
-    <button class="nav-btn active" data-tab="hr"         onclick="showTab('hr')">
-        <i class="fas fa-users"></i> 人力看板
-    </button>
-    <button class="nav-btn" data-tab="warning"   onclick="showTab('warning')">
-        <i class="fas fa-exclamation-triangle"></i> 预警看板
-    </button>
-    <button class="nav-btn" data-tab="grid"      onclick="showTab('grid')">
-        <i class="fas fa-th"></i> 人才九宫格
-    </button>
-    <button class="nav-btn" data-tab="profile"   onclick="showTab('profile')">
-        <i class="fas fa-id-card"></i> 主任卡片
-    </button>
-    <button class="nav-btn" data-tab="comparison" onclick="showTab('comparison')">
-        <i class="fas fa-balance-scale"></i> 人员对比
-    </button>
-</nav>
-
-<!-- 内容区 -->
-<div class="content-area">
-
-    <!-- 人力看板（预加载） -->
-    <div id="tab-hr" class="tab-panel active">
-        <iframe id="iframe-hr" src="hr_dashboard.html" title="人力看板"></iframe>
-    </div>
-
-    <!-- 预警看板（懒加载） -->
-    <div id="tab-warning" class="tab-panel">
-        <iframe id="iframe-warning" data-src="warning_board.html" title="预警看板"></iframe>
-    </div>
-
-    <!-- 人才九宫格（懒加载） -->
-    <div id="tab-grid" class="tab-panel">
-        <iframe id="iframe-grid" data-src="talent_grid.html" title="人才九宫格"></iframe>
-    </div>
-
-    <!-- 主任卡片（懒加载） -->
-    <div id="tab-profile" class="tab-panel">
-        <iframe id="iframe-profile" data-src="profile.html" title="主任卡片"></iframe>
-    </div>
-
-    <!-- 人员对比（懒加载） -->
-    <div id="tab-comparison" class="tab-panel">
-        <iframe id="iframe-comparison" data-src="comparison.html" title="人员对比"></iframe>
-    </div>
-
+<div class="hr-container" id="app">
+    <div class="loading">加载数据中...</div>
 </div>
 
-<!-- 欢迎弹窗 -->
-<div id="welcomeOverlay" class="welcome-overlay">
-    <div class="welcome-modal">
-        <div class="welcome-header">
-            <i class="fas fa-layer-group"></i>
-            <span>人才评估核心看板</span>
-            <span style="font-size:13px;color:#3b82f6;font-weight:600;margin-left:4px;">V2.0</span>
-        </div>
-        <div class="welcome-body">
-            <div class="welcome-section">
-                <div class="welcome-section-title"><i class="fas fa-database"></i> 数据截止日期</div>
-                <div class="welcome-data-date" id="welcomeDataDate">加载中...</div>
-            </div>
-            <div class="welcome-section">
-                <div class="welcome-section-title"><i class="fas fa-bell"></i> 最近更新</div>
-                <ul class="welcome-updates" id="welcomeUpdates">
-                    <li>预警看板：新增月份多选筛选，支持按需查看各月预警数据</li>
-                    <li>预警看板：双维度区间筛选，精准定位风险人员</li>
-                    <li>九宫格：城市×主管筛选，灵活切换分析视角</li>
-                    <li>主任画像：管理动作均值基准线 + 主管评价气泡</li>
-                    <li>对比页：城市×队列筛选，横向对比更便捷</li>
-                </ul>
-            </div>
-        </div>
-        <div class="welcome-footer">
-            <label class="welcome-checkbox"><input type="checkbox" id="welcomeNoShow"> 今日不再显示</label>
-            <button class="welcome-close-btn" onclick="closeWelcome()">进入看板</button>
-        </div>
-    </div>
-</div>
-
-<script src="./employee_profile.js"></script>
 <script>
-    function showTab(name) {
-        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-
-        const panel = document.getElementById('tab-' + name);
-        panel.classList.add('active');
-        document.querySelector(`[data-tab="${name}"]`).classList.add('active');
-
-        const iframe = panel.querySelector('iframe');
-        if (iframe && !iframe.src && iframe.dataset.src) {
-            iframe.src = iframe.dataset.src;
-        }
-    }
-
-    // 跨 iframe 导航：预警看板 / 九宫格 → 主任卡片
-    const profileIframe = document.getElementById('iframe-profile');
-    let _profileReady = false;
-    profileIframe.addEventListener('load', () => { _profileReady = true; });
-
-    window.addEventListener('message', function(event) {
-        if (!event.data || event.data.type !== 'goToProfile') return;
-        const id = event.data.id;
-        showTab('profile');
-        const send = () => profileIframe.contentWindow.postMessage({ type: 'selectEmployee', id }, '*');
-        if (_profileReady) {
-            send();
-        } else {
-            profileIframe.addEventListener('load', send, { once: true });
-        }
+    // 注册 datalabels 插件
+    Chart.register(ChartDataLabels);
+    // 全局配置显示数据标签
+    Chart.defaults.set('plugins.datalabels', {
+        color: '#0f172a',
+        anchor: 'end',
+        align: 'top',
+        offset: 4,
+        font: { weight: 'bold', size: 11 }
     });
-</script>
 
-<script>
-// ── 欢迎弹窗逻辑 ──
-(function() {
-    const STORAGE_KEY = 'talent_eval_welcome_dismissed_date';
-    const today = new Date().toISOString().split('T')[0];
+    let globalData = null;
 
-    // 检查今日是否已关闭
-    if (localStorage.getItem(STORAGE_KEY) === today) {
-        document.getElementById('welcomeOverlay').style.display = 'none';
-        return;
+    // 获取最新月份
+    function getLatestMonth(snapshots) {
+        const months = [...new Set(snapshots.map(s => s.month))];
+        months.sort();
+        return months[months.length - 1];
     }
 
-    // 从 DATA_UPDATE_DATE 获取数据更新日期（由 generate_profile.py 生成）
-    function formatDateDisplay(dateStr) {
-        if (!dateStr || dateStr === 'undefined') return '暂无数据';
-        // "2026-06-25" → "2026年6月25日"
-        var parts = dateStr.split('-');
-        return parts[0] + '年' + parseInt(parts[1]) + '月' + parseInt(parts[2]) + '日';
+    // 根据城市筛选快照
+    function filterSnapshotsByCity(snapshots, city, month) {
+        return snapshots.filter(s => s.month === month && (city === 'all' || s.city === city));
     }
 
-    var updateDate = (typeof DATA_UPDATE_DATE !== 'undefined') ? DATA_UPDATE_DATE : null;
-    document.getElementById('welcomeDataDate').textContent = formatDateDisplay(updateDate);
-
-    // 关闭弹窗
-    window.closeWelcome = function() {
-        var overlay = document.getElementById('welcomeOverlay');
-        var noShow = document.getElementById('welcomeNoShow');
-        if (noShow.checked) {
-            localStorage.setItem(STORAGE_KEY, today);
+    // 渲染 KPI
+    function getPreviousMonth(snapshots, latestMonth) {
+        const months = [...new Set(snapshots.map(s => s.month))].sort();
+        const idx = months.indexOf(latestMonth);
+        return idx > 0 ? months[idx - 1] : null;
+    }
+    function renderKPIs(snapshots, city, latestMonth) {
+        const filtered = filterSnapshotsByCity(snapshots, city, latestMonth);
+        const total = filtered.length;
+        const formal = filtered.filter(s => s.status === '主任').length;
+        const intern = filtered.filter(s => s.status === '见习主任').length;
+        // 上月环比
+        const prevMonth = getPreviousMonth(snapshots, latestMonth);
+        let tD = null, fD = null, iD = null;
+        if (prevMonth) {
+            const prev = filterSnapshotsByCity(snapshots, city, prevMonth);
+            tD = total - prev.length;
+            fD = formal - prev.filter(s => s.status === '主任').length;
+            iD = intern - prev.filter(s => s.status === '见习主任').length;
         }
-        overlay.style.opacity = '0';
-        overlay.style.transition = 'opacity 0.2s';
-        setTimeout(function() { overlay.style.display = 'none'; }, 200);
-    };
-})();
-</script>
+        function d(v) {
+            if (v === null) return '';
+            if (v > 0) return '<span class="kpi-delta kpi-delta-up">↑' + v + '</span>';
+            if (v < 0) return '<span class="kpi-delta kpi-delta-down">↓' + Math.abs(v) + '</span>';
+            return '<span class="kpi-delta kpi-delta-flat">→0</span>';
+        }
+        document.getElementById('kpiCards').innerHTML =
+            '<div class="kpi-card"><div class="kpi-label"><i class="fas fa-users"></i> 总主任人数</div><div class="kpi-number">' + total + d(tD) + '</div></div>' +
+            '<div class="kpi-card"><div class="kpi-label"><i class="fas fa-user-check"></i> 转正主任</div><div class="kpi-number">' + formal + d(fD) + '</div></div>' +
+            '<div class="kpi-card"><div class="kpi-label"><i class="fas fa-user-graduate"></i> 见习主任</div><div class="kpi-number">' + intern + d(iD) + '</div></div>';
+    }
 
+    // 获取历史趋势 (每月每城市总人数)
+    function getTrendData(snapshots, city) {
+        const months = [...new Set(snapshots.map(s => s.month))].sort();
+        const trend = months.map(month => {
+            const filtered = snapshots.filter(s => s.month === month && (city === 'all' || s.city === city));
+            return filtered.length;
+        });
+        return { months, trend };
+    }
+
+    // 渲染折线图
+    let trendChart = null;
+    function renderTrendChart(snapshots, city) {
+        const { months, trend } = getTrendData(snapshots, city);
+        const ctx = document.getElementById('trendChart').getContext('2d');
+        if (trendChart) trendChart.destroy();
+        trendChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [{
+                    label: city === 'all' ? '全城团队总人数' : `${city}团队人数`,
+                    data: trend,
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59,130,246,0.05)',
+                    borderWidth: 3,
+                    pointRadius: 4,
+                    pointBackgroundColor: '#1e40af',
+                    tension: 0.2,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    tooltip: { callbacks: { label: (ctx) => `${ctx.raw} 人` } },
+                    datalabels: { align: 'top', offset: 6, formatter: (value) => value }
+                },
+                scales: { y: { beginAtZero: true, title: { display: true, text: '人数' } } }
+            }
+        });
+    }
+
+    // 渲染各城市见习 vs 转正柱状图
+    let cityCompareChart = null;
+    function renderCityCompareChart(snapshots, selectedCity, latestMonth) {
+        const ctx = document.getElementById('cityCompareChart').getContext('2d');
+        if (cityCompareChart) cityCompareChart.destroy();
+
+        if (selectedCity === 'all') {
+            const cities = [...new Set(snapshots.filter(s => s.month === latestMonth).map(s => s.city))];
+            const formalData = cities.map(c => snapshots.filter(s => s.month === latestMonth && s.city === c && s.status === '主任').length);
+            const internData = cities.map(c => snapshots.filter(s => s.month === latestMonth && s.city === c && s.status === '见习主任').length);
+            cityCompareChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: cities,
+                    datasets: [
+                        { label: '转正主任', data: formalData, backgroundColor: '#2c7da0', borderRadius: 8 },
+                        { label: '见习主任', data: internData, backgroundColor: '#ffb74d', borderRadius: 8 }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: { datalabels: { anchor: 'center', align: 'center', formatter: (value) => value } },
+                    scales: { y: { beginAtZero: true, title: { display: true, text: '人数' } } }
+                }
+            });
+        } else {
+            const formal = snapshots.filter(s => s.month === latestMonth && s.city === selectedCity && s.status === '主任').length;
+            const intern = snapshots.filter(s => s.month === latestMonth && s.city === selectedCity && s.status === '见习主任').length;
+            cityCompareChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['转正主任', '见习主任'],
+                    datasets: [{ label: '人数', data: [formal, intern], backgroundColor: ['#2c7da0', '#ffb74d'], borderRadius: 8 }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: { datalabels: { anchor: 'end', align: 'top', formatter: (value) => value } },
+                    scales: { y: { beginAtZero: true, title: { display: true, text: '人数' } } }
+                }
+            });
+        }
+    }
+
+    // 在岗时长饼图
+    let tenurePieChart = null;
+    function renderTenurePieChart(snapshots, selectedCity, latestMonth) {
+        let filtered = snapshots.filter(s => s.month === latestMonth);
+        if (selectedCity !== 'all') filtered = filtered.filter(s => s.city === selectedCity);
+        const groups = { "<6个月": 0, "6-12个月": 0, "1-2年": 0, "2年以上": 0 };
+        // 以最新月份最后一天为基准
+        const [yr, mo] = latestMonth.split('-').map(Number);
+        const refDate = new Date(yr, mo, 0);
+        filtered.forEach(emp => {
+            if (!emp.promotion_date) return;
+            const promoDate = new Date(emp.promotion_date);
+            const diffDays = (refDate - promoDate) / (1000 * 60 * 60 * 24);
+            if (diffDays < 180) groups["<6个月"]++;
+            else if (diffDays < 365) groups["6-12个月"]++;
+            else if (diffDays < 730) groups["1-2年"]++;
+            else groups["2年以上"]++;
+        });
+        const ctx = document.getElementById('tenurePieChart').getContext('2d');
+        if (tenurePieChart) tenurePieChart.destroy();
+        tenurePieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: Object.keys(groups),
+                datasets: [{ data: Object.values(groups), backgroundColor: ['#3b82f6', '#f97316', '#10b981', '#8b5cf6'] }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'right', labels: { boxWidth: 14, padding: 16, font: { size: 13 } } },
+                    datalabels: { formatter: (value, ctx) => { let total = ctx.dataset.data.reduce((a,b)=>a+b,0); let pct = ((value/total)*100).toFixed(1); return `${value} (${pct}%)`; }, color: '#fff', anchor: 'center', align: 'center', font: { weight: 'bold' } }
+                }
+            }
+        });
+    }
+
+    // 渲染人力更新明细
+    function renderEventList(changes, selectedCity) {
+        let filtered = changes;
+        if (selectedCity !== 'all') filtered = changes.filter(c => c.city === selectedCity);
+        filtered.sort((a,b) => new Date(b.month) - new Date(a.month));
+        const container = document.getElementById('eventListContainer');
+        if (filtered.length === 0) {
+            container.innerHTML = '<div style="text-align:center; padding:20px;">暂无近期人力动态</div>';
+            return;
+        }
+        container.innerHTML = filtered.slice(0, 8).map(ev => `
+            <div class="event-item">
+                <div><strong>${ev.name}</strong> · <span style="color:#64748b;font-size:12px;">${ev.city || ''}</span>${ev.remark ? ' · ' + ev.remark : ''}</div>
+                <div><span class="event-type ${ev.change_type}">${ev.change_type}</span> <span class="badge-date">${ev.month}</span></div>
+            </div>
+        `).join('');
+    }
+
+    // 全局刷新
+    function refreshAll(snapshots, changes, selectedCity, latestMonth) {
+        renderKPIs(snapshots, selectedCity, latestMonth);
+        renderTrendChart(snapshots, selectedCity);
+        renderCityCompareChart(snapshots, selectedCity, latestMonth);
+        renderTenurePieChart(snapshots, selectedCity, latestMonth);
+        renderEventList(changes, selectedCity);
+    }
+
+    // 加载数据并初始化
+    async function loadData() {
+        try {
+            const json = __DATA__; // 数据已内嵌，无需 fetch
+            globalData = json;
+            const snapshots = json.snapshots;
+            const changes = json.changes.map(c => ({ ...c, city: c.city || (snapshots.find(s => s.employee_id === c.employee_id)?.city || '未知') })); // 确保变动有城市字段
+            const latestMonth = getLatestMonth(snapshots);
+            const cities = [...new Set(snapshots.map(s => s.city))];
+            // 构建界面
+            const app = document.getElementById('app');
+            app.innerHTML = `
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title"><i class="fas fa-chart-line"></i> 团队规模 & 人力动态<span style="font-size:12px;font-weight:400;color:#94a3b8;margin-left:10px;">*数据来源：观远花名册数据</span></div>
+                        <select id="cityMainSelect" class="filter-select">
+                            <option value="all">🌍 全部城市</option>
+                            ${cities.map(c => `<option value="${c}">🏙️ ${c}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="kpi-row" id="kpiCards"></div>
+                    <div class="split-row">
+                        <div class="split-left">
+                            <div style="font-weight: 600; margin-bottom: 10px;"><i class="fas fa-chart-simple"></i> 团队规模变化趋势（全部月份）</div>
+                            <div class="chart-container"><canvas id="trendChart"></canvas></div>
+                        </div>
+                        <div class="split-right">
+                            <div style="font-weight: 600; margin-bottom: 10px;"><i class="fas fa-clock"></i> 近期人力更新明细</div>
+                            <div id="eventListContainer" class="event-list"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="split-row">
+                    <div class="split-left">
+                        <div class="card" style="height: 100%;">
+                            <div class="card-header"><div class="card-title"><i class="fas fa-chart-column"></i> 各城市见习主任 vs 转正主任</div></div>
+                            <div style="height: 300px;"><canvas id="cityCompareChart"></canvas></div>
+                        </div>
+                    </div>
+                    <div class="split-right">
+                        <div class="card" style="height: 100%;">
+                            <div class="card-header"><div class="card-title"><i class="fas fa-chart-pie"></i> 上任时长分布</div></div>
+                            <div style="height: 300px; position: relative;"><canvas id="tenurePieChart"></canvas></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            // 初始化渲染
+            refreshAll(snapshots, changes, 'all', latestMonth);
+            // 绑定城市切换事件
+            const citySelect = document.getElementById('cityMainSelect');
+            citySelect.addEventListener('change', (e) => {
+                refreshAll(snapshots, changes, e.target.value, latestMonth);
+            });
+        } catch (err) {
+            document.getElementById('app').innerHTML = `<div class="loading" style="color:red;">数据加载失败: ${err.message}<br>请确保 data.json 文件存在且格式正确</div>`;
+        }
+    }
+    loadData();
+</script>
 </body>
 </html>
